@@ -1,6 +1,6 @@
 <template>
       <div class="d-flex justify-content-center">
-        <div class="d-flex flex-row bd-highlight border border-dark justify-content-between align-items-center mt-5 w-75" id="cabecera">
+        <div class="d-flex flex-row bd-highlight border border-dark justify-content-between align-items-center mt-5 w-100 ml-5 mr-5" id="cabecera">
           
           <div class="p-2 bd-highlight justify-content-start ml-4">
             
