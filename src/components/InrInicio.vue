@@ -1,8 +1,6 @@
 <template>
+ <button type="button" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-4 ml-5 mr-5" style="width: 90%;"> 
 
- <div class="d-flex justify-content-center">
-    <div class="d-inline-flex bd-highlight border border-dark align-items-center mt-4 ml-5 mr-5" style="width: 90%;">
-        
         <div class="p-2 flex-row bd-highlight">
 
             <div class="d-inline-flex flex-column bd-highlight ml-3">
@@ -54,10 +52,7 @@
             </div>
         </div>
 
-        
-    </div>
- </div>
-
+</button>
     
 </template>
 
