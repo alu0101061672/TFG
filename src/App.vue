@@ -20,13 +20,6 @@
         <router-link to="/capas">Capas</router-link>
       </div>
 
-      <div class="bd-highlight align-self-">
-
-        <h5> Filtros </h5>
-
-
-      </div>
-
     </div>
 
    
