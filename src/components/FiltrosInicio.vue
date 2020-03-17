@@ -1,5 +1,5 @@
 <template>
-        <div class="d-flex bd-highlight align-items-center justify-content-end mb-3 mt-4 ml-3 mr-5 pr-5 float-right" style="max-width:750px;">
+        <div class="d-flex flex-row bd-highlight align-items-center pl-5 float-right" style="max-width:750px;">
           
           <div class="p-2 bd-highlight ml-4 font-weight-bold">
               <h5> Filtros </h5>

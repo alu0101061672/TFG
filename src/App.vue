@@ -1,9 +1,9 @@
 <template>
   <div id="app">
 
-    <router-view/>
+    <router-view />
 
-    <div class="d-flex flex-row bd-highlight mb-3 ml-5 pl-5 align-items-center" style="max-width:750px;">
+    <!-- <div class="d-flex flex-row bd-highlight mb-3 ml-5 pl-5 align-items-center" style="max-width:750px;">
       
       <div class="p-2 bd-highlight font-weight-bold" style="color:black;">
         
@@ -20,7 +20,7 @@
         <router-link to="/capas">Capas</router-link>
       </div>
 
-    </div>
+    </div> -->
 
    
     
