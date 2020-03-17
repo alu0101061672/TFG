@@ -3,15 +3,15 @@
 
     <router-view/>
 
-    <div class="d-flex flex-row bd-highlight mb-3 ml-5 mr-5 pl-5 pr-5 align-items-center">
+    <div class="d-flex flex-row bd-highlight mb-3 ml-5 pl-5 align-items-center" style="max-width:750px;">
       
-      <div class="p-2 bd-highlight font-weight-bold">
+      <div class="p-2 bd-highlight font-weight-bold" style="color:black;">
         
         <h3> INR's </h3>
         
       </div>
 
-      <div id="nav">
+      <div id="nav" >
         <router-link to="/">Inicio</router-link> |
         <router-link to="/documentos">Documentos</router-link> |
         <router-link to="/actividad">Actividad</router-link> |
