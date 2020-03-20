@@ -53,6 +53,41 @@
 
           </div>
 
+          <div class="float-right mr-4" style="margin-top: -15px;">
+            <div class="row">
+              <form id="custom-search-form" class="form-search form-horizontal pull-right" >
+                  <div class="input-append">
+                      <input type="text" class="search-query pl-2 border border-dark" placeholder="Search" style="border-radius: 15px;">
+                        <button type="submit" class="btn"><img src="../assets/busqueda.svg" alt="búsqueda" style="margin-left: -63px;"></button>
+                  </div>
+              </form>
+              </div>
+          </div>
+
+          <hr style="margin-top: 350px; height: 1px; width: 1000px;
+            background: -moz-radial-gradient(center center, circle, black, white); 
+            background: -o-radial-gradient(center center, circle, black, white); 
+            background: -ms-radial-gradient(center center, circle, black, white); 
+            background: radial-gradient(center center, circle, black, white); 
+            background: -webkit-radial-gradient(center center, circle, black, white); 
+          "/>
+
+          <div class="float-left">
+              <div class="text-uppercase">
+                Favoritos
+              </div>
+              <div class="d-flex-inline" style="margin-top: 10px;">
+                <img src="../assets/carpeta.svg" alt="carpeta" class="img-responsive img-fluid" 
+                  height="25" width="25"/> 
+
+                <div class="text-uppercase" style="margin-left: 110px; margin-top: -22px;">
+                  Nombre
+                </div>
+
+                  
+              </div>
+          </div>
+
         </div>
 
       </div>
