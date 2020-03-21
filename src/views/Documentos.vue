@@ -102,7 +102,6 @@
 // @ is an alias to /src
 import Cabecera from '@/components/Cabecera.vue'
 import Navegacion from '@/components/Navegacion.vue'
-import EstructuraPagina from '@/components/EstructuraPagina.vue'
 import DatosINR from '@/components/DatosINR.vue'
 
 export default {
@@ -110,7 +109,6 @@ export default {
   components: {
     Cabecera,
     Navegacion, 
-    EstructuraPagina,
     DatosINR
   }
 }
