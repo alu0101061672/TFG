@@ -16,6 +16,7 @@
             </div>
 
             <div class="flex-column bd-highlight border border-dark" style="width: 500px; height:310px;">
+              <DatosINR />
             </div>
 
         </div>
@@ -102,13 +103,15 @@
 import Cabecera from '@/components/Cabecera.vue'
 import Navegacion from '@/components/Navegacion.vue'
 import EstructuraPagina from '@/components/EstructuraPagina.vue'
+import DatosINR from '@/components/DatosINR.vue'
 
 export default {
   name: 'Documentos',
   components: {
     Cabecera,
     Navegacion, 
-    EstructuraPagina
+    EstructuraPagina,
+    DatosINR
   }
 }
 </script>
