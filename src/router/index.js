@@ -5,12 +5,18 @@ import Actividad from '../views/Actividad.vue'
 import Busqueda from '../views/Busqueda.vue'
 import Sge112 from '../views/SGE112.vue'
 import Capas from '../views/Capas.vue'
+import InicioSesion from '../views/InicioSesion.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'InicioSesion',
+    component: InicioSesion
+  },
+  {
+    path: '/inicio',
     name: 'Inicio',
     component: Inicio
   },

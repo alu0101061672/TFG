@@ -9,7 +9,7 @@
     </div>
 
     <div id="nav" >
-        <router-link to="/">Inicio</router-link> |
+        <router-link to="/inicio">Inicio</router-link> |
         <router-link to="/documentos">Documentos</router-link> |
         <router-link to="/actividad">Actividad</router-link> |
         <router-link to="/busqueda">Búsqueda</router-link> |
