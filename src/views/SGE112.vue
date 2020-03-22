@@ -16,6 +16,7 @@
             </div>
 
             <div class="flex-column bd-highlight border border-dark" style="width: 500px; height:310px;">
+              <DatosINR />
             </div>
 
         </div>
@@ -34,12 +35,14 @@
 // @ is an alias to /src
 import Cabecera from '@/components/Cabecera.vue'
 import Navegacion from '@/components/Navegacion.vue'
+import DatosINR from '@/components/DatosINR.vue'
 
 export default {
   name: 'Sge112',
   components: {
     Cabecera,
-    Navegacion
+    Navegacion,
+    DatosINR
   }
 }
 </script>
