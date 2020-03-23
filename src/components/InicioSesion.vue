@@ -46,23 +46,24 @@
 										</div>
 									</div>
 								</form>
-								<form id="register-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+								<!-- action="http://phpoll.com/register/process" -->
+								<form id="register-form"  method="post" role="form" style="display: none;">
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="">
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" pattern="^[A-Za-z0-9_]{1,15}$" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="">
+										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="" pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña">
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar contraseña">
+										<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar contraseña" required />
 									</div>
 									<div class="form-group">
 										<div class="row justify-content-center">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Crear cuenta">
+												<button type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Crear cuenta" />
 											</div>
 										</div>
 									</div>

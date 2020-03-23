@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+
 import InicioSesion from '@/components/InicioSesion.vue'
 
 export default {
