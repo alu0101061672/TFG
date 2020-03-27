@@ -18,12 +18,12 @@
 					<div class="panel-body">
 						<div class="row mt-2">
 							<div class="col-lg-12">
-								<form id="login-form" action="http://phpoll.com/login/process" method="post" role="form" style="display: block;">
+								<form id="login-form" @submit1="onSubmit1" @reset1="onReset1" method="post" role="form" style="display: block;">
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="">
+										<input v-model="userRegister.usuario" type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña">
+										<input v-model="userRegister.password" type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
@@ -32,7 +32,10 @@
 									<div class="form-group">
 										<div class="row justify-content-center">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Iniciar sesión">
+												<!--<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Iniciar sesión">-->
+												<button type="submit" variant="primary" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" > Iniciar sesión </button>
+												<!--<button type="reset" variant="danger" name="register-reset" id="register-reset" tabindex="4" class="form-control btn btn-light"> Resetear </button> -->
+
 											</div>
 										</div>
 									</div>
@@ -47,23 +50,25 @@
 									</div>
 								</form>
 								<!-- action="http://phpoll.com/register/process" -->
-								<form id="register-form"  method="post" role="form" style="display: none;">
+								<form id="register-form" @submit="onSubmit" method="post" role="form" style="display: none;">
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" pattern="^[A-Za-z0-9_]{1,15}$" required />
+										<input v-model="userRegister.usuario" type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" pattern="^[A-Za-z0-9_]{1,15}$" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="" pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+										<input v-model="userRegister.email" type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="" pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
+										<input v-model="userRegister.password" type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar contraseña" required />
+										<input v-model="userRegister.confirmpassword" type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar contraseña" required />
 									</div>
 									<div class="form-group">
 										<div class="row justify-content-center">
-											<div class="col-sm-6 col-sm-offset-3">
-												<button type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Crear cuenta" />
+											<div class="col-sm-6 col-sm-offset-3">												
+												<button type="submit" variant="primary" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" > Crear cuenta </button>
+												<button type="reset" class="form-control btn btn-light"> Resetear </button>
+
 											</div>
 										</div>
 									</div>
@@ -182,10 +187,6 @@ body {
 
 <script>
 
-export default {
-    name: 'InicioSesion'
-}
-
 $(function() {
 
     $('#login-form-link').click(function(e) {
@@ -204,4 +205,88 @@ $(function() {
 	});
 
 });
+
+
+export default {
+  data() {
+    return {
+	 userLogin: {
+        usuario: "",
+        password: "",
+        checked: []
+      },
+      userRegister: {
+        email: "",
+        password: "",
+		usuario: "",
+		confirmpassword: "",
+        checked: []
+      },
+      show: true
+    };
+  },
+  methods: {
+	onSubmit1(evt) {
+      evt.preventDefault();
+      this.axios
+        .post("/signin", this.userLogin)
+        .then(res => {
+          if (res.data.token) {
+            console.log(res.data);
+            this.$store.commit("islogIn");
+            this.$store.commit("setEmail", res.data.email);
+            this.$store.commit("setToken", res.data.token);
+            this.$router.push("/map");
+          }
+        })
+        .catch(err => {
+          console.log(err.response);
+          onReset();
+          this.$store.commit("isLogOut");
+        });
+    },
+    onReset1(evt) {
+      evt.preventDefault();
+      // Reset our form values
+      this.userLogin.email = "";
+      this.userLogin.password = "";
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+	})},
+	  
+    onSubmit(evt) {
+	  evt.preventDefault();
+	  if(this.userRegister.password === this.userRegister.confirmpassword){
+      this.axios
+        .post("/signup", this.userRegister)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(e => {
+          console.log(e.response);
+		});
+	  }else {
+		  alert("Las contraseñas no coinciden");
+		  console.log("Contraseñas no coinciden")
+	  }
+
+    },
+    onReset(evt) {
+      evt.preventDefault();
+      // Reset our form values
+      this.userLogin.email = "";
+	  this.userLogin.password = "";
+	  this.userLogin.confirmpassword = "";
+      this.userLogin.usuario = "";
+      this.userLogin.checked = [];
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    }
+  }
+};
 </script>
