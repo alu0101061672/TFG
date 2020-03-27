@@ -1,6 +1,6 @@
 import services from '../services';
 
-/*function isAuth(req, res, next) {
+function isAuth(req, res, next) {
     if (!req.headers.authorization) {
         return res.status(403).send({ auth: false });
     }
@@ -14,7 +14,7 @@ import services from '../services';
         .catch(response => {
             res.status(response.status).send();
         });
-}*/
+}/*
 const jwt = require('jsonwebtoken');
 
 let verificarAuth = (req, res, next) => {
@@ -55,7 +55,7 @@ let verificaRol = (req, res, next) => {
   
   }
   
-  module.exports = {verificarAuth, verificaRol};
+  module.exports = {verificarAuth, verificaRol};*/
   
 
-//module.exports = isAuth;
+module.exports = isAuth;

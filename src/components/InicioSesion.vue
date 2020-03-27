@@ -32,9 +32,8 @@
 									<div class="form-group">
 										<div class="row justify-content-center">
 											<div class="col-sm-6 col-sm-offset-3">
-												<!--<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Iniciar sesión">-->
-												<button type="submit" variant="primary" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" > Iniciar sesión </button>
-												<!--<button type="reset" variant="danger" name="register-reset" id="register-reset" tabindex="4" class="form-control btn btn-light"> Resetear </button> -->
+												<button onclick="location.href='#/inicio'" type="submit" variant="primary" name="is-submit" id="is-submit" tabindex="4" class="form-control btn btn-register" > Iniciar sesión </button>
+												<button type="reset" class="form-control btn btn-light"> Resetear </button>
 
 											</div>
 										</div>
@@ -66,9 +65,8 @@
 									<div class="form-group">
 										<div class="row justify-content-center">
 											<div class="col-sm-6 col-sm-offset-3">												
-												<button type="submit" variant="primary" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" > Crear cuenta </button>
+												<button v-on:click="goLogIn" type="submit" variant="primary" name="register-submit" tabindex="4" class="form-control btn btn-register" > Crear cuenta </button>
 												<button type="reset" class="form-control btn btn-light"> Resetear </button>
-
 											</div>
 										</div>
 									</div>
@@ -226,6 +224,14 @@ export default {
     };
   },
   methods: {
+	goLogIn: function () {
+		
+		$("#login-form").delay(100).fadeIn(100);
+ 		$("#register-form").fadeOut(100);
+		$('#register-form-link').removeClass('active');
+		$('#login-form-link').addClass('active');
+
+	},
 	onSubmit1(evt) {
       evt.preventDefault();
       this.axios
