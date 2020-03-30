@@ -1,6 +1,6 @@
-import jwt from 'jwt-simple';
-import moment from 'moment';
-import config from '../config';
+const jwt = require('jwt-simple');
+const moment = require('moment');
+const config = require('config');
 
 function createToken(user) {
     const payload = {

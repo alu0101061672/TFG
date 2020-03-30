@@ -1,6 +1,6 @@
-import User from '../models/usuario';
-import services from '../services';
-import bcrypt from 'bcrypt';
+const User = require('../models/usuario');
+const services = require('../services');
+const bcrypt = require('bcryptjs');
 
 function signUp(req, res) {
     const user = new User({
