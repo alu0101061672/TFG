@@ -2,7 +2,7 @@ const User = require('../models/usuario');
 const services = require('../services');
 const bcrypt = require('bcryptjs');
 
-function signUp(req, res) {
+async function signUp(req, res) {
     const user = new User({
         email: req.body.email,
         usuario: req.body.usuario,
@@ -10,16 +10,30 @@ function signUp(req, res) {
         confirmpassword: req.body.confirmpassword,
     });
 
-    user.save(err => {
-        if (err)
-            return res.status(500).send({
-                message: `Error al crear el usuario: ${err}`,
+
+    // Buscamos email en DB
+    const usuarioDB = await User.findOne({email: req.body.email});
+
+    // Evaluamos si no existe el usuario en DB
+    if(usuarioDB){
+        return res.status(400).json({
+        mensaje: 'Usuario existente',
+        });
+    } 
+    else {
+
+        user.save(err => {
+            if (err)
+                return res.status(500).send({
+                    message: `Error al crear el usuario: ${err}`,
             });
 
         return res
             .status(201)
-            .send({ token: services.createToken(user) });
-    });
+            .send({ token: services.createToken(user), });
+        });
+    }
+
 }
 
 function signIn(req, res) {
@@ -35,6 +49,9 @@ function signIn(req, res) {
                 err,
                 result,
             ) {
+                console.log(req.body.password);
+                console.log(user.password);
+                console.log(result);
                 if (err)
                     return res.status(500).send({
                         message: `Error al realizar la petición ${err}`,
@@ -75,7 +92,7 @@ function showInfo(req, res) {
 
         return res.status(200).send({
             message: 'Enviando datos...',
-            user: user,
+        
         });
     });
 }
@@ -88,8 +105,22 @@ function changelastLogin(email) {
     return User.findOneAndUpdate({ email: email }, dateLogin);
 }
 
+function showAll (req,res) {
+
+    User.find(function(err,user){
+
+        if(err) res.send(500, err.message);
+
+        //console.log('GET /user')
+        res.status(200).json(user);
+    })    
+
+
+}
+
 module.exports = {
     signIn,
     signUp,
     showInfo,
+    showAll
 };

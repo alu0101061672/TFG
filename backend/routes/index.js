@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const express = require ('express');
 const userCtrl = require( '../controllers/user');
@@ -18,5 +18,5 @@ api.get('/isAuth', auth, (req, res) => {
     res.status(200).send({ auth: true });
 });
 
-module.exports = api;
+module.exports = api;*/
 
