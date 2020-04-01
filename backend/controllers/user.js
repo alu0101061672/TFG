@@ -1,6 +1,6 @@
 const User = require('../models/usuario');
 const services = require('../services');
-const bcrypt = require('bcryptjs');
+var bcrypt = require('bcryptjs');
 
 async function signUp(req, res) {
     const user = new User({
@@ -44,14 +44,13 @@ function signIn(req, res) {
                 return res.status(404).send({
                     message: 'Este usuario no está en la BBDD',
                 });
-
-            bcrypt.compare(req.body.password, user.password, function(
+            
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(user.password, salt);
+            bcrypt.compare(req.body.password, hash, function(
                 err,
                 result,
             ) {
-                console.log(req.body.password);
-                console.log(user.password);
-                console.log(result);
                 if (err)
                     return res.status(500).send({
                         message: `Error al realizar la petición ${err}`,
