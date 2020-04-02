@@ -237,7 +237,7 @@ export default {
 	onSubmit1(evt) {
       evt.preventDefault();
       this.axios
-        .post(URL + "/signin/signin", this.userLogin)
+        .post(URL + "/user/signin", this.userLogin)
         .then(res => {
           if (res.data.token) {
             console.log(res.data);
@@ -269,7 +269,7 @@ export default {
 	  evt.preventDefault();
 	  if(this.userRegister.password === this.userRegister.confirmpassword){
       this.axios
-        .post(URL + "/signup/signup", this.userRegister)
+        .post(URL + "/user/signup", this.userRegister)
         .then(res => {
           console.log(res.data);
         })

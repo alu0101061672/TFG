@@ -4,8 +4,9 @@ var serveStatic = require('serve-static')
 const morgan = require('morgan');
 const cors = require('cors');
 
-const signup = require('./routes/signup');
-const signin = require('./routes/signin');
+const user = require('./routes/index');
+// const signup = require('./routes/signup');
+// const signin = require('./routes/signin');
 
 const app = express();
 
@@ -14,8 +15,9 @@ app.use(express.urlencoded({extended: true}));
 app.use(morgan("tiny"));
 app.use(cors());
 
-app.use('/signup', signup);
-app.use('/signin', signin);
+app.use('/user', user)
+// app.use('/signup', signup);
+// app.use('/signin', signin);
 
 app.use(serveStatic(__dirname + "/dist"));
 

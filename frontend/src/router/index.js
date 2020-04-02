@@ -6,6 +6,7 @@ import Busqueda from '../views/Busqueda.vue'
 import Sge112 from '../views/SGE112.vue'
 import Capas from '../views/Capas.vue'
 import InicioSesion from '../views/InicioSesion.vue'
+import Administrador from '../views/Administrador.vue'
 
 Vue.use(VueRouter)
 
@@ -23,9 +24,7 @@ const routes = [
   {
     path: '/documentos',
     name: 'Documentos',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+ 
     component: function () {
       return import(/* webpackChunkName: "about" */ '../views/Documentos.vue')
     }
@@ -49,6 +48,11 @@ const routes = [
     path: '/capas',
     name: 'Capas',
     component: Capas
+  },
+  {
+    path: '/administrador',
+    name: 'Administrador',
+    component: Administrador
   }
 
 

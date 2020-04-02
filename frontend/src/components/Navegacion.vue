@@ -15,6 +15,7 @@
         <router-link to="/busqueda">Búsqueda</router-link> |
         <router-link to="/sge112">SGE-112</router-link> |
         <router-link to="/capas">Capas</router-link>
+        
     </div>
 
  </div>

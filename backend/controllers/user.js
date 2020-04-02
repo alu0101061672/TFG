@@ -112,13 +112,57 @@ function showAll (req,res) {
         //console.log('GET /user')
         res.status(200).json(user);
     })    
+}
 
+async function deleteUserById(req,res){
 
+    const id = req.params.id;
+    const userDb = await User.findByIdAndRemove(id);
+
+    if(!userDb){
+        return res.status(400).json({
+          mensaje: 'No se encontró el id indicado',
+          error
+        })
+    }
+    res.json(userDb);
+}
+
+async function deleteUserByEmail(req,res){
+
+    const email = req.params.email;
+    const userDb = await User.findByIdAndRemove(email);
+
+    if(!userDb){
+        return res.status(400).json({
+          mensaje: 'No se encontró el email indicado',
+          error
+        })
+    }
+    res.json(userDb);
+}
+
+async function deleteUserByUsuario(req,res){
+
+    const usuario = req.params.usuario;
+    const userDb = await User.findByIdAndRemove(usuario);
+
+    if(!userDb){
+        return res.status(400).json({
+          mensaje: 'No se encontró el usuario indicado',
+          error
+        })
+    }
+    res.json(userDb);
 }
 
 module.exports = {
     signIn,
     signUp,
     showInfo,
-    showAll
+    showAll,
+    deleteUserById,
+    deleteUserByEmail,
+    deleteUserByUsuario
+
 };
