@@ -18,12 +18,12 @@
 					<div class="panel-body">
 						<div class="row mt-2">
 							<div class="col-lg-12">
-								<form id="login-form" @submit1="onSubmit1" @reset1="onReset1" method="post" role="form" style="display: block;">
+								<form id="login-form" @submit="onSubmit1" @reset="onReset1" method="post" role="form" style="display: block;">
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input v-model="userRegister.usuario" type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" required />
+										<input v-model="userLogin.email" type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="" required />
 									</div>
 									<div class="d-inline-flex form-group w-75 justify-content-center">
-										<input v-model="userRegister.password" type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
+										<input v-model="userLogin.password" type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
@@ -32,7 +32,8 @@
 									<div class="form-group">
 										<div class="row justify-content-center">
 											<div class="col-sm-6 col-sm-offset-3">
-												<button onclick="location.href='#/inicio'" type="submit" variant="primary" name="is-submit" id="is-submit" tabindex="4" class="form-control btn btn-register" > Iniciar sesión </button>
+												<!-- onclick="location.href='#/inicio'"  -->
+												<button type="submit" variant="primary" name="is-submit" id="is-submit" tabindex="4" class="form-control btn btn-register" > Iniciar sesión </button>
 												<button type="reset" class="form-control btn btn-light"> Resetear </button>
 
 											</div>
@@ -48,8 +49,8 @@
 										</div>
 									</div>
 								</form>
-								<!-- action="http://phpoll.com/register/process" -->
-								<form id="register-form" @submit="onSubmit" method="post" role="form" style="display: none;">
+
+								<form id="register-form" @submit="onSubmit" @reset="onReset" method="post" role="form" style="display: none;">
 									<div class="d-inline-flex form-group w-75 justify-content-center">
 										<input v-model="userRegister.usuario" type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" pattern="^[A-Za-z0-9_]{1,15}$" required />
 									</div>
@@ -204,12 +205,13 @@ $(function() {
 
 });
 
+const URL = "http://localhost:4000";
 
 export default {
   data() {
     return {
 	 userLogin: {
-        usuario: "",
+        email: "",
         password: "",
         checked: []
       },
@@ -235,19 +237,20 @@ export default {
 	onSubmit1(evt) {
       evt.preventDefault();
       this.axios
-        .post("/signin", this.userLogin)
+        .post(URL + "/signin/signin", this.userLogin)
         .then(res => {
           if (res.data.token) {
             console.log(res.data);
             this.$store.commit("islogIn");
             this.$store.commit("setEmail", res.data.email);
             this.$store.commit("setToken", res.data.token);
-            this.$router.push("/map");
+			this.$router.push("/inicio");
+			
           }
         })
         .catch(err => {
           console.log(err.response);
-          onReset();
+          //onReset1();
           this.$store.commit("isLogOut");
         });
     },
@@ -266,7 +269,7 @@ export default {
 	  evt.preventDefault();
 	  if(this.userRegister.password === this.userRegister.confirmpassword){
       this.axios
-        .post("/signup", this.userRegister)
+        .post(URL + "/signup/signup", this.userRegister)
         .then(res => {
           console.log(res.data);
         })
@@ -282,11 +285,11 @@ export default {
     onReset(evt) {
       evt.preventDefault();
       // Reset our form values
-      this.userLogin.email = "";
-	  this.userLogin.password = "";
-	  this.userLogin.confirmpassword = "";
-      this.userLogin.usuario = "";
-      this.userLogin.checked = [];
+      this.userRegister.email = "";
+	  this.userRegister.password = "";
+	  this.userRegister.confirmpassword = "";
+      this.userRegister.usuario = "";
+      this.userRegister.checked = [];
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {

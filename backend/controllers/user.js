@@ -61,9 +61,8 @@ function signIn(req, res) {
                         req.body.email,
                     );
                     changeLastSignIn.then(response =>
-                        console.log(
-                            `Last Login:  ${response.lastLogin}`,
-                        ),
+
+                            console.log(`Last Login:  ${response.lastLogin}`)
                     );
                     res.status(200).send({
                         message: 'Te has logueado correctamente',
