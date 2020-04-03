@@ -20,6 +20,7 @@ const usuarioSchema = new Schema({
   activo: { type: Boolean, default: true },
   date:{type: Date, default: Date.now},
   lastLogin: Date,
+  
 });
 
 /*usuarioSchema.plugin(uniqueValidator, { message: 'Error, esperaba {PATH} único.' });

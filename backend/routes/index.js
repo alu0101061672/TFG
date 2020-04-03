@@ -7,8 +7,8 @@ api.post('/signin', user.signIn);
 api.post('/signup', user.signUp);
 
 api.delete('/delete/:id', user.deleteUserById);
-api.delete('/delete/:email', user.deleteUserByEmail);
-api.delete('/delete/:usuario', user.deleteUserByUsuario);
+// api.delete('/delete/:email', user.deleteUserByEmail);
+// api.delete('/delete/:usuario', user.deleteUserByUsuario);
 
 
 api.get('/showinfo', user.showInfo);
