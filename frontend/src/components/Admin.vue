@@ -9,17 +9,17 @@
             
             <div class="text-dark ml-3">
 
-                <input v-model="identificador" list="usuariosEliminar" placeholder="Nombre de usuario"/>
+                <input v-model="usu" list="usuariosEliminar" placeholder="Nombre de usuario"/>
 
                 <datalist id="usuariosEliminar">
-                    <option v-for="usuario in usuarios" :key="usuario._id" :value="usuario._id"> {{ usuario.usuario }} </option>
+                    <option v-for="usuario in usuarios" :key="usuario.usuario" v-bind:value="usuario.usuario"> {{ usuario.usuario }} </option>
                 </datalist>
 
             </div>
 
             <div class="text-dark ml-3">
 
-                <button type="submit" v-on:click="eliminarUsuario(identificador)" class="btn btn-outline-dark" style="height:36px;" > Eliminar </button>    
+                <button type="submit" v-on:click="eliminarUsuario(usu)" class="btn btn-outline-dark" style="height:36px;" > Eliminar </button>    
 
             </div>
         </div>
@@ -32,20 +32,20 @@
 
                 <div class="text-dark ml-3">
 
-                    <input list="usuariosCambiarRol" placeholder="Nombre de usuario"/>
+                    <input v-model="usu" list="usuariosCambiarRol" placeholder="Nombre de usuario"/>
 
                     <datalist id="usuariosCambiarRol">
-                        <option v-for="usuarioCambiarRol in usuarios" v-bind:key = "usuarioCambiarRol.usuario" >  </option>
+                        <option v-for="usuarioCambiarRol in usuarios" :key="usuarioCambiarRol.usuario" v-bind:value="usuarioCambiarRol.usuario" > {{ usuarioCambiarRol.usuario }} </option>
                     </datalist>
 
                 </div>
 
                 <div class="text-dark ml-3">
 
-                    <input list="usuariosRol" placeholder="Rol de usuario"/>
+                    <input v-model="roles" list="usuariosRol" placeholder="Rol de usuario"/>
 
                     <datalist id="usuariosRol">
-                        <option v-for="rol in roles" v-bind:key = "rol.rol" >  </option>
+                        <option v-for="rol in roles" :key="rol.role" v-bind:value="rol.role"> {{ rol.role }} </option>
                     </datalist>
 
                 </div>
@@ -73,30 +73,34 @@ export default {
         return{
             usuarios: [],
             roles: [],
-            usuario: [],
+            usu: [],
+
 
         };
     },
     async mounted (){
         await this.getDataUser();
+        await this.getRoleUser();
+    },
+    watch: {
+        usu: function () {
+            return this.getDataUser();
+        },
+        roles: function () {
+            return this.getRoleUser();
+        },
     },
     methods: {
 
-        eliminarUsuario(id){
+        async eliminarUsuario(usu){
 
-            this.axios.delete(`http://localhost:4000/user/delete/${id}`)
-            .then(res => {
-            let index = this.usuarios.findIndex( item => item._id === res.data._id )
-            this.usuarios.splice(index, 1);
-
-            this.showAlert();
-            this.mensaje.texto = 'Usuario Eliminado!'
-            this.mensaje.color = 'danger'
-            })
+            await this.axios
+            .delete(`http://localhost:4000/user/delete/${usu}`)
+            
             .catch( e => {
             console.log(e.response);
             })
-            this.identificador = '';
+            this.usu = '';
 
         },
         async getDataUser(){
@@ -105,12 +109,27 @@ export default {
             .then(res => {
 
             this.usuarios = res.data;
+            console.log(this.usuarios);
 
             })
             .catch(err => {
             console.log(err);
             });
-        }
+        },
+        async getRoleUser(){
+            await this.axios
+            .get("http://localhost:4000/user/getrole")
+            .then(res => {
+
+            this.roles = res.data;
+            console.log(this.roles);
+
+            })
+            .catch(err => {
+            console.log(err);
+            });
+        },
+
     }
 }
 </script>

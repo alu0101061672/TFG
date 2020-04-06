@@ -103,9 +103,9 @@ function changelastLogin(email) {
     return User.findOneAndUpdate({ email: email }, dateLogin);
 }
 
-function showAll (req,res) {
+async function showAll (req,res) {
 
-    User.find(function(err,user){
+    await User.find(function(err,user){
 
         if(err) res.send(500, err.message);
 
@@ -114,25 +114,45 @@ function showAll (req,res) {
     })    
 }
 
-async function deleteUserById(req,res){
+async function getRole (req,res) {
 
-    const _id = req.params.id;
+    const roles = await User.distinct("role")//find(function(err,user){
+    console.log(roles);
+        //if(err) res.send(500, err.message);
+
+        //console.log('GET /user')
+        //res.status(200).json(user.role);
+     
+}
+
+
+
+async function deleteUserByUsuario(req,res){
+
+    const usu = req.params.usuario;
+        //console.log(usu);
+   
+        var user = User.findOne({ usuario: usu });
+
+        //console.log((await user)._id);
+
     try{
-        const userDb = await User.findByIdAndRemove(_id);
+        const userDb = await User.findByIdAndRemove((await user)._id);
 
         if(!userDb){
             return res.status(400).json({
-            mensaje: 'No se encontró el id indicado',
-            error
+            mensaje: 'No se encontró el id indicado'
             })
         }
         res.json(userDb);
-    }catch (error) {
+
+    } catch (error) {
         return res.status(400).json({
           mensaje: 'Ocurrio un error',
           error
         });
     }
+
 }
 
 // async function deleteUserByEmail(req,res){
@@ -168,6 +188,7 @@ module.exports = {
     signUp,
     showInfo,
     showAll,
-    deleteUserById
+    deleteUserByUsuario,
+    getRole
 
 };
