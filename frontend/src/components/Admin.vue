@@ -9,7 +9,7 @@
             
             <div class="text-dark ml-3">
 
-                <input v-model="usu" list="usuariosEliminar" placeholder="Nombre de usuario"/>
+                <input v-model="usudel" list="usuariosEliminar" placeholder="Nombre de usuario"/>
 
                 <datalist id="usuariosEliminar">
                     <option v-for="usuario in usuarios" :key="usuario.usuario" v-bind:value="usuario.usuario"> {{ usuario.usuario }} </option>
@@ -19,7 +19,7 @@
 
             <div class="text-dark ml-3">
 
-                <button type="submit" v-on:click="eliminarUsuario(usu)" class="btn btn-outline-dark" style="height:36px;" > Eliminar </button>    
+                <button type="submit" v-on:click="eliminarUsuario(usudel)" class="btn btn-outline-dark" style="height:36px;" > Eliminar </button>    
 
             </div>
         </div>
@@ -32,7 +32,7 @@
 
                 <div class="text-dark ml-3">
 
-                    <input v-model="usu" list="usuariosCambiarRol" placeholder="Nombre de usuario"/>
+                    <input v-model="usurol" list="usuariosCambiarRol" placeholder="Nombre de usuario"/>
 
                     <datalist id="usuariosCambiarRol">
                         <option v-for="usuarioCambiarRol in usuarios" :key="usuarioCambiarRol.usuario" v-bind:value="usuarioCambiarRol.usuario" > {{ usuarioCambiarRol.usuario }} </option>
@@ -42,17 +42,17 @@
 
                 <div class="text-dark ml-3">
 
-                    <input v-model="roles" list="usuariosRol" placeholder="Rol de usuario"/>
+                    <input v-model="rolChosen" list="usuariosRol" placeholder="Rol de usuario"/>
 
                     <datalist id="usuariosRol">
-                        <option v-for="rol in roles" :key="rol.role" v-bind:value="rol.role"> {{ rol.role }} </option>
+                        <option v-for="rol in roles" :key="rol" v-bind:value="rol"> {{ rol }} </option>
                     </datalist>
 
                 </div>
 
                 <div class="text-dark ml-3">
 
-                    <button type="button" class="btn btn-outline-dark" style="height:36px;" > Cambiar </button>    
+                    <button type="submit" v-on:click="changeRolUser(usurol,rolChosen)" class="btn btn-outline-dark" style="height:36px;" > Cambiar </button>    
 
                 </div>
 
@@ -73,7 +73,9 @@ export default {
         return{
             usuarios: [],
             roles: [],
-            usu: [],
+            usudel: [],
+            usurol: [],
+            rolChosen: [],
 
 
         };
@@ -83,24 +85,39 @@ export default {
         await this.getRoleUser();
     },
     watch: {
-        usu: function () {
+        usudel: function () {
             return this.getDataUser();
         },
-        roles: function () {
+        usurol: function () {
+            return this.getDataUser();
+        },
+        rolChosen: function () {
             return this.getRoleUser();
         },
     },
     methods: {
 
-        async eliminarUsuario(usu){
+        async eliminarUsuario(usudel){
 
             await this.axios
-            .delete(`http://localhost:4000/user/delete/${usu}`)
+            .delete(`http://localhost:4000/user/delete/${usudel}`)
             
             .catch( e => {
             console.log(e.response);
             })
-            this.usu = '';
+            this.usudel = '';
+
+        },
+        async changeRolUser(usurol,rolChosen){
+
+            await this.axios
+            .put(`http://localhost:4000/user/changerol/${usurol}`, { role: rolChosen })
+            
+            .catch( e => {
+            console.log(e.response);
+            })
+            this.usurol = '';
+            this.rolChosen = '';
 
         },
         async getDataUser(){

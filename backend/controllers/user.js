@@ -108,7 +108,7 @@ async function showAll (req,res) {
     await User.find(function(err,user){
 
         if(err) res.send(500, err.message);
-
+        
         //console.log('GET /user')
         res.status(200).json(user);
     })    
@@ -116,16 +116,50 @@ async function showAll (req,res) {
 
 async function getRole (req,res) {
 
-    const roles = await User.distinct("role")//find(function(err,user){
-    console.log(roles);
-        //if(err) res.send(500, err.message);
+    const roles = await User.distinct("role");
 
+
+    // roles.forEach( (e) => {
+    //     console.log(e)
+
+    //     rols.rol = e
+
+    // })
+
+
+        //if(err) res.send(500, err.message);
         //console.log('GET /user')
-        //res.status(200).json(user.role);
+        res.status(200).json(roles);
      
 }
 
+async function changeRolToUser(req,res){
 
+    const usu = req.params.usuario;
+    const roles = req.body.role;
+
+        console.log(usu);
+        console.log(roles);
+   
+        var user = User.findOne({ usuario: usu });
+
+    try{
+        const userDb = await User.findByIdAndUpdate( 
+            {_id: (await user)._id},
+            {role: roles},
+        );
+ 
+
+        res.json(userDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+
+}
 
 async function deleteUserByUsuario(req,res){
 
@@ -155,40 +189,13 @@ async function deleteUserByUsuario(req,res){
 
 }
 
-// async function deleteUserByEmail(req,res){
-
-//     const email = req.params.email;
-//     const userDb = await User.findByIdAndRemove(email);
-
-//     if(!userDb){
-//         return res.status(400).json({
-//           mensaje: 'No se encontró el email indicado',
-//           error
-//         })
-//     }
-//     res.json(userDb);
-// }
-
-// async function deleteUserByUsuario(req,res){
-
-//     const usuario = req.params.usuario;
-//     const userDb = await User.findByIdAndRemove(usuario);
-
-//     if(!userDb){
-//         return res.status(400).json({
-//           mensaje: 'No se encontró el usuario indicado',
-//           error
-//         })
-//     }
-//     res.json(userDb);
-// }
-
 module.exports = {
     signIn,
     signUp,
     showInfo,
     showAll,
     deleteUserByUsuario,
-    getRole
+    getRole,
+    changeRolToUser
 
 };
