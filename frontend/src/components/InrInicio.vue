@@ -1,4 +1,15 @@
 <template>
+<div>
+        <div class="p-2 d-flex bd-highlight justify-content-end mr-5" style="height:50px;">
+
+            <button type="button" class="d-flex btn btn-outline-dark" style="width:180px; height:36px;">
+                <img src="../assets/añadir.svg" alt="añadir aportación" class="img-responsive img-fluid float-left" 
+                    height="25" width="25"/>
+                <div class="d-flex ml-1"> Crear nuevo INR </div>
+            </button>
+
+        </div>
+
  <button type="button" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-4 ml-5 mr-5" style="width: 90%;"> 
 
         <div class="p-2 flex-row bd-highlight">
@@ -53,7 +64,7 @@
         </div>
 
 </button>
-    
+</div>
 </template>
 
 <script>

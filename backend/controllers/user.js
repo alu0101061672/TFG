@@ -119,18 +119,7 @@ async function getRole (req,res) {
 
     const roles = await User.distinct("role");
 
-
-    // roles.forEach( (e) => {
-    //     console.log(e)
-
-    //     rols.rol = e
-
-    // })
-
-
-        //if(err) res.send(500, err.message);
-        //console.log('GET /user')
-        res.status(200).json(roles);
+    res.status(200).json(roles);
      
 }
 
