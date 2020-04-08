@@ -1,14 +1,35 @@
 <template>
 <div>
-        <div class="p-2 d-flex bd-highlight justify-content-end mr-5" style="height:50px;">
+    <div class="p-2 d-flex bd-highlight justify-content-end mr-5" style="height:50px;" v-if="rol === 'ADMIN'">
 
-            <button type="button" class="d-flex btn btn-outline-dark" style="width:180px; height:36px;">
-                <img src="../assets/añadir.svg" alt="añadir aportación" class="img-responsive img-fluid float-left" 
-                    height="25" width="25"/>
-                <div class="d-flex ml-1"> Crear nuevo INR </div>
-            </button>
+        <button type="button" data-toggle="modal" data-target="#exampleModalCenter" v-on:click="newINR" class="d-flex btn bg-light border border-dark" style="width:180px; height:36px;">
+            <img src="../assets/añadir.svg" alt="añadir aportación" class="img-responsive img-fluid float-left" 
+                height="25" width="25"/>
+            <div class="d-flex ml-1"> Crear nuevo INR </div>
+        </button>
 
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Crear INR</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
         </div>
+
+
+    </div>
 
  <button type="button" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-4 ml-5 mr-5" style="width: 90%;"> 
 
@@ -69,6 +90,20 @@
 
 <script>
 export default {
-    name: 'InrInicio'
+    name: 'InrInicio',
+    data() {
+        return{
+            rol: this.$store.getters.getRole,
+        };
+    },
+
+    methods: {
+        
+        newINR: function () {
+		
+          
+
+        }
+    }
 }
 </script>
