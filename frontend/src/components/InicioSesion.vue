@@ -243,7 +243,9 @@ export default {
             console.log(res.data);
             this.$store.commit("islogIn");
             this.$store.commit("setEmail", res.data.email);
-            this.$store.commit("setToken", res.data.token);
+			this.$store.commit("setToken", res.data.token);
+			this.$store.commit("setRole", res.data.role);
+			//console.log(this.$store.getters.getRole);
 			this.$router.push("/inicio");
 			
           }

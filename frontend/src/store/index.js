@@ -8,6 +8,7 @@ export default new Vuex.Store({
     session_out: true,
     token: '',
     email: '',
+    role: '',
 },
 mutations: {
     islogIn(state) {
@@ -23,6 +24,9 @@ mutations: {
     setEmail(state, newEmail) {
         state.email = newEmail;
     },
+    setRole(state, newRole) {
+        state.role = newRole;
+    },
 },
 getters: {
     getToken(state) {
@@ -33,6 +37,9 @@ getters: {
     },
     getEmail(state) {
         return state.email;
+    },
+    getRole(state) {
+        return state.role;
     },
 },
 actions: {},

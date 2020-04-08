@@ -15,14 +15,14 @@
 
           </div>
 
-          <div class="p-2 bd-highlight">
+          <div class="p-2 bd-highlight" style="margin-right:-620px;">
 
             <img src="../assets/icono_perfil.png" alt="perfil" class="float-left" 
               height="55" width="55"/>
 
-            <div class="dropdown mr-5 float-right ml-3 mt-2">
+            <div class="dropdown mr-5 float-right ml-3 mt-2" style="height:36px;">
 
-              <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Mi perfil
               </button>
 
@@ -34,6 +34,12 @@
 
             </div>
 
+          </div>
+
+          <div class="p-2 bd-highlight">
+
+            <button type="button" class="btn btn-outline-danger mr-5" style="height:36px;" > Cerrar sesión </button>    
+                       
           </div>
 
         </div>

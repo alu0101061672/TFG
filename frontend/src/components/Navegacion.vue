@@ -1,6 +1,6 @@
 <template>
 
- <div class="d-flex flex-row bd-highlight pr-5 align-items-center" style="max-width:660px; margin-right: 200px;">
+ <div class="d-flex flex-row bd-highlight pr-5 align-items-center" style="max-width:790px;">
       
     <div class="p-2 bd-highlight font-weight-bold" style="color:black;">
         
@@ -8,13 +8,25 @@
     
     </div>
 
-    <div id="nav" >
+    <div id="nav" v-if="rol === 'ADMIN'">
+        <router-link to="/inicio">Inicio</router-link> |
+        <router-link to="/documentos">Documentos</router-link> |
+        <router-link to="/actividad">Actividad</router-link> |
+        <router-link to="/busqueda">Búsqueda</router-link> |
+        <router-link to="/sge112">SGE-112</router-link> |
+        <router-link to="/capas">Capas</router-link> |
+        <router-link to="/administrador">Administrador</router-link>
+        
+    </div>
+
+    <div id="nav" v-else>
         <router-link to="/inicio">Inicio</router-link> |
         <router-link to="/documentos">Documentos</router-link> |
         <router-link to="/actividad">Actividad</router-link> |
         <router-link to="/busqueda">Búsqueda</router-link> |
         <router-link to="/sge112">SGE-112</router-link> |
         <router-link to="/capas">Capas</router-link>
+
         
     </div>
 
@@ -24,6 +36,36 @@
 
 <script>
 export default {
-    name: 'Navegacion'
+    name: 'Navegacion',
+    data() {
+        return{
+            usuarios: [],
+            rol: this.$store.getters.getRole,
+        };
+    },
+    async mounted (){
+        await this.getDataUser();
+    },
+    // watch: {
+    //     usu: function () {
+    //         return this.getDataUser();
+    //     }
+    // },
+    methods: {
+        async getDataUser(){
+            await this.axios
+            .get("http://localhost:4000/user/showall")
+            .then(res => {
+
+            this.usuarios = res.data;
+            console.log(this.usuarios);
+
+            })
+            .catch(err => {
+            console.log(err);
+            });
+        }
+    }
+
 }
 </script>

@@ -16,7 +16,7 @@ const usuarioSchema = new Schema({
   email: {type: String, required: [true, 'Email obligatorio'], unique:true },
   password: { type: String,  required: [true, 'Pass es necesario'] },
   confirmpassword: { type: String,  required: [true, 'Pass es necesario'] },
-  role: { type: String, default: 'USER', enum: roles },
+  role: { type: String, default: 'USER', enum: roles, select: true },
   activo: { type: Boolean, default: true },
   date:{type: Date, default: Date.now},
   lastLogin: Date,

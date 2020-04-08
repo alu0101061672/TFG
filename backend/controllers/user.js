@@ -37,6 +37,7 @@ async function signUp(req, res) {
 }
 
 function signIn(req, res) {
+
     User.findOne({ email: req.body.email })
         .select('password')
         .then(user => {
@@ -55,7 +56,6 @@ function signIn(req, res) {
                     return res.status(500).send({
                         message: `Error al realizar la petición ${err}`,
                     });
-
                 if (result) {
                     let changeLastSignIn = changelastLogin(
                         req.body.email,
@@ -71,6 +71,7 @@ function signIn(req, res) {
                             req.originalUrl,
                         ),
                         email: req.body.email,
+                        role: user.role
                     });
                 } else {
                     res.status(500).send({
