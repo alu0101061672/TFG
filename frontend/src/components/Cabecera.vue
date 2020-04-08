@@ -38,7 +38,7 @@
 
           <div class="p-2 bd-highlight">
 
-            <button type="button" class="btn btn-outline-danger mr-5" style="height:36px;" > Cerrar sesión </button>    
+            <button type="submit" v-on:click="logOut" class="btn btn-outline-danger mr-5" style="height:36px;" > Cerrar sesión </button>    
                        
           </div>
 
@@ -49,6 +49,16 @@
 
 <script>
 export default {
-    name: 'Inicio'
+    name: 'Inicio',
+
+    methods: {
+        
+        logOut: function () {
+		
+          this.$router.push("/");
+
+        }
+    }
+
 }
 </script>
