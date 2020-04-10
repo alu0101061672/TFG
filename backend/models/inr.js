@@ -9,7 +9,7 @@ const gravedades = {
 }
 
 const tipos = {
-  values: ['SIMULACRO', 'CASOREAL'],
+  values: ['SIMULACRO', 'CASO REAL'],
   message: '{VALUE} no es un tipo válido'
 }
 
@@ -17,7 +17,7 @@ const inrSchema = new Schema({
   nombre: {type: String, required: [true, 'Nombre obligatorio'], unique:true },
   localizacion: {type: String, required: [true, 'Localización obligatoria'] },
   descripcion: { type: String,  required: [true, 'Descripción es necesario'] },
-  datosRelevantes: { type: String,  required: [true, 'datosRelevantes es necesario'] },
+  //datosRelevantes: { type: String,  required: [true, 'datosRelevantes es necesario'] },
   gravedad: { type: String, enum: gravedades, select: true, required: [true, 'Gravedad es necesario'] },
   tipo: { type: String, enum: tipos, select: true, required: [true, 'Tipo de INR es necesario'] },
   activo: { type: Boolean, default: true },
