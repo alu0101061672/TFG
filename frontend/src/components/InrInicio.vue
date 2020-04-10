@@ -104,13 +104,14 @@
 
     </div>
 
+<div id="inrWatch" v-for="inr in inrs" :key="inr.nombre">
  <button type="button" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-4 ml-5 mr-5" style="width: 90%;"> 
 
         <div class="p-2 flex-row bd-highlight">
 
             <div class="d-inline-flex flex-column bd-highlight ml-3">
             
-                Nombre INR
+                {{inr.nombre}}
 
             </div>
 
@@ -119,7 +120,7 @@
               <img src="../assets/localizacion.png" alt="localización" class="img-responsive img-fluid" 
               height="23" width="23"/> 
 
-              Localización        
+              {{inr.localizacion}}        
 
             </div>
 
@@ -136,7 +137,7 @@
 
             <div class="d-inline-flex flex-column bd-highlight pl-2">
             
-                Descripción
+                {{inr.descripcion}}
 
             </div>
 
@@ -157,7 +158,8 @@
             </div>
         </div>
 
-</button>
+ </button>
+</div>
 </div>
 </template>
 
@@ -182,25 +184,31 @@ export default {
                 fechaInicio: '',
                 fechaFin: '',
             },
+            inrs: [],
             // gravedades: [],
             // tipos: [],
             // gravedad: [],
             // tipo: [],
         };
     },
-    // async mounted (){
-    //     await this.getGravedades();
-    //     await this.getTipos();
-    // },
-    // watch: {
-    //     gravedad: function () {
-    //         return this.getGravedades();
-    //     },
-    //     tipo: function () {
-    //         return this.getTipos();
-    //     },
+    async mounted (){
+        await this.getINRs();
+        // await this.getGravedades();
+        // await this.getTipos();
+    },
+    watch: {
 
-    // },
+        inrWatch: function () {
+            return this.getDataUser();
+        },
+        // gravedad: function () {
+        //     return this.getGravedades();
+        // },
+        // tipo: function () {
+        //     return this.getTipos();
+        // },
+
+    },
 
     methods: {
 
@@ -242,6 +250,20 @@ export default {
             this.show = false;
             this.$nextTick(() => {
                 this.show = true;
+            });
+        },
+
+        async getINRs(){
+            await this.axios
+            .get("http://localhost:4000/user/showinrs")
+            .then(res => {
+
+            this.inrs = res.data;
+            console.log(this.inrs);
+
+            })
+            .catch(err => {
+            console.log(err);
             });
         },
 

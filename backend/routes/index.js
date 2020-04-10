@@ -15,7 +15,7 @@ api.get('/getrole', user.getRole);
 
 api.put('/changerol/:usuario', user.changeRolToUser);
 
-api.get('/showAll', inr.showAll);
+api.get('/showinrs', inr.showAll);
 api.post('/inr', inr.dataINR);
 api.get('/getgravedad', inr.getGravedad);
 api.get('/gettipo', inr.getTipo);
