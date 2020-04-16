@@ -12,8 +12,8 @@
                 Fecha
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
-                <a class="dropdown-item" href="#"> Más reciente </a>
-                <a class="dropdown-item" href="#"> Más antiguo </a>               
+                <a class="dropdown-item" href="#"> Comienzan antes </a>
+                <a class="dropdown-item" href="#"> Comienzan más tarde </a>               
               </div>
             
             </div>

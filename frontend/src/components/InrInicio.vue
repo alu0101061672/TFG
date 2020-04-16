@@ -131,8 +131,9 @@
 
             <div class="flex-row bd-highlight mb-3 pb-1">
 
-                <div class="d-inline-flex flex-column bd-highlight border bg-success" style="height: 15px; width: 45px">
-                </div>
+                <div v-if="inr.gravedad === 'BAJO'" class="d-inline-flex flex-column bd-highlight border bg-success" style="height: 15px; width: 45px"></div>
+                <div v-if="inr.gravedad === 'MEDIO'" class="d-inline-flex flex-column bd-highlight border bg-warning" style="height: 15px; width: 45px"></div>
+                <div v-if="inr.gravedad === 'GRAVE'" class="d-inline-flex flex-column bd-highlight border bg-danger" style="height: 15px; width: 45px"></div>
 
             </div>
 
