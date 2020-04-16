@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import JwPagination from 'jw-vue-pagination';
+Vue.component('jw-pagination', JwPagination);
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 

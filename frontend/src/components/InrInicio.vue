@@ -22,24 +22,24 @@
                     <form id="inr-form" class="d-flex flex-column align-items-center" @submit="onSubmit" @reset="onReset" method="post" role="form">
                        
                         <div class="form-group w-75">
-                            <input v-model="inr.nombre" type="text" name="nombre" id="nombre" tabindex="1" aria-describedby="nombreHelp" class="form-control" placeholder="Nombre" value="" required />
+                            <input v-model="inr.nombre" type="text" name="nombre" id="nombre" tabindex="1" aria-describedby="nombreHelp" class="text-uppercase form-control" placeholder="Nombre" value="" required />
                             <div><small id="nombreHelp" class="form-text text-muted float-left ml-2"> Formato: NOMBRE INR </small></div>
                         </div>
                         
                         <div class="form-group w-75">
-                            <input v-model="inr.localizacion" type="text" name="localizacion" id="localizacion" tabindex="1" class="form-control" aria-describedby="localizacionHelp" placeholder="Localización" value="" required />
+                            <input v-model="inr.localizacion" type="text" name="localizacion" id="localizacion" tabindex="1" class="text-uppercase form-control" aria-describedby="localizacionHelp" placeholder="Localización" value="" required />
                             <div><small id="localizacionHelp" class="form-text text-muted float-left ml-2"> Formato: SANTA CRUZ </small></div>
 
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" class="form-control" placeholder="Descripción" value="" required />
+                            <input v-model="inr.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" class="text-uppercase form-control" placeholder="Descripción" value="" required />
 
                         </div>
 
                         <div class="form-group w-75">
 
-                            <input v-model="inr.gravedad" list="gravedades" type="text" name="gravedad" id="gravedad" tabindex="2" class="form-control" aria-describedby="gravedadHelp" placeholder="Gravedad" required />
+                            <input v-model="inr.gravedad" list="gravedades" type="text" name="gravedad" id="gravedad" tabindex="2" class="text-uppercase form-control" aria-describedby="gravedadHelp" placeholder="Gravedad" required />
                             
                             <!-- <datalist id="gravedades">
                                 <option v-for="grav in gravedades" :key="grav" v-bind:value="grav"> {{ grav }} </option>
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.tipo" list="tipos" type="text" name="tipo" id="tipo" tabindex="2" class="form-control" placeholder="Tipo" aria-describedby="tipoHelp" required />
+                            <input v-model="inr.tipo" list="tipos" type="text" name="tipo" id="tipo" tabindex="2" class="text-uppercase form-control" placeholder="Tipo" aria-describedby="tipoHelp" required />
                             <!-- <datalist id="tipos">
                                 <option v-for="tipo in tipos" :key="tipo" v-bind:value="tipo"> {{ tipo }} </option>
                             </datalist> -->
@@ -59,28 +59,31 @@
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.numAfectados" type="number" name="numAfectados" min="0" id="numAfectados" tabindex="2" class="form-control" placeholder="Número de afectados" required />
+                            <input v-model="inr.numAfectados" type="number" name="numAfectados" min="0" id="numAfectados" tabindex="2" class="text-uppercase form-control" placeholder="Número de afectados" required />
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.recursosNecesarios" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="form-control" placeholder="Recursos necesarios" required />
+                            <input v-model="inr.recursosNecesarios" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.tipoTerreno" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="form-control" placeholder="Tipo de terreno" required />
+                            <input v-model="inr.tipoTerreno" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="text-uppercase form-control" placeholder="Tipo de terreno" required />
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.fechaInicio" type="text" name="fechaInicio" id="fechaInicio" tabindex="2" class="form-control" placeholder="Fecha de inicio" />
+                            <div>
+                                <label for="FechaInicio"></label>
+                                <b-form-datepicker id="FechaInicio" v-model="inr.fechaInicio" class="mb-2" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
+                            </div>
                         </div>
 
                         <div class="form-group w-75">
                             <div>
                                 <label for="FechaFin"></label>
-                                <b-form-datepicker id="FechaFin" v-model="inr.fechaFin" class="mb-2"></b-form-datepicker>
-                                <p>Value: '{{ inr.fechaFin }}'</p>
+                                <b-form-datepicker id="FechaFin" v-model="inr.fechaFin" class="mb-2" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
                             </div>
                         </div>
+
                         <div class="form-group w-75">
                             <div class="row justify-content-center">
                                 <div class="col-sm-6 col-sm-offset-3">												
@@ -104,62 +107,67 @@
 
     </div>
 
-<div id="inrWatch" v-for="inr in inrs" :key="inr.nombre">
- <button type="button" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-4 ml-5 mr-5" style="width: 90%;"> 
+    <div id=inrWatch v-for="inr in pageOfItems" :key="inr.nombre">
+    <button type="button" v-on:click="goINR" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-1 mb-4 ml-5 mr-5" style="width: 90%;"> 
 
-        <div class="p-2 flex-row bd-highlight">
+            <div class="p-2 flex-row bd-highlight" style="min-width: 250px;text-align: left;">
 
-            <div class="d-inline-flex flex-column bd-highlight ml-3">
-            
-                {{inr.nombre}}
+                <div class="d-inline-flex flex-column bd-highlight ml-3">
+                
+                    {{inr.nombre}}
 
-            </div>
+                </div>
 
-            <div class="flex-column bd-highlight ml-4">
-            
-              <img src="../assets/localizacion.png" alt="localización" class="img-responsive img-fluid" 
-              height="23" width="23"/> 
+                <div class="flex-column bd-highlight ml-3">
+                
+                    <img src="../assets/localizacion.png" alt="localización" class="img-responsive img-fluid" 
+                    height="23" width="23"/> 
 
-              {{inr.localizacion}}        
+                    {{inr.localizacion}}        
 
-            </div>
-
-        </div>
-
-        <div class="flex-row bd-highlight mb-3 pb-1">
-
-            <div class="d-inline-flex flex-column bd-highlight border bg-success" style="height: 15px; width: 45px">
-            </div>
-
-        </div>
-
-        <div class="p-2 flex-row bd-highlight justify-content-center" style="margin-left: 100px;">
-
-            <div class="d-inline-flex flex-column bd-highlight pl-2">
-            
-                {{inr.descripcion}}
+                </div>
 
             </div>
 
-            <div class="flex-column bd-highlight pl-5">
-            
-                Datos relevantes
+            <div class="flex-row bd-highlight mb-3 pb-1">
+
+                <div class="d-inline-flex flex-column bd-highlight border bg-success" style="height: 15px; width: 45px">
+                </div>
 
             </div>
 
-        </div>
+            <div class="p-2 flex-row bd-highlight justify-content-center" style="margin-left: 100px; min-width: 1000px;text-align: left;">
 
-        <div class="p-2 flex-row bd-highlight align-self-end" style="margin-left: 1100px;">
+                <div class="flex-column bd-highlight">
+                
+                    {{inr.descripcion}}
 
-            <div class="flex-column bd-highlight justify-content-end">
-            
-                Fecha
+                </div>
+
+                <div class="flex-column bd-highlight">
+                
+                    Número de afectados: {{inr.numAfectados}}
+
+                </div>
 
             </div>
-        </div>
 
- </button>
-</div>
+            <div class="p-2 flex-row bd-highlight align-self-end" style="margin-left:;">
+
+                <div class="flex-column bd-highlight justify-content-end">
+                
+                    {{inr.fechaInicio}}
+
+                </div>
+            </div>
+
+    </button>
+    </div>
+
+    <div class="card-footer bg-transparent border-0 mb-3 pb-0 pt-3">
+            <jw-pagination :items="inrs" @changePage="onChangePage"></jw-pagination>
+    </div>
+
 </div>
 </template>
 
@@ -185,6 +193,7 @@ export default {
                 fechaFin: '',
             },
             inrs: [],
+            pageOfItems: [],
             // gravedades: [],
             // tipos: [],
             // gravedad: [],
@@ -198,9 +207,9 @@ export default {
     },
     watch: {
 
-        inrWatch: function () {
-            return this.getDataUser();
-        },
+        // inrs: function () {
+        //     return this.getINRs();
+        // },
         // gravedad: function () {
         //     return this.getGravedades();
         // },
@@ -211,11 +220,26 @@ export default {
     },
 
     methods: {
+        
+        onChangePage(pageOfItems) {
+
+            // update page of items
+
+            this.pageOfItems = pageOfItems;
+
+        },
 
         goInicio: function () {
 		
             $("#cerrar").click();
-            $('.modal-backdrop').remove();	    
+            $('.modal-backdrop').remove();
+            location.reload();
+            
+        },
+
+        goINR: function () {
+		
+            this.$router.push("/documentos");	    
             
         },
 
@@ -230,6 +254,8 @@ export default {
                 .catch(e => {
                 console.log(e.response);
                 });
+            return this.getINRs();
+            
             
         },
 
