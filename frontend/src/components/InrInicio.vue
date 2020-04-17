@@ -2,13 +2,25 @@
 <div>
     <div class="p-2 d-flex bd-highlight justify-content-end mr-5" style="height:50px;" v-if="rol === 'ADMIN'">
 
-        <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="d-flex btn bg-light border border-dark" style="width:180px; height:36px;">
+        <button type="button" data-toggle="modal" data-target="#newINR" class="d-flex btn bg-light border border-dark mr-2" style="width:180px; height:36px;">
             <img src="../assets/añadir.svg" alt="añadir aportación" class="img-responsive img-fluid float-left" 
                 height="25" width="25"/>
             <div class="d-flex ml-1"> Crear nuevo INR </div>
         </button>
 
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <button type="button" data-toggle="modal" data-target="#modifyINR" class="d-flex btn bg-light border border-dark mr-2" style="width:225px; height:36px;">
+            <img src="../assets/rectificar.svg" alt="modificar aportación" class="img-responsive img-fluid float-left" 
+                height="25" width="25"/>
+            <div class="d-flex ml-1"> Modificar INR existente </div>
+        </button>
+
+        <button type="button" data-toggle="modal" data-target="#deleteINR" class="d-flex btn bg-light border border-dark" style="width:150px; height:36px;">
+            <img src="../assets/delete.svg" alt="eliminar aportación" class="img-responsive img-fluid float-left" 
+                height="25" width="25"/>
+            <div class="d-flex ml-1"> Eliminar INR </div>
+        </button>
+
+        <div class="modal fade" id="newINR" tabindex="-1" role="dialog" aria-labelledby="newINRTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -70,18 +82,18 @@
                             <input v-model="inr.tipoTerreno" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="text-uppercase form-control" placeholder="Tipo de terreno" required />
                         </div>
 
-                        <div class="form-group w-75">
-                            <div>
+                        <div class="form-group w-75" style="max-height: 38px !important; margin-top: -23px;">
+                            
                                 <label for="FechaInicio"></label>
-                                <b-form-datepicker id="FechaInicio" v-model="inr.fechaInicio" class="mb-2" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
-                            </div>
+                                <b-form-datepicker id="FechaInicio" v-model="inr.fechaInicio" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
+                            
                         </div>
 
                         <div class="form-group w-75">
-                            <div>
+                            
                                 <label for="FechaFin"></label>
-                                <b-form-datepicker id="FechaFin" v-model="inr.fechaFin" class="mb-2" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
-                            </div>
+                                <b-form-datepicker id="FechaFin" v-model="inr.fechaFin" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
+                            
                         </div>
 
                         <div class="form-group w-75">
@@ -94,7 +106,7 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
-                            <button type="submit" id="save" v-on:click="goInicio" variant="primary" name="inr-submit" class="form-control btn btn-primary"> Guardar </button>
+                            <button type="submit" id="save" v-on:click="goInicio()" variant="primary" name="inr-submit" class="form-control btn btn-primary"> Guardar </button>
                         </div>
 					</form>
 
@@ -104,8 +116,150 @@
             </div>
         </div>
 
+        <div class="modal fade" id="modifyINR" tabindex="-1" role="dialog" aria-labelledby="modifyINRTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modificar INR</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
+                    <form id="inr-form-modify" class="d-flex flex-column align-items-center" @reset="onReset" role="form">
+
+                        <div class="form-group w-75">
+                            <input v-model="nameOfINR" type="text" name="nombre" id="nombre" tabindex="1" aria-describedby="nombreHelp" class="text-uppercase form-control" placeholder="Nombre del INR a modificar" value="" required />
+                            <div><small id="nombreHelp" class="form-text text-muted float-left ml-2"> Formato: NOMBRE INR </small></div>
+                        </div>
+                       
+                        <div class="form-group w-75">
+                            <input v-model="inr.nombre" type="text" name="nombre" id="nombre" tabindex="1" aria-describedby="nombreHelp" class="text-uppercase form-control" placeholder="Nuevo nombre" value="" required />
+                            <div><small id="nombreHelp" class="form-text text-muted float-left ml-2"> Formato: NOMBRE INR </small></div>
+                        </div>
+                        
+                        <div class="form-group w-75">
+                            <input v-model="inr.localizacion" type="text" name="localizacion" id="localizacion" tabindex="1" class="text-uppercase form-control" aria-describedby="localizacionHelp" placeholder="Localización" value="" required />
+                            <div><small id="localizacionHelp" class="form-text text-muted float-left ml-2"> Formato: SANTA CRUZ </small></div>
+
+                        </div>
+
+                        <div class="form-group w-75">
+                            <input v-model="inr.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" class="text-uppercase form-control" placeholder="Descripción" value="" required />
+
+                        </div>
+
+                        <div class="form-group w-75">
+
+                            <input v-model="inr.gravedad" list="gravedades" type="text" name="gravedad" id="gravedad" tabindex="2" class="text-uppercase form-control" aria-describedby="gravedadHelp" placeholder="Gravedad" required />
+                            
+                            <!-- <datalist id="gravedades">
+                                <option v-for="grav in gravedades" :key="grav" v-bind:value="grav"> {{ grav }} </option>
+                            </datalist> -->
+                            
+                            <div><small id="gravedadHelp" class="form-text text-muted float-left ml-2"> Opciones: GRAVE, MEDIO, BAJO </small></div>
+
+                        </div>
+
+                        <div class="form-group w-75">
+                            <input v-model="inr.tipo" list="tipos" type="text" name="tipo" id="tipo" tabindex="2" class="text-uppercase form-control" placeholder="Tipo" aria-describedby="tipoHelp" required />
+                            <!-- <datalist id="tipos">
+                                <option v-for="tipo in tipos" :key="tipo" v-bind:value="tipo"> {{ tipo }} </option>
+                            </datalist> -->
+                            <div><small id="tipoHelp" class="form-text text-muted float-left ml-2"> Opciones: SIMULACRO, CASO REAL </small></div>
+
+                        </div>
+
+                        <div class="form-group w-75">
+                            <input v-model="inr.numAfectados" type="number" name="numAfectados" min="0" id="numAfectados" tabindex="2" class="text-uppercase form-control" placeholder="Número de afectados" required />
+                        </div>
+
+                        <div class="form-group w-75">
+                            <input v-model="inr.recursosNecesarios" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                        </div>
+
+                        <div class="form-group w-75">
+                            <input v-model="inr.tipoTerreno" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="text-uppercase form-control" placeholder="Tipo de terreno" required />
+                        </div>
+
+                        <div class="form-group w-75" style="max-height: 38px !important; margin-top: -23px;">
+                            
+                                <label for="FechaInicio"></label>
+                                <b-form-datepicker id="FechaInicio" v-model="inr.fechaInicio" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
+                            
+                        </div>
+
+                        <div class="form-group w-75">
+                            
+                                <label for="FechaFin"></label>
+                                <b-form-datepicker id="FechaFin" v-model="inr.fechaFin" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
+                            
+                        </div>
+
+                        <div class="form-group w-75">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-6 col-sm-offset-3">												
+                                    <button type="reset" class="form-control btn btn-light"> Resetear </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
+                            <button type="submit" id="save" v-on:click="changeDataINR(nameOfINR,{inr})" variant="primary" name="inr-submit-modify" class="form-control btn btn-primary"> Cambiar </button>
+                        </div>
+					</form>
+
+                </div>
+
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="modal fade" id="deleteINR" tabindex="-1" role="dialog" aria-labelledby="deleteINRTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar INR</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="inr-form-modify" class="d-flex flex-column align-items-center" @reset="onReset" role="form">
+
+                        <div class="form-group w-75">
+
+                            <input v-model="deleteINR" list="inrEliminar" type="text" name="nombre" id="nombre" tabindex="1" aria-describedby="nombreHelp" class="text-uppercase form-control" placeholder="Nombre del INR" value="" required />
+                            <datalist id="inrEliminar">
+                                <option v-for="inr in inrs" :key="inr.nombre" v-bind:value="inr.nombre"> {{ inr.nombre }} </option>
+                            </datalist>
+
+                        </div>
+                       
+                        <div class="form-group w-75">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-6 col-sm-offset-3">												
+                                    <button type="reset" class="form-control btn btn-light"> Resetear </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
+                            <button type="submit" v-on:click="deleteAnINR(deleteINR)" variant="primary" name="inr-submit-delete" class="form-control btn btn-primary"> Eliminar </button>
+                        </div>
+					</form>
+
+                </div>
+
+                </div>
+            </div>
+        </div>
+    
 
     <div id=inrWatch v-for="inr in pageOfItems" :key="inr.nombre">
     <button type="button" v-on:click="goINR" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-1 mb-4 ml-5 mr-5" style="width: 90%;"> 
@@ -195,6 +349,8 @@ export default {
             },
             inrs: [],
             pageOfItems: [],
+            nameOfINR: "",
+            deleteINR: "",
             // gravedades: [],
             // tipos: [],
             // gravedad: [],
@@ -221,6 +377,31 @@ export default {
     },
 
     methods: {
+
+        async deleteAnINR(deleteINR){
+
+            await this.axios
+            .delete(URL + `/user/deleteINR/${deleteINR}`)
+            
+            .catch( e => {
+            console.log(e.response);
+            })
+            this.deleteINR = '';
+
+        },
+
+        async changeDataINR(nameOfINR,inr){
+
+            await this.axios
+            .put(URL + `/user/changeDataINR/${nameOfINR}`, { inr })
+            
+            .catch( e => {
+            console.log(e.response);
+            })
+            this.nameOfINR = '';
+            this.inr = {};
+
+        },
         
         onChangePage(pageOfItems) {
 
@@ -255,8 +436,7 @@ export default {
                 .catch(e => {
                 console.log(e.response);
                 });
-            return this.getINRs();
-            
+            //return this.getINRs();
             
         },
 

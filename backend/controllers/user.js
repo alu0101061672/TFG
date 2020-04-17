@@ -128,8 +128,8 @@ async function changeRolToUser(req,res){
     const usu = req.params.usuario;
     const roles = req.body.role;
 
-        console.log(usu);
-        console.log(roles);
+       // console.log(usu);
+        //console.log(roles);
    
         var user = User.findOne({ usuario: usu });
 

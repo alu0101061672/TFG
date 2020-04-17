@@ -19,6 +19,9 @@ api.get('/showinrs', inr.showAll);
 api.post('/inr', inr.dataINR);
 api.get('/getgravedad', inr.getGravedad);
 api.get('/gettipo', inr.getTipo);
+api.put('/changeDataINR/:inr', inr.changeDataINR);
+api.delete('/deleteINR/:inr', inr.deleteINR);
+
 
 
 // api.get('/private', auth, function(req, res) {

@@ -68,10 +68,78 @@ async function getTipo (req,res) {
      
 }
 
+async function changeDataINR(req,res){
+
+    const nameofINR = req.params.inr;
+    const inrs = req.body.inr;
+
+    var inr = INR.findOne({ nombre: nameofINR });
+
+    try{
+        const inrDb = await INR.findByIdAndUpdate( 
+            {_id: (await inr)._id},
+            { 
+            nombre: inrs.inr.nombre,
+            localizacion: inrs.inr.localizacion,
+            descripcion: inrs.inr.descripcion,
+            gravedad: inrs.inr.gravedad,
+            tipo: inrs.inr.tipo,
+            numAfectados: inrs.inr.numAfectados,
+            recursosNecesarios: inrs.inr.recursosNecesarios,
+            tipoTerreno: inrs.inr.tipoTerreno,
+            fechaInicio: inrs.inr.fechaInicio,
+            fechaFin: inrs.inr.fechaFin 
+            }
+        );
+
+        res.json(inrDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+
+}
+
+async function deleteINR(req,res){
+
+    const nameOfINR = req.params.inr;
+
+    var inr = INR.findOne({ nombre: nameOfINR });
+
+
+    try{
+
+        //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
+        const inrDB = await INR.findByIdAndRemove((await inr)._id);
+
+
+        if(!inrDB){
+            return res.status(400).json({
+            mensaje: 'No se encontró el nombre del INR indicado'
+            })
+        }
+        res.json(inrDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+
+}
+
+
+
 module.exports = {
     showAll,
     dataINR,
     getGravedad,
     getTipo,
+    changeDataINR,
+    deleteINR
 
 };
