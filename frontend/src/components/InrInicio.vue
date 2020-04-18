@@ -106,7 +106,8 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
-                            <button type="submit" id="save" v-on:click="goInicio()" variant="primary" name="inr-submit" class="form-control btn btn-primary"> Guardar </button>
+                            <button type="submit" id="guardar" v-on:click="getINRs()" variant="primary" name="inr-submit" class="form-control btn btn-primary"> Guardar </button>
+
                         </div>
 					</form>
 
@@ -186,14 +187,14 @@
                         <div class="form-group w-75" style="max-height: 38px !important; margin-top: -23px;">
                             
                                 <label for="FechaInicio"></label>
-                                <b-form-datepicker id="FechaInicio" v-model="inr.fechaInicio" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
+                                <b-form-datepicker id="FechaInicio" v-model="inr.fechaInicio" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}" required></b-form-datepicker>
                             
                         </div>
 
                         <div class="form-group w-75">
                             
                                 <label for="FechaFin"></label>
-                                <b-form-datepicker id="FechaFin" v-model="inr.fechaFin" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}"></b-form-datepicker>
+                                <b-form-datepicker id="FechaFin" v-model="inr.fechaFin" today-button reset-button close-button locale="es" :date-format-options="{ year: 'numeric', month: 'long', day: '2-digit'}" required></b-form-datepicker>
                             
                         </div>
 
@@ -207,7 +208,7 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
-                            <button type="submit" id="save" v-on:click="changeDataINR(nameOfINR,{inr})" variant="primary" name="inr-submit-modify" class="form-control btn btn-primary"> Cambiar </button>
+                            <button type="submit" id="cambiar" v-on:click="changeDataINR(nameOfINR,{inr})" variant="primary" name="inr-submit-modify" class="form-control btn btn-primary"> Cambiar </button>
                         </div>
 					</form>
 
@@ -250,7 +251,7 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
-                            <button type="submit" v-on:click="deleteAnINR(deleteINR)" variant="primary" name="inr-submit-delete" class="form-control btn btn-primary"> Eliminar </button>
+                            <button type="submit" id="eliminar" v-on:click="deleteAnINR(deleteINR)" variant="primary" name="inr-submit-delete" class="form-control btn btn-primary"> Eliminar </button>
                         </div>
 					</form>
 
@@ -411,11 +412,12 @@ export default {
 
         },
 
-        goInicio: function () {
+        goInicio() {
 		
             $("#cerrar").click();
             $('.modal-backdrop').remove();
             location.reload();
+            this.inr = {};
             
         },
 
@@ -436,7 +438,6 @@ export default {
                 .catch(e => {
                 console.log(e.response);
                 });
-            //return this.getINRs();
             
         },
 

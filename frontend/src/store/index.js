@@ -9,10 +9,12 @@ export default new Vuex.Store({
     token: '',
     email: '',
     role: '',
+    usuario: '',
 },
 mutations: {
     islogIn(state) {
         state.session_out = false;
+
     },
     isLogOut(state) {
         state.session_out = true;
@@ -27,6 +29,10 @@ mutations: {
     setRole(state, newRole) {
         state.role = newRole;
     },
+    setUsuario(state, newUsuario) {
+        console.log("AFSFA" + newUsuario);
+        state.usuario = newUsuario;
+    },
 },
 getters: {
     getToken(state) {
@@ -40,6 +46,9 @@ getters: {
     },
     getRole(state) {
         return state.role;
+    },
+    getUsuario(state) {
+        return state.usuario;
     },
 },
 actions: {},

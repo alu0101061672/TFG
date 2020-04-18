@@ -240,12 +240,14 @@ export default {
         .post(URL + "/user/signin", this.userLogin)
         .then(res => {
           if (res.data.token) {
-            console.log(res.data);
+            console.log({...res.data});
             this.$store.commit("islogIn");
             this.$store.commit("setEmail", res.data.email);
 			this.$store.commit("setToken", res.data.token);
 			this.$store.commit("setRole", res.data.role);
-			//console.log(this.$store.getters.getRole);
+			//console.log("HOLAAA " + res.data.usuario);
+			this.$store.commit("setUsuario", res.data.usuario);
+			//showUser(res.data.email);
 			this.$router.push("/inicio");
 			
           }
@@ -254,8 +256,26 @@ export default {
           console.log(err.response);
           //onReset1();
           this.$store.commit("isLogOut");
-        });
-    },
+		});
+	},
+
+	async showUser(correo){
+		console.log("CORREO " + correo);
+	await this.axios
+		.get(`http://localhost:4000/user/showuser/${correo}`)
+		.then(res => {
+			console.log({...res.data});
+			console.log("HOLAAA " + res.data.usuario);
+			this.$store.commit("setUsuario", res.data.usuario);
+				
+			
+		})
+		.catch(err => {
+			console.log(err.response);
+		});
+
+
+	},
     onReset1(evt) {
       evt.preventDefault();
       // Reset our form values

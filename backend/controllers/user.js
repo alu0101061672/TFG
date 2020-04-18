@@ -8,6 +8,7 @@ async function signUp(req, res) {
         usuario: req.body.usuario,
         password: req.body.password,
         confirmpassword: req.body.confirmpassword,
+        role: req.body.role
     });
 
 
@@ -36,11 +37,16 @@ async function signUp(req, res) {
 
 }
 
-function signIn(req, res) {
+async function signIn(req, res) {
 
+    // var usua = showUser(req.body.email);
+    // console.log(usua);
+    var user = await User.findOne({ email: req.body.email });
+    var userDB = await User.findById(user._id);
+    
     User.findOne({ email: req.body.email })
         .select('password')
-        .then(user => {
+        .then((user) => {
             if (!user)
                 return res.status(404).send({
                     message: 'Este usuario no está en la BBDD',
@@ -63,7 +69,8 @@ function signIn(req, res) {
                     changeLastSignIn.then(response =>
 
                             console.log(`Last Login:  ${response.lastLogin}`)
-                    );
+                    ); 
+                                        
                     res.status(200).send({
                         message: 'Te has logueado correctamente',
                         token: services.createToken(
@@ -71,7 +78,8 @@ function signIn(req, res) {
                             req.originalUrl,
                         ),
                         email: req.body.email,
-                        role: user.role
+                        role: user.role,
+                        usuario: userDB.usuario,
                     });
                 } else {
                     res.status(500).send({
@@ -115,6 +123,16 @@ async function showAll (req,res) {
     })    
 }
 
+async function showUser (req,res) {
+
+    var user = await User.findOne({ email: req });
+
+    var userDB = await User.findById(user._id);
+ console.log(userDB);
+   // res.send(userDB);
+
+}
+
 async function getRole (req,res) {
 
     const roles = await User.distinct("role");
@@ -131,7 +149,7 @@ async function changeRolToUser(req,res){
        // console.log(usu);
         //console.log(roles);
    
-        var user = User.findOne({ usuario: usu });
+    var user = User.findOne({ usuario: usu });
 
     try{
         const userDb = await User.findByIdAndUpdate( 
@@ -139,7 +157,6 @@ async function changeRolToUser(req,res){
             {role: roles},
         );
  
-
         res.json(userDb);
 
     } catch (error) {
@@ -186,6 +203,7 @@ module.exports = {
     showAll,
     deleteUserByUsuario,
     getRole,
-    changeRolToUser
+    changeRolToUser,
+    showUser
 
 };

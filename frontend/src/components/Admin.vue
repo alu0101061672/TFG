@@ -61,6 +61,80 @@
         </div>
     </div>
 
+            <div class="d-flex flex-column mt-5">
+
+            <div class="d-flex align-items-center" style="width: 800px;">
+
+                 <button type="button" data-toggle="modal" data-target="#addUser" class="d-flex btn bg-light border border-dark mr-2" style="width:; height:;">
+                    <div class="d-flex ml-1"> Añadir un usuario nuevo </div>
+                </button>
+
+                        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Añadir nuevo usuario" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir nuevo usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="userAdd-form" class="d-flex flex-column align-items-center" @submit="onSubmit" @reset="onReset" method="post" role="form">
+
+                        <div class="form-group w-75">
+							<input v-model="userRegister.usuario" type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nombre de usuario" value="" pattern="^[A-Za-z0-9_]{1,15}$" required />
+                        </div>
+                        
+                        <div class="form-group w-75">
+							<input v-model="userRegister.email" type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="" pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                        </div>
+
+                        <div class="form-group w-75">
+                            <input v-model="userRegister.role" type="text" name="rolUsuario" id="rolUsuario" tabindex="1" class="form-control" placeholder="Rol del usuario" value="" required />
+
+                        </div>
+
+                        <div class="form-group w-75">
+							<input v-model="userRegister.password" type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
+                        </div>
+
+                        <div class="form-group w-75">
+							<input v-model="userRegister.confirmpassword" type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar contraseña" required />
+                        </div>
+
+                        <div class="form-group w-75">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-6 col-sm-offset-3">												
+                                    <button type="reset" class="form-control btn btn-light"> Resetear </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
+                            <button type="submit" v-on:click="goAdmin" class="form-control btn btn-register" variant="primary" id="addUser" name="addUser-submit"> Añadir </button>    
+
+                        </div>
+					</form>
+
+                </div>
+
+                </div>
+            </div>
+        </div>
+                
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
 
  </div>
     
@@ -76,6 +150,13 @@ export default {
             usudel: [],
             usurol: [],
             rolChosen: [],
+            userRegister: {
+                email: "",
+                password: "",
+                usuario: "",
+                confirmpassword: "",
+                role: ""
+            },
 
 
         };
@@ -96,6 +177,56 @@ export default {
         },
     },
     methods: {
+
+        goAdmin() {
+		
+            $("#cerrar").click();
+            $('.modal-backdrop').remove();
+            location.reload();
+            this.userRegister = {};
+            
+        },
+
+        onSubmit(evt) {
+            console.log("holaaa");
+            evt.preventDefault();
+            if(this.userRegister.password === this.userRegister.confirmpassword){
+            this.axios
+                .post(URL + "/user/signup", this.userRegister)
+                .then(res => {
+                console.log(res.data);
+                })
+                .catch(e => {
+                console.log(e.response);
+                });
+            }else {
+                alert("Las contraseñas no coinciden");
+                console.log("Contraseñas no coinciden")
+            }
+
+        },
+        onReset(evt) {
+            evt.preventDefault();
+            // Reset our form values
+            this.userRegister.email = "";
+            this.userRegister.password = "";
+            this.userRegister.confirmpassword = "";
+            this.userRegister.usuario = "";
+            this.userRegister.role = "";
+         
+        },  
+
+        // async addUser(usuadd){
+
+        //     await this.axios
+        //     .post(`http://localhost:4000/user/signup`)
+            
+        //     .catch( e => {
+        //     console.log(e.response);
+        //     })
+        //     this.usuadd = '';
+
+        // },
 
         async eliminarUsuario(usudel){
 

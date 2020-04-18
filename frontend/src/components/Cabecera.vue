@@ -16,14 +16,15 @@
           </div>
 
           <div class="p-2 bd-highlight" style="margin-right:-620px;">
-
+<!-- 
             <img src="../assets/icono_perfil.png" alt="perfil" class="float-left" 
-              height="55" width="55"/>
+              height="55" width="55"/> -->
+            <b-avatar variant="info" text="BV"></b-avatar>
 
-            <div class="dropdown mr-5 float-right ml-3 mt-2" style="height:36px;">
+            <div class="dropdown mr-5 float-right ml-2" style="height:36px;">
 
               <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Mi perfil
+                {{ perfil }}
               </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
@@ -50,11 +51,20 @@
 <script>
 export default {
     name: 'Inicio',
+    data() {
+      return {
+        sesion: this.$store.getters.getSession,
+        perfil: this.$store.getters.getUsuario,
+
+      };
+
+    },
 
     methods: {
         
         logOut: function () {
-		
+          
+          this.$store.commit("isLogOut");
           this.$router.push("/");
 
         }

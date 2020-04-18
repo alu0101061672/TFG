@@ -24,8 +24,8 @@ const inrSchema = new Schema({
   numAfectados: {type: Number, required: [true, 'Número de afectados necesario']},
   recursosNecesarios: {type: String, required: [true, 'Recursos necesarios obligatorio'] },
   tipoTerreno: {type: String, required: [true, 'Tipo de terreno obligatorio'] },
-  fechaInicio:{type: Date, default: Date.now},
-  fechaFin:{type: Date},
+  fechaInicio:{type: Date, default: Date.now, required: [true, 'Fecha de inicio del INR obligatorio']},
+  fechaFin:{type: Date, required: [true, 'Fecha de finalización del INR obligatorio']},
   
 });
 
