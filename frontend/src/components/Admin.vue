@@ -171,7 +171,6 @@ export default {
     methods: {
 
         onSubmit(evt) {
-            console.log("holaaa");
             evt.preventDefault();
             if(this.userRegister.password === this.userRegister.confirmpassword){
             this.axios

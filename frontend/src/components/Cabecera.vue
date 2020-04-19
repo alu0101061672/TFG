@@ -23,15 +23,14 @@
 
             <div class="dropdown mr-5 float-right ml-2" style="height:36px;">
 
-              <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white;" type="button" id="usuariosActivos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ perfil }}
               </button>
 
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+              <div class="dropdown-menu"  aria-labelledby="usuariosActivos">
+                <h6 class="dropdown-header">Usuarios activos</h6>
+                <a class="dropdown-item" v-for="usu in usuariosActivos" :key="usu" v-bind:value="usu"> {{ usu }} </a>
+              </div>
 
             </div>
 
@@ -55,12 +54,47 @@ export default {
       return {
         sesion: this.$store.getters.getSession,
         perfil: this.$store.getters.getUsuario,
+        usuarios: [],
+        activeUsers: [],
 
       };
 
     },
 
+    async mounted (){
+        await this.getDataUser();
+    },
+
     methods: {
+
+        usuariosActivos(){
+
+          usuarios.forEach(user => {
+            if(this.$store.getters.getSession == false)
+              activeUsers.push(user);
+          });
+
+        },
+
+        async getDataUser() {
+            await this.axios
+            .get("http://localhost:4000/user/showall")
+            .then(res => {
+
+              this.usuarios = res.data;
+              console.log(this.usuarios);
+
+            })
+            .catch(err => {
+              console.log(err);
+            });
+
+            this.usuarios.forEach(user => {
+             if(this.$store.getters.getSession == false)
+              this.activeUsers.push(user);
+            });
+
+        },
         
         logOut: function () {
           

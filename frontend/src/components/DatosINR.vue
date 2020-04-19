@@ -4,7 +4,11 @@
       <div class="d-inline-flex flex-row float-left ml-3"> 
 
         <div class="text-dark "><u>Datos INR</u></div>
-        <div class="bd-highlight border bg-success ml-3 mt-1" style="height: 15px; width: 45px"></div>
+        
+        <div v-if="inr.gravedad === 'BAJO'" class="bd-highlight border bg-success ml-3 mt-1" style="height: 15px; width: 45px"></div>
+        <div v-if="inr.gravedad === 'MEDIO'" class="bd-highlight border bg-success ml-3 mt-1" style="height: 15px; width: 45px"></div>
+        <div v-if="inr.gravedad === 'GRAVE'" class="bd-highlight border bg-success ml-3 mt-1" style="height: 15px; width: 45px"></div>
+
 
       </div>
 
@@ -13,7 +17,7 @@
       <div class="d-inline-flex flex-row float-left ml-3"> 
           
           <div class="text-dark"> Descripción: </div> 
-          <div class="text-dark pl-1"> Breve descripción </div>
+          <div class="text-dark pl-1"> {{ inr.descripcion }} </div>
 
       </div>
 
@@ -22,7 +26,7 @@
       <div class="d-inline-flex flex-row float-left ml-3"> 
           
           <div class="text-dark"> Fecha de inicio: </div> 
-          <div class="text-dark pl-1 pr-1"> Fecha </div> |
+          <div class="text-dark pl-1 pr-1"> {{ inr.fechaInicio }} </div> |
           <div><img src="../assets/date.svg" alt="date" class=" ml-1 img-responsive img-fluid" 
                 height="20" width="20"/>
           </div> 
@@ -34,7 +38,7 @@
       <div class="d-inline-flex flex-row float-left ml-3"> 
           
           <div class="text-dark"> Fecha de finalización: </div> 
-          <div class="text-dark pl-1 pr-1"> Fecha </div> | 
+          <div class="text-dark pl-1 pr-1"> {{ inr.fechaFin }} </div> | 
           <div><img src="../assets/date.svg" alt="date" class=" ml-1 img-responsive img-fluid" 
                 height="20" width="20"/>
           </div>
@@ -46,7 +50,7 @@
       <div class="d-inline-flex flex-row float-left ml-3"> 
           
           <div class="text-dark"> Zona afectada: </div> 
-          <div class="text-dark pl-1"> Zona </div> 
+          <div class="text-dark pl-1"> {{ inr.localizacion }} </div> 
 
       </div>
 
@@ -55,7 +59,7 @@
       <div class="d-inline-flex flex-row float-left ml-3"> 
           
           <div class="text-dark"> Número de afectados: </div> 
-          <div class="text-dark pl-1"> Número personas </div> 
+          <div class="text-dark pl-1"> {{ inr.numAfectados }} </div> 
 
       </div>
 
@@ -115,6 +119,14 @@
 <script>
 
 export default {
-  name: 'DatosINR'
+  name: 'DatosINR',
+    data() {
+      return {
+        inr: this.$store.getters.getINR,
+       
+      };
+
+    },
+
 }
 </script>

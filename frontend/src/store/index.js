@@ -10,6 +10,18 @@ export default new Vuex.Store({
     email: '',
     role: '',
     usuario: '',
+    inr: {
+        nombre: "",
+        localizacion: "",
+        descripcion: "",
+        gravedad: "",
+        tipo: "",
+        numAfectados: "",
+        recursosNecesarios: [],
+        tipoTerreno: [], 
+        fechaInicio: '',
+        fechaFin: '',
+    },
 },
 mutations: {
     islogIn(state) {
@@ -30,9 +42,11 @@ mutations: {
         state.role = newRole;
     },
     setUsuario(state, newUsuario) {
-        console.log("AFSFA" + newUsuario);
         state.usuario = newUsuario;
     },
+    setINR(state, newINR){
+        state.inr = newINR;
+    }
 },
 getters: {
     getToken(state) {
@@ -50,6 +64,9 @@ getters: {
     getUsuario(state) {
         return state.usuario;
     },
+    getINR(state){
+        return state.inr;
+    }
 },
 actions: {},
 modules: {},

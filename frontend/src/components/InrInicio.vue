@@ -263,7 +263,7 @@
     
 
     <div id=inrWatch v-for="inr in pageOfItems" :key="inr.nombre">
-    <button type="button" v-on:click="goINR" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-1 mb-4 ml-5 mr-5" style="width: 90%;"> 
+    <button type="button" v-on:click="goINR(inr)" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-1 mb-4 ml-5 mr-5" style="width: 90%;"> 
 
             <div class="p-2 flex-row bd-highlight" style="min-width: 250px;text-align: left;">
 
@@ -421,10 +421,11 @@ export default {
             
         },
 
-        goINR: function () {
-		
-            this.$router.push("/documentos");	    
+        goINR(inr) {
             
+            this.$store.commit("setINR", inr);
+            this.$router.push("/documentos");
+	    
         },
 
         onSubmit(evt) {
@@ -433,8 +434,8 @@ export default {
             this.axios
                 .post(URL + "/user/inr", this.inr)
                 .then(res => {
-                console.log(res.data);
-                })
+                    console.log(res.data);
+                    })
                 .catch(e => {
                 console.log(e.response);
                 });
