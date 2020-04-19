@@ -59,9 +59,8 @@
             </div>
 
         </div>
-    </div>
 
-            <div class="d-flex flex-column mt-5">
+    <div class="d-flex flex-column mt-5">
 
             <div class="d-flex align-items-center" style="width: 800px;">
 
@@ -69,9 +68,9 @@
                     <div class="d-flex ml-1"> Añadir un usuario nuevo </div>
                 </button>
 
-                        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Añadir nuevo usuario" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Añadir nuevo usuario" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Añadir nuevo usuario</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -113,30 +112,23 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="form-control btn btn-secondary" data-dismiss="modal" id="cerrar" > Cancelar </button>
-                            <button type="submit" v-on:click="goAdmin" class="form-control btn btn-register" variant="primary" id="addUser" name="addUser-submit"> Añadir </button>    
+                            <button type="submit" class="form-control btn btn-register" variant="primary" id="addUser" name="addUser-submit"> Añadir </button>    
 
                         </div>
 					</form>
 
                 </div>
-
-                </div>
             </div>
+         </div>
         </div>
                 
-
-
-
-                </div>
-
-            </div>
-
-        </div>
     </div>
+</div>
 
 
+</div>
 
- </div>
+</div>
     
 </template>
 
@@ -178,21 +170,12 @@ export default {
     },
     methods: {
 
-        goAdmin() {
-		
-            $("#cerrar").click();
-            $('.modal-backdrop').remove();
-            location.reload();
-            this.userRegister = {};
-            
-        },
-
         onSubmit(evt) {
             console.log("holaaa");
             evt.preventDefault();
             if(this.userRegister.password === this.userRegister.confirmpassword){
             this.axios
-                .post(URL + "/user/signup", this.userRegister)
+                .post("http://localhost:4000/user/signup", this.userRegister)
                 .then(res => {
                 console.log(res.data);
                 })
@@ -203,6 +186,11 @@ export default {
                 alert("Las contraseñas no coinciden");
                 console.log("Contraseñas no coinciden")
             }
+
+            $("#cerrar").click();
+            $('.modal-backdrop').remove();
+            location.reload();
+            this.userRegister = {};
 
         },
         onReset(evt) {
