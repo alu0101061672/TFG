@@ -12,11 +12,11 @@
 
         <div class="p-2 flex-row bd-highlight">
 
-            <div class="d-inline-flex flex-column bd-highlight border border-dark" style="width: 500px; height:310px;">
-            </div>
-
-            <div class="flex-column bd-highlight border border-dark" style="width: 500px; height:310px;">
-              <DatosINR />
+            <div class="d-inline-flex flex-column bd-highlight border-dark border-top" style="width: 500px;">
+              <!-- <div class="d-inline-flex flex-column bd-highlight border-dark border-left" style="height: 273px;">
+              <div class="d-inline-flex flex-column bd-highlight border-dark border-right" style="height: 273px;">
+                --><DatosINR /> 
+               <!-- </div></div> -->
             </div>
 
         </div>

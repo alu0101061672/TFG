@@ -135,7 +135,7 @@ async function showUser (req,res) {
 
 async function getRole (req,res) {
 
-    const roles = await User.distinct("role");
+    const roles = ['ADMIN', 'USER'];
 
     res.status(200).json(roles);
      

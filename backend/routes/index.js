@@ -20,6 +20,8 @@ api.get('/showinrs', inr.showAll);
 api.post('/inr', inr.dataINR);
 api.get('/getgravedad', inr.getGravedad);
 api.get('/gettipo', inr.getTipo);
+api.get('/getterreno', inr.getTipoTerreno);
+api.get('/getrecursos', inr.getRecursos);
 api.put('/changeDataINR/:inr', inr.changeDataINR);
 api.delete('/deleteINR/:inr', inr.deleteINR);
 

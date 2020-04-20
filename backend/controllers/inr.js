@@ -54,7 +54,7 @@ async function dataINR (req,res) {
 
 async function getGravedad (req,res) {
 
-    const gravedades = await INR.distinct("gravedad");
+    const gravedades = ['GRAVE', 'MEDIO', 'BAJO'];
 
     res.status(200).json(gravedades);
      
@@ -62,9 +62,25 @@ async function getGravedad (req,res) {
 
 async function getTipo (req,res) {
 
-    const tipos = await INR.distinct("tipo");
+    const tipos = ['SIMULACRO', 'CASO REAL'];
 
     res.status(200).json(tipos);
+     
+}
+
+async function getTipoTerreno (req,res) {
+
+    const terrenos = ['TERRESTRE', 'ACUÁTICO', 'AÉREO'];
+
+    res.status(200).json(terrenos);
+     
+}
+
+function getRecursos (req,res) {
+
+    const recursos = ['POLICIA LOCAL', 'POLICIA NACIONAL', 'GUARDIA CIVIL', 'AMBULANCIA', 'BOMBEROS', 'GES' ];
+
+    res.status(200).json(recursos);
      
 }
 
@@ -140,6 +156,8 @@ module.exports = {
     getGravedad,
     getTipo,
     changeDataINR,
-    deleteINR
+    deleteINR,
+    getTipoTerreno,
+    getRecursos
 
 };

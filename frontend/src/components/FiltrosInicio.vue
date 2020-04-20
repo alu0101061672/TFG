@@ -37,7 +37,6 @@
             <div class="input-group-text bg-white border-0">
               <input type="checkbox" aria-label="Gravedad">
             </div>
-          
               <div class="bd-highlight" >
                 Simulacros
               </div>

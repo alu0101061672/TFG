@@ -1,5 +1,60 @@
 <template>
 <div>
+    <div class="d-flex flex-row bd-highlight align-items-center pl-5 float-right" style="max-width:750px; margin-top: -69px; margin-right: 180px;">
+          
+          <div class="p-2 bd-highlight ml-4 font-weight-bold">
+              <h5> Filtros </h5>
+          </div>
+          
+          <div class="bd-highlight mb-2 ml-3">
+            <div class="dropdown float-right">
+
+              <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Fecha
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                <a class="dropdown-item" href="#"> Comienzan antes </a>
+                <a class="dropdown-item" href="#"> Comienzan más tarde </a>               
+              </div>
+            
+            </div>
+          </div>
+          
+          <div class="bd-highlight mb-2 ml-3">
+            <div class="dropdown float-right">
+
+              <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Gravedad
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                <a class="dropdown-item" href="#"> Más grave </a>
+                <a class="dropdown-item" href="#"> Menos grave </a>               
+              </div>
+            
+            </div>
+          </div>
+
+          <div class="input-group-prepend mb-2 ml-3">
+            <div class="input-group-text bg-white border-0">
+              <input v-on:click="getSimulacros" type="checkbox" aria-label="Gravedad">
+            </div>
+              <div class="bd-highlight" >
+                Simulacros
+              </div>
+          </div>
+
+          <div class="input-group-prepend mb-2 ml-3">
+            <div class="input-group-text bg-white border-0">
+              <input type="checkbox" aria-label="Gravedad">
+            </div>
+          
+              <div class="bd-highlight">
+                Casos reales
+              </div>
+          </div>
+
+    </div>
+    
     <div class="p-2 d-flex bd-highlight justify-content-end mr-5" style="height:50px;" v-if="rol === 'ADMIN'">
 
         <button type="button" data-toggle="modal" data-target="#newINR" class="d-flex btn bg-light border border-dark mr-2" style="width:180px; height:36px;">
@@ -53,20 +108,18 @@
 
                             <input v-model="inr.gravedad" list="gravedades" type="text" name="gravedad" id="gravedad" tabindex="2" class="text-uppercase form-control" aria-describedby="gravedadHelp" placeholder="Gravedad" required />
                             
-                            <!-- <datalist id="gravedades">
+                            <datalist id="gravedades">
                                 <option v-for="grav in gravedades" :key="grav" v-bind:value="grav"> {{ grav }} </option>
-                            </datalist> -->
+                            </datalist> 
                             
-                            <div><small id="gravedadHelp" class="form-text text-muted float-left ml-2"> Opciones: GRAVE, MEDIO, BAJO </small></div>
-
                         </div>
 
                         <div class="form-group w-75">
                             <input v-model="inr.tipo" list="tipos" type="text" name="tipo" id="tipo" tabindex="2" class="text-uppercase form-control" placeholder="Tipo" aria-describedby="tipoHelp" required />
-                            <!-- <datalist id="tipos">
+                            
+                            <datalist id="tipos">
                                 <option v-for="tipo in tipos" :key="tipo" v-bind:value="tipo"> {{ tipo }} </option>
-                            </datalist> -->
-                            <div><small id="tipoHelp" class="form-text text-muted float-left ml-2"> Opciones: SIMULACRO, CASO REAL </small></div>
+                            </datalist> 
 
                         </div>
 
@@ -75,11 +128,21 @@
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.recursosNecesarios" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <input v-model="inr.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            
+                            <datalist id="recursos">
+                                <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
+                            </datalist>
+
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.tipoTerreno" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="text-uppercase form-control" placeholder="Tipo de terreno" required />
+                            <input v-model="inr.tipoTerreno" list="terrenos" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="text-uppercase form-control" placeholder="Tipo de terreno" required />
+                        
+                            <datalist id="terrenos">
+                                <option v-for="terreno in terrenos" :key="terreno" v-bind:value="terreno"> {{ terreno }} </option>
+                            </datalist>
+
                         </div>
 
                         <div class="form-group w-75" style="max-height: 38px !important; margin-top: -23px;">
@@ -177,11 +240,11 @@
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.recursosNecesarios" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <input v-model="inr.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.tipoTerreno" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="text-uppercase form-control" placeholder="Tipo de terreno" required />
+                            <input v-model="inr.tipoTerreno" list="terrenos" type="text" name="tipoTerreno" id="tipoTerreno" tabindex="2" class="text-uppercase form-control" placeholder="Tipo de terreno" required />
                         </div>
 
                         <div class="form-group w-75" style="max-height: 38px !important; margin-top: -23px;">
@@ -352,16 +415,19 @@ export default {
             pageOfItems: [],
             nameOfINR: "",
             deleteINR: "",
-            // gravedades: [],
-            // tipos: [],
-            // gravedad: [],
-            // tipo: [],
+            gravedades: [],
+            tipos: [],
+            recursos: [],
+            terrenos: [],
+            
         };
     },
     async mounted (){
         await this.getINRs();
-        // await this.getGravedades();
-        // await this.getTipos();
+        await this.getGravedades();
+        await this.getTipos();
+        await this.getRecursos();
+        await this.getTerrenos();
     },
     watch: {
 
@@ -497,6 +563,34 @@ export default {
 
                 this.tipos = res.data;
                 console.log(this.tipos);
+
+            })
+            .catch(err => {
+            console.log(err);
+            });
+        },
+
+        async getRecursos(){
+            await this.axios
+            .get(URL + "/user/getrecursos")
+            .then(res => {
+
+                this.recursos = res.data;
+                console.log(this.recursos);
+
+            })
+            .catch(err => {
+            console.log(err);
+            });
+        },
+
+        async getTerrenos(){
+            await this.axios
+            .get(URL + "/user/getterreno")
+            .then(res => {
+
+                this.terrenos = res.data;
+                console.log(this.terrenos);
 
             })
             .catch(err => {

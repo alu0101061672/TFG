@@ -2,8 +2,8 @@
   <div class="inicio">
       
     <Cabecera/>
-    <div class="d-inline-flex mt-3 mb-3">
-      <div class="d-flex flex-row bd-highlight align-items-center" style="max-width:790px;">
+    <div class="d-flex justify-content-center mt-3 mb-3 " style="max-width:500px;">
+      <div class="d-flex flex-row bd-highlight align-items-center" >
             
           <div class="p-2 bd-highlight font-weight-bold" style="color:black;">
               
@@ -11,7 +11,7 @@
            </div>
        </div>
      
-    <FiltrosInicio class="mt-2" />
+    <!-- <FiltrosInicio class="mt-2" /> -->
     </div>
 
     <InrInicio />
