@@ -36,7 +36,7 @@
 
           <div class="input-group-prepend mb-2 ml-3">
             <div class="input-group-text bg-white border-0">
-              <input type="checkbox" aria-label="Gravedad">
+              <input v-on:click="getSimulacros()" v-model="checked" type="checkbox" id="checkbox" aria-label="Simulacros">
             </div>
               <div class="bd-highlight" >
                 Simulacros
@@ -45,9 +45,8 @@
 
           <div class="input-group-prepend mb-2 ml-3">
             <div class="input-group-text bg-white border-0">
-              <input type="checkbox" aria-label="Gravedad">
+              <input type="checkbox" aria-label="Casos reales" id="checkbox2" v-on:click="getCasosReales()" v-model="checked2">
             </div>
-          
               <div class="bd-highlight">
                 Casos reales
               </div>
@@ -384,7 +383,10 @@
     </div>
 
     <div class="card-footer bg-transparent border-0 mb-3 pb-0 pt-3">
-            <jw-pagination :items="inrs" @changePage="onChangePage"></jw-pagination>
+            <jw-pagination v-if='showINRs === "normal"' :items="inrs" @changePage="onChangePage"></jw-pagination>
+            <jw-pagination v-if='showINRs === "simulacros"' :items="simulacros" @changePage="onChangePage"></jw-pagination>
+            <jw-pagination v-if='showINRs === "casosReales"' :items="casosReales" @changePage="onChangePage"></jw-pagination>
+
     </div>
 
 </div>
@@ -419,6 +421,11 @@ export default {
             tipos: [],
             recursos: [],
             terrenos: [],
+            showINRs: "",
+            simulacros: [],
+            checked: "",
+            casosReales: [],
+            checked2: "",
             
         };
     },
@@ -529,6 +536,8 @@ export default {
         },
 
         async getINRs(){
+
+            this.showINRs = "normal";
             await this.axios
             .get("http://localhost:4000/user/showinrs")
             .then(res => {
@@ -553,6 +562,46 @@ export default {
             console.log(err);
             });
         },
+
+        getSimulacros(){
+
+         if(this.checked === false || this.checked === ""){
+
+            this.showINRs = "simulacros";
+
+            this.inrs.forEach(element => {
+
+                if (element.tipo === "SIMULACRO" && !(this.simulacros.includes(element))){
+                    this.simulacros.push(element);
+                }
+
+            });
+         }else {
+            this.showINRs = "normal";
+
+         }
+
+        },  
+
+        getCasosReales(){
+
+         if(this.checked2 === false || this.checked2 === ""){
+
+            this.showINRs = "casosReales";
+
+            this.inrs.forEach(element => {
+
+                if (element.tipo === "CASO REAL" && !(this.casosReales.includes(element))){
+                    this.casosReales.push(element);
+                }
+
+            });
+         }else {
+            this.showINRs = "normal";
+
+         }
+
+        },  
 
         async getTipos(){
             await this.axios
