@@ -8,14 +8,15 @@
     </div>
 
     <div>
-      <div class="bg-light d-inline-flex bd-highlight ml-5 mr-5"> 
+      <div class="d-inline-flex bd-highlight ml-5 mr-5"> 
 
         <div class="p-2 flex-row bd-highlight">
 
             <div class="d-inline-flex flex-column bd-highlight border-dark border-top" style="width: 500px;">
               <!-- <div class="d-inline-flex flex-column bd-highlight border-dark border-left" style="height: 273px;">
               <div class="d-inline-flex flex-column bd-highlight border-dark border-right" style="height: 273px;">
-                --><DatosINR /> 
+                -->
+              <DatosINR /> 
                <!-- </div></div> -->
             </div>
 
@@ -46,15 +47,46 @@
               </div> -->
           </div>
 
-          <div class="float-right mr-4">
+          <div class="float-right mr-4" style="margin-top: -70px;">
           
-            <img src="../assets/añadirDocumento.svg" alt="añadir documento nuevo" class="img-responsive img-fluid" style="margin-top: -120px; margin-right: 145px;"
+            <button type="button" data-toggle="modal" data-target="#addDocument" class="d-flex btn bg-light border border-dark mr-2" style="width:190px; height:36px;">
+               <img src="../assets/añadirDocumento.svg" alt="añadir documento nuevo" class="img-responsive img-fluid" 
               height="25" width="25"/>
-            <div class="ml-3" style="margin-top: -82px;"> Añadir documento </div>
+              <div class="ml-2"> Añadir documento </div>
+            </button>
+
+            <div class="modal fade" id="addDocument" tabindex="-1" role="dialog" aria-labelledby="Añadir un documento" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir un documento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="documento-form" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
+                       
+                        <b-form-file v-model="file" class="mt-3 mb-3" plain></b-form-file>
+                        <!-- <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div> -->
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
+                            <button type="button" id="guardar" variant="primary" name="inr-submit" class="btn btn-primary" style="width: 90px;"> Añadir </button>
+
+                        </div>
+					</form>
+
+                </div>
+
+                </div>
+            </div>
+        </div>
 
           </div>
 
-          <div class="float-right mr-4" style="margin-top: -15px;">
+          <!-- <div class="float-right mr-4" style="margin-top: -15px;">
             <div class="row">
               <form id="custom-search-form" class="form-search form-horizontal pull-right" >
                   <div class="input-append">
@@ -63,7 +95,7 @@
                   </div>
               </form>
               </div>
-          </div>
+          </div> -->
 
           <hr style="margin-top: 350px; height: 1px; width: 1000px;
             background: -moz-radial-gradient(center center, circle, black, white); 
@@ -110,6 +142,11 @@ export default {
     Cabecera,
     Navegacion, 
     DatosINR
-  }
+  },
+  data() {
+      return {
+        file: null,
+      }
+    }
 }
 </script>

@@ -36,7 +36,7 @@
 
           <div class="input-group-prepend mb-2 ml-3">
             <div class="input-group-text bg-white border-0">
-              <input v-on:click="getSimulacros" type="checkbox" aria-label="Gravedad">
+              <input type="checkbox" aria-label="Gravedad">
             </div>
               <div class="bd-highlight" >
                 Simulacros
@@ -365,7 +365,7 @@
 
                 <div class="flex-column bd-highlight">
                 
-                    Número de afectados: {{inr.numAfectados}}
+                    Número de afectados: {{inr.numAfectados}}, Tipo: {{inr.tipo}}
 
                 </div>
 
@@ -534,7 +534,6 @@ export default {
             .then(res => {
 
             this.inrs = res.data;
-            console.log(this.inrs);
 
             })
             .catch(err => {
@@ -548,7 +547,6 @@ export default {
             .then(res => {
 
                 this.gravedades = res.data;
-                console.log(this.gravedades);
 
             })
             .catch(err => {
@@ -562,7 +560,6 @@ export default {
             .then(res => {
 
                 this.tipos = res.data;
-                console.log(this.tipos);
 
             })
             .catch(err => {
@@ -576,7 +573,6 @@ export default {
             .then(res => {
 
                 this.recursos = res.data;
-                console.log(this.recursos);
 
             })
             .catch(err => {
@@ -590,7 +586,6 @@ export default {
             .then(res => {
 
                 this.terrenos = res.data;
-                console.log(this.terrenos);
 
             })
             .catch(err => {

@@ -8,7 +8,7 @@
     </div>
 
     <div>
-      <div class="bg-light d-inline-flex bd-highlight ml-5 mr-5"> 
+      <div class="d-inline-flex bd-highlight ml-5 mr-5"> 
 
         <div class="p-2 flex-row bd-highlight">
 
