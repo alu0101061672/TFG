@@ -19,9 +19,9 @@
 <!-- 
             <img src="../assets/icono_perfil.png" alt="perfil" class="float-left" 
               height="55" width="55"/> -->
-            <b-avatar variant="info" text="BV"></b-avatar>
+            <b-avatar variant="info"></b-avatar>
 
-            <div class="dropdown mr-5 float-right ml-2" style="height:36px;">
+            <div v-on:click="updateData()" class="dropdown mr-5 float-right ml-2" style="height:36px;">
 
               <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white;" type="button" id="usuariosActivos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ perfil }}
@@ -29,7 +29,7 @@
 
               <div class="dropdown-menu"  aria-labelledby="usuariosActivos">
                 <h6 class="dropdown-header">Usuarios activos</h6>
-                <a class="dropdown-item" v-for="usu in usuariosActivos" :key="usu" v-bind:value="usu"> {{ usu }} </a>
+                <a class="dropdown-item" v-for="usu in activeUsers" :key="usu.usuario" v-bind:value="usu.usuario"> {{ usu.usuario }} </a>
               </div>
 
             </div>
@@ -38,7 +38,7 @@
 
           <div class="p-2 bd-highlight">
 
-            <button type="submit" v-on:click="logOut" class="btn btn-outline-danger mr-5" style="height:36px;" > Cerrar sesión </button>    
+            <button type="button" v-on:click="logOut" class="btn btn-outline-danger mr-5" style="height:36px;" > Cerrar sesión </button>    
                        
           </div>
 
@@ -66,41 +66,47 @@ export default {
     },
 
     methods: {
+      async getDataUser (){
+        await this.axios
+        .get("http://localhost:4000/user/showall")
+        .then(res => {
 
-        usuariosActivos(){
+          this.usuarios = res.data;
 
-          usuarios.forEach(user => {
-            if(this.$store.getters.getSession == false)
-              activeUsers.push(user);
-          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
-        },
+      },
 
-        async getDataUser() {
-            await this.axios
-            .get("http://localhost:4000/user/showall")
-            .then(res => {
-
-              this.usuarios = res.data;
-
-            })
-            .catch(err => {
-              console.log(err);
-            });
-
-            this.usuarios.forEach(user => {
-             if(this.$store.getters.getSession == false)
-              this.activeUsers.push(user);
-            });
-
-        },
+      async updateData() {
         
-        logOut: function () {
-          
-          this.$store.commit("isLogOut");
-          this.$router.push("/");
+        await this.getDataUser();
 
-        }
+        this.usuarios.forEach(user => {
+          console.log(user.usuario)
+          console.log(this.activeUsers.includes(user))
+          if((user.activo === false) && (user.usuario != this.perfil) && !(this.activeUsers.includes(user)))
+            this.activeUsers.push(user);
+        });
+
+      },
+        
+      async logOut() {
+
+        await this.axios
+          .put(`http://localhost:4000/user/logout/${this.perfil}`)
+          
+          .catch( e => {
+            console.log(e.response);
+          })
+        
+        this.activeUsers.pop(this.perfil);
+        this.$store.commit("isLogOut");
+        this.$router.push("/");
+
+      }
     }
 
 }

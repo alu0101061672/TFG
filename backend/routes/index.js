@@ -14,6 +14,7 @@ api.get('/showall', user.showAll);
 api.get('/showuser/:email', user.showUser);
 api.get('/getrole', user.getRole);
 
+api.put('/logout/:usuario', user.logOut);
 api.put('/changerol/:usuario', user.changeRolToUser);
 
 api.get('/showinrs', inr.showAll);

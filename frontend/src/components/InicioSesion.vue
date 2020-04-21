@@ -255,27 +255,26 @@ export default {
         .catch(err => {
           console.log(err.response);
           //onReset1();
-          this.$store.commit("isLogOut");
 		});
 	},
 
-	async showUser(correo){
-		console.log("CORREO " + correo);
-	await this.axios
-		.get(`http://localhost:4000/user/showuser/${correo}`)
-		.then(res => {
-			console.log({...res.data});
-			console.log("HOLAAA " + res.data.usuario);
-			this.$store.commit("setUsuario", res.data.usuario);
+	// async showUser(correo){
+	// 	console.log("CORREO " + correo);
+	// await this.axios
+	// 	.get(`http://localhost:4000/user/showuser/${correo}`)
+	// 	.then(res => {
+	// 		console.log({...res.data});
+	// 		console.log("HOLAAA " + res.data.usuario);
+	// 		this.$store.commit("setUsuario", res.data.usuario);
 				
 			
-		})
-		.catch(err => {
-			console.log(err.response);
-		});
+	// 	})
+	// 	.catch(err => {
+	// 		console.log(err.response);
+	// 	});
 
 
-	},
+	// },
     onReset1(evt) {
       evt.preventDefault();
       // Reset our form values

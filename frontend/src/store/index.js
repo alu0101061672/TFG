@@ -26,7 +26,6 @@ export default new Vuex.Store({
 mutations: {
     islogIn(state) {
         state.session_out = false;
-
     },
     isLogOut(state) {
         state.session_out = true;

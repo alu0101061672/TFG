@@ -8,7 +8,9 @@ async function signUp(req, res) {
         usuario: req.body.usuario,
         password: req.body.password,
         confirmpassword: req.body.confirmpassword,
-        role: req.body.role
+        role: req.body.role,
+        
+
     });
 
 
@@ -43,6 +45,11 @@ async function signIn(req, res) {
     // console.log(usua);
     var user = await User.findOne({ email: req.body.email });
     var userDB = await User.findById(user._id);
+
+    await User.findByIdAndUpdate( 
+        {_id: (await user)._id},
+        {activo: false}
+    );
     
     User.findOne({ email: req.body.email })
         .select('password')
@@ -121,6 +128,29 @@ async function showAll (req,res) {
         //console.log('GET /user')
         res.status(200).json(user);
     })    
+}
+
+async function logOut (req,res) {
+
+    const usu = req.params.usuario;
+
+    var user = User.findOne({ usuario: usu });
+
+    try{
+        const userDb = await User.findByIdAndUpdate( 
+            {_id: (await user)._id},
+            {activo: true},
+        );
+ 
+        res.json(userDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+    
 }
 
 async function showUser (req,res) {
@@ -204,6 +234,7 @@ module.exports = {
     deleteUserByUsuario,
     getRole,
     changeRolToUser,
-    showUser
+    showUser,
+    logOut
 
 };
