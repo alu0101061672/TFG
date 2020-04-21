@@ -27,8 +27,10 @@
                 Gravedad
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
-                <a class="dropdown-item" href="#"> Más grave </a>
-                <a class="dropdown-item" href="#"> Menos grave </a>               
+                <a v-on:click="getMasGrave()" class="dropdown-item" href="#"> Más grave </a>
+                <a v-on:click="getMenosGrave()" class="dropdown-item" href="#"> Menos grave </a> 
+                <div class="dropdown-divider"></div>
+                <a v-on:click="putNormal()" class="dropdown-item" href="#"> Sin filtro </a>                             
               </div>
             
             </div>
@@ -386,6 +388,8 @@
             <jw-pagination v-if='showINRs === "normal"' :items="inrs" @changePage="onChangePage"></jw-pagination>
             <jw-pagination v-if='showINRs === "simulacros"' :items="simulacros" @changePage="onChangePage"></jw-pagination>
             <jw-pagination v-if='showINRs === "casosReales"' :items="casosReales" @changePage="onChangePage"></jw-pagination>
+            <jw-pagination v-if='showINRs === "masGraves"' :items="masgrave" @changePage="onChangePage"></jw-pagination>
+            <jw-pagination v-if='showINRs === "menosGraves"' :items="menosgrave" @changePage="onChangePage"></jw-pagination>
 
     </div>
 
@@ -426,6 +430,11 @@ export default {
             checked: "",
             casosReales: [],
             checked2: "",
+            masgrave: [],
+            menosgrave: [],
+            medio: [],
+            grave: [],
+            bajo: [],
             
         };
     },
@@ -561,6 +570,72 @@ export default {
             .catch(err => {
             console.log(err);
             });
+        },
+        putNormal(){
+
+            this.showINRs = "normal";
+            this.getSimulacros();
+            this.getCasosReales();
+
+        },
+        
+        fillGravedades(){
+
+            this.inrs.forEach(element => {
+
+                if (element.gravedad === "GRAVE" && !(this.grave.includes(element))){
+                    this.grave.push(element);
+                } else if (element.gravedad === "MEDIO" && !(this.medio.includes(element))){
+                    this.medio.push(element);
+                } else if (element.gravedad === "BAJO" && !(this.bajo.includes(element))){
+                    this.bajo.push(element);
+                }
+
+            });
+        },
+
+        getMasGrave(){
+
+            this.masgrave =  [];
+
+            this.fillGravedades();
+            
+            this.grave.forEach(element => {
+                this.masgrave.push(element);
+            });
+            this.medio.forEach(element => {
+                this.masgrave.push(element);
+            });
+
+            this.bajo.forEach(element => {
+                this.masgrave.push(element);
+            });
+            this.showINRs = "masGraves";
+
+
+        },
+
+        getMenosGrave(){
+
+            this.menosgrave =  [];
+
+            this.fillGravedades();
+
+            this.bajo.forEach(element => {
+                this.menosgrave.push(element);
+            });
+            
+            this.medio.forEach(element => {
+                this.menosgrave.push(element);
+            });
+
+            this.grave.forEach(element => {
+                this.menosgrave.push(element);
+            });
+            this.showINRs = "menosGraves";
+
+
+
         },
 
         getSimulacros(){
