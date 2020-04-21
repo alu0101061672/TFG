@@ -565,42 +565,57 @@ export default {
 
         getSimulacros(){
 
-         if(this.checked === false || this.checked === ""){
+            if((this.checked === false || this.checked === "") && (this.checked2 === true )){
 
-            this.showINRs = "simulacros";
+                this.showINRs = "normal";
+                $('#checkbox2').removeAttr('checked');
+                $('#checkbox').removeAttr('checked');
+                this.checked2 = false;
 
-            this.inrs.forEach(element => {
+            } else if(this.checked === false || this.checked === ""){
+               
+               $('#checkbox').attr('checked');
+                this.showINRs = "simulacros";
 
-                if (element.tipo === "SIMULACRO" && !(this.simulacros.includes(element))){
-                    this.simulacros.push(element);
-                }
+                this.inrs.forEach(element => {
 
-            });
-         }else {
-            this.showINRs = "normal";
+                    if (element.tipo === "SIMULACRO" && !(this.simulacros.includes(element))){
+                        this.simulacros.push(element);
+                    }
 
-         }
+                });
 
+            } else {
+                this.showINRs = "normal";
+
+            }
         },  
 
         getCasosReales(){
+            
+            if((this.checked2 === false || this.checked2 === "") && (this.checked === true)){
+                
+                this.showINRs = "normal";
+                $('#checkbox2').removeAttr('checked');
+                $('#checkbox').removeAttr('checked');
+                this.checked = false;
 
-         if(this.checked2 === false || this.checked2 === ""){
+            } else if(this.checked2 === false || this.checked2 === ""){
+                
+                $('#checkbox2').attr('checked');
+                this.showINRs = "casosReales";
 
-            this.showINRs = "casosReales";
+                this.inrs.forEach(element => {
 
-            this.inrs.forEach(element => {
+                    if (element.tipo === "CASO REAL" && !(this.casosReales.includes(element))){
+                        this.casosReales.push(element);
+                    }
 
-                if (element.tipo === "CASO REAL" && !(this.casosReales.includes(element))){
-                    this.casosReales.push(element);
-                }
+                });
 
-            });
-         }else {
-            this.showINRs = "normal";
-
-         }
-
+            } else {
+                this.showINRs = "normal";
+            }
         },  
 
         async getTipos(){
