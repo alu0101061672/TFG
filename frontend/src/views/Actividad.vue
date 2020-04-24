@@ -184,6 +184,60 @@
 
         </div>
 
+        <br /> <br />
+
+        <div class="d-inline-flex flex-row float-left" v-if="rol === 'ADMIN'" style="margin-top: -3px;"> 
+
+          <button type="button" data-toggle="modal" data-target="#eliminarAportacion" class="d-inline-flex btn bg-light border border-dark ml-5" style="width:235px; height:36px;">
+              <img src="../assets/delete.svg" alt="eliminar aportación" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+            <div class="text-dark ml-1">Eliminar una aportación</div>
+          </button>
+
+          <div class="modal fade" id="eliminarAportacion" tabindex="-1" role="dialog" aria-labelledby="Eliminar una aportación" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered" role="document">
+               <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="RectificarAportacion">Rectificar una aportación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                 </div>
+                 <div class="modal-body">
+
+                    <form id="eliminar-aportacion-form" @reset="onReset" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
+                       
+                        <div class="form-group" style="min-width:350px;">
+
+                          <input v-model="removeAportacion" list="aportacionEliminar" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="aportacionEliminar" class="text-uppercase form-control" placeholder="Nombre de la aportación a eliminar" value="" required />
+                          <datalist id="aportacionEliminar">
+                              <option v-for="aportacion in aportaciones" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
+                          </datalist>
+
+                        </div>
+
+                        <div class="form-group w-50">
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-offset-3">												
+                                    <button type="reset" class="form-control btn btn-light"> Resetear </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
+                            <button type="submit" id="eliminar" v-on:click="deleteAportacion(removeAportacion)" variant="primary" name="eliminar-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Eliminar </button>
+                        </div>
+					          </form>
+
+                 </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
 
           <br /> <br /> <br />
 
@@ -229,6 +283,9 @@ export default {
       },
       aportaciones: [],
       newTitleAportacion: "",
+      rol: this.$store.getters.getRole,
+      removeAportacion: "",
+
 
     };
   },
@@ -265,9 +322,9 @@ export default {
 
         $("#cerrar").click();
         $('.modal-backdrop').remove();
-        this.aportacion.titulo = "";
-        this.aportacion.descripcion = "";
-        this.aportacion.recursosNecesarios = "";
+        // this.aportacion.titulo = "";
+        // this.aportacion.descripcion = "";
+        // this.aportacion.recursosNecesarios = "";
     },
     onSubmit(evt) {
 
@@ -308,6 +365,19 @@ export default {
         });
         this.newTitleAportacion = '';
         this.aportacion = {};
+
+    },
+    async deleteAportacion(removeAportacion) {
+
+      await this.axios
+      .delete(URL + `/user/deleteAportacion/${removeAportacion}`)
+      .then(res => {
+            console.log(res.data);
+            })
+      .catch( e => {
+      console.log(e.response);
+      })
+      this.removeAportacion = '';
 
     },
 

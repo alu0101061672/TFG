@@ -55,7 +55,6 @@ async function changeDataAportacion(req,res){
 
     const tituloAportacion = req.params.aportacion;
     const aportaciones = req.body.aportacion.aportacion;
-    console.log(aportaciones.titulo)
 
     var apor = Aportaciones.findOne({ titulo: tituloAportacion });
 
@@ -86,12 +85,10 @@ async function deleteAportacion(req,res){
 
     var aportacion = Aportaciones.findOne({ titulo: tituloAportacion });
 
-
     try{
 
         //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
         const aportacionesDB = await Aportaciones.findByIdAndRemove((await aportacion)._id);
-
 
         if(!aportacionesDB){
             return res.status(400).json({

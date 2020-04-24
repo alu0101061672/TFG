@@ -294,7 +294,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form id="inr-form-modify" class="d-flex flex-column align-items-center" @reset="onReset" role="form">
+                    <form id="inr-form-eliminar" class="d-flex flex-column align-items-center" @reset="onReset" role="form">
 
                         <div class="form-group w-75">
 
