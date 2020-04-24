@@ -22,6 +22,12 @@ export default new Vuex.Store({
         fechaInicio: '',
         fechaFin: '',
     },
+    aportacion: {
+        titulo: "",
+        descripcion: "",
+        recursosNecesarios: [],
+
+    },
 },
 mutations: {
     islogIn(state) {
@@ -45,6 +51,9 @@ mutations: {
     },
     setINR(state, newINR){
         state.inr = newINR;
+    },
+    setAportacion(state, newAportacion){
+        state.aportacion = newAportacion;
     }
 },
 getters: {
@@ -65,6 +74,9 @@ getters: {
     },
     getINR(state){
         return state.inr;
+    },
+    getAportacion(state){
+        return state.aportacion;
     }
 },
 actions: {},

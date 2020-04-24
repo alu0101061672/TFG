@@ -21,9 +21,9 @@
               height="55" width="55"/> -->
             <b-avatar variant="info"></b-avatar>
 
-            <div v-on:click="updateData()" class="dropdown mr-5 float-right ml-2" style="height:36px;">
+            <div class="dropdown mr-5 float-right ml-2" style="height:36px;">
 
-              <button class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white;" type="button" id="usuariosActivos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button v-on:click="updateData()" class="btn btn-secondary dropdown-toggle" style="color:black; background-color:white;" type="button" id="usuariosActivos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ perfil }}
               </button>
 
@@ -82,11 +82,11 @@ export default {
 
       async updateData() {
         
-        await this.getDataUser();
+        this.getDataUser();
+        this.activeUsers = [];
+
 
         this.usuarios.forEach(user => {
-          console.log(user.usuario)
-          console.log(this.activeUsers.includes(user))
           if((user.activo === false) && (user.usuario != this.perfil) && !(this.activeUsers.includes(user)))
             this.activeUsers.push(user);
         });
@@ -102,7 +102,7 @@ export default {
             console.log(e.response);
           })
         
-        this.activeUsers.pop(this.perfil);
+        //this.activeUsers.pop(this.perfil);
         this.$store.commit("isLogOut");
         this.$router.push("/");
 

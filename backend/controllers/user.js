@@ -47,8 +47,8 @@ async function signIn(req, res) {
     var userDB = await User.findById(user._id);
 
     await User.findByIdAndUpdate( 
-        {_id: (await user)._id},
-        {activo: false}
+        {_id: user._id},
+        {activo: false},
     );
     
     User.findOne({ email: req.body.email })
@@ -137,11 +137,12 @@ async function logOut (req,res) {
     var user = User.findOne({ usuario: usu });
 
     try{
+
         const userDb = await User.findByIdAndUpdate( 
             {_id: (await user)._id},
             {activo: true},
         );
- 
+
         res.json(userDb);
 
     } catch (error) {

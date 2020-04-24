@@ -1,6 +1,4 @@
 const INR = require('../models/inr');
-const services = require('../services');
-var bcrypt = require('bcryptjs');
 
 async function showAll (req,res) {
 

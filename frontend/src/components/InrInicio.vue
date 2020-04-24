@@ -59,19 +59,19 @@
     <div class="p-2 d-flex bd-highlight justify-content-end mr-5" style="height:50px;" v-if="rol === 'ADMIN'">
 
         <button type="button" data-toggle="modal" data-target="#newINR" class="d-flex btn bg-light border border-dark mr-2" style="width:180px; height:36px;">
-            <img src="../assets/añadir.svg" alt="añadir aportación" class="img-responsive img-fluid float-left" 
+            <img src="../assets/añadir.svg" alt="añadir inr" class="img-responsive img-fluid float-left" 
                 height="25" width="25"/>
             <div class="d-flex ml-1"> Crear nuevo INR </div>
         </button>
 
         <button type="button" data-toggle="modal" data-target="#modifyINR" class="d-flex btn bg-light border border-dark mr-2" style="width:225px; height:36px;">
-            <img src="../assets/rectificar.svg" alt="modificar aportación" class="img-responsive img-fluid float-left" 
+            <img src="../assets/rectificar.svg" alt="modificar inr" class="img-responsive img-fluid float-left" 
                 height="25" width="25"/>
             <div class="d-flex ml-1"> Modificar INR existente </div>
         </button>
 
         <button type="button" data-toggle="modal" data-target="#deleteINR" class="d-flex btn bg-light border border-dark" style="width:150px; height:36px;">
-            <img src="../assets/delete.svg" alt="eliminar aportación" class="img-responsive img-fluid float-left" 
+            <img src="../assets/delete.svg" alt="eliminar inr" class="img-responsive img-fluid float-left" 
                 height="25" width="25"/>
             <div class="d-flex ml-1"> Eliminar INR </div>
         </button>
@@ -574,8 +574,10 @@ export default {
         putNormal(){
 
             this.showINRs = "normal";
-            this.getSimulacros();
-            this.getCasosReales();
+            $('#checkbox2').removeAttr('checked');
+            $('#checkbox').removeAttr('checked');
+            this.checked2 = false;
+            this.checked = false;
 
         },
         

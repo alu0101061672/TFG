@@ -22,35 +22,168 @@
 
           <div class="d-inline-flex flex-row mt-5 w-100 justify-content-between"> 
 
-            <div class="d-inline-flex ml-5">
-
-              <img src="../assets/añadir.svg" alt="añadir aportación" class="img-responsive img-fluid" 
+            <button type="button" data-toggle="modal" data-target="#addAportacion" class="d-inline-flex btn bg-light border border-dark ml-5 mb-2" style="width:235px; height:36px;">
+               <img src="../assets/añadir.svg" alt="añadir aportación" class="img-responsive img-fluid" 
                 height="25" width="25"/>
-              <div class="text-dark ml-1">Añadir nueva aportación</div>
+                <div class="text-dark ml-1">Añadir nueva aportación</div>
+            </button>
 
+            <div class="modal fade" id="addAportacion" tabindex="-1" role="dialog" aria-labelledby="Añadir una aportación" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered" role="document">
+               <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir una aportación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                 </div>
+                 <div class="modal-body">
+
+                    <form id="aportacion-form" @submit="onSubmit" @reset="onReset" method="post" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
+                       
+                        <div class="form-group" style="min-width:300px;">
+                            <input v-model="aportacion.titulo" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Titulo de la aportación" value="" required />
+                            <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
+                        </div>
+
+                        <div class="form-group" style="min-width:300px;">
+                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                        </div>
+
+                        <div class="form-group" style="min-width:300px;">
+                            <input v-model="aportacion.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <datalist id="recursos">
+                                <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
+                            </datalist>
+                        </div>
+
+                        <div class="form-group w-50">
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-offset-3">												
+                                    <button type="reset" class="form-control btn btn-light"> Resetear </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
+                            <button type="submit" id="guardar" v-on:click="getAportaciones()" variant="primary" name="aportaciones-submit" class="btn btn-primary" style="width: 90px;"> Añadir </button>
+
+                        </div>
+					          </form>
+
+                 </div>
+              </div>
             </div>
+          </div>
 
-            <div class="d-inline-flex mr-5">
-
+            <button type="button" data-toggle="modal" data-target="#addInfo" class="d-inline-flex btn bg-white mr-5" style="width:70px; height:36px;">
               <img src="../assets/addInfo.svg" alt="añadir información" class="img-responsive img-fluid float-right"
                 height="25" width="25"/>
               <div style="color: #ff2301;"> info </div>
+            </button>
 
+            <div class="modal fade" id="addInfo" tabindex="-1" role="dialog" aria-labelledby="Información" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered" role="document">
+               <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="info"> Información del estilo de sintaxis a utilizar </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                 </div>
+                 <div class="modal-body">
+
+                    <form id="info-aportacion-form" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
+                       
+                       <div class="form-group w-75">
+                         <u> Normas a seguir </u>
+                       </div>
+                        <ul class="form-group w-75" style="min-width:400px;">
+                         <li> Escribir en mayúsculas siempre </li>
+                         <li> Escribir sin tildes </li>
+                         <li> Separación de palabras por un espacio </li>
+                        </ul>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Salir </button>
+                        </div>
+					          </form>
+
+                 </div>
+              </div>
             </div>
+          </div>
 
           </div>
 
           <br />
 
           <div class="d-inline-flex flex-row float-left"> 
-            <div class="d-inline-flex" style="margin-left: 50px;">
-
-              <img src="../assets/rectificar.svg" alt="rectificar aportación" class="img-responsive img-fluid" 
+            
+            <button type="button" data-toggle="modal" data-target="#rectificarAportacion" class="d-inline-flex btn bg-light border border-dark ml-5" style="width:235px; height:36px;">
+                <img src="../assets/rectificar.svg" alt="rectificar aportación" class="img-responsive img-fluid" 
                 height="25" width="25"/>
-              <div class="text-dark ml-1 mt-1">Rectificar una aportación</div>
+              <div class="text-dark ml-1">Rectificar una aportación</div>
+            </button>
+            
+            <div class="modal fade" id="rectificarAportacion" tabindex="-1" role="dialog" aria-labelledby="Rectificar una aportación" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered" role="document">
+               <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Rectificar una aportación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                 </div>
+                 <div class="modal-body">
 
+                    <form id="rectificar-aportacion-form" @reset="onReset" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
+                       
+                       <div class="form-group" style="min-width:370px;">
+                            <input v-model="newTitleAportacion" list="aportaciones" type="text" name="tituloARectificar" id="tituloARectificar" tabindex="1" aria-describedby="rectificar" class="text-uppercase form-control" placeholder="Nombre de la aportación a rectificar" value="" required />
+                            <datalist id="aportaciones">
+                                <option v-for="aportacion in aportaciones" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
+                            </datalist>
+                        </div>
+
+                        <div class="form-group" style="min-width:370px;">
+                            <input v-model="aportacion.titulo" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
+                            <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
+                        </div>
+
+                        <div class="form-group" style="min-width:370px;">
+                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                        </div>
+
+                        <div class="form-group" style="min-width:370px;">
+                            <input v-model="aportacion.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <datalist id="recursos">
+                                <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
+                            </datalist>
+                        </div>
+
+                        <div class="form-group w-50">
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-offset-3">												
+                                    <button type="reset" class="form-control btn btn-light"> Resetear </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
+                            <button type="submit" id="cambiar2" v-on:click="changeDataAportaciones(newTitleAportacion,{aportacion})" variant="primary" name="rectificar-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Rectificar </button>
+                        </div>
+					          </form>
+
+                 </div>
+              </div>
             </div>
           </div>
+
+        </div>
+
 
           <br /> <br /> <br />
 
@@ -71,6 +204,9 @@
 </template>
 
 <script>
+
+const URL = "http://localhost:4000";
+
 // @ is an alias to /src
 import Cabecera from '@/components/Cabecera.vue'
 import Navegacion from '@/components/Navegacion.vue'
@@ -82,6 +218,103 @@ export default {
     Cabecera,
     Navegacion,
     DatosINR
+  },
+  data() {
+    return {
+      recursos: [],
+      aportacion: {
+        titulo: "",
+        descripcion: "",
+        recursosNecesarios: [],
+      },
+      aportaciones: [],
+      newTitleAportacion: "",
+
+    };
+  },
+  async mounted (){
+      await this.getAportaciones();
+      await this.getRecursos();
+  },
+  methods: {
+
+    async getRecursos(){
+        await this.axios
+        .get(URL + "/user/getrecursosaportacion")
+        .then(res => {
+
+            this.recursos = res.data;
+
+        })
+        .catch(err => {
+        console.log(err);
+        });
+    },
+    async getAportaciones(){
+
+        await this.axios
+        .get(URL + "/user/showaportaciones")
+        .then(res => {
+
+        this.aportaciones = res.data;
+
+        })
+        .catch(err => {
+        console.log(err);
+        });
+
+        $("#cerrar").click();
+        $('.modal-backdrop').remove();
+        this.aportacion.titulo = "";
+        this.aportacion.descripcion = "";
+        this.aportacion.recursosNecesarios = "";
+    },
+    onSubmit(evt) {
+
+      evt.preventDefault();
+      this.axios
+        .post(URL + "/user/aportacion", this.aportacion)
+        .then(res => {
+            console.log(res.data);
+            this.$store.commit("setAportacion", res.data);
+            })
+        .catch(e => {
+        console.log(e.response);
+        });
+    
+    },
+    onReset(evt) {
+      evt.preventDefault();
+
+      // Reset our form values
+      this.aportacion.titulo = "";
+      this.aportacion.descripcion = "";
+      this.aportacion.recursosNecesarios = "";
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+          this.show = true;
+      });
+    },
+    async changeDataAportaciones(newTitleAportacion,aportacion) {
+
+      await this.axios
+        .put(URL + `/user/changeDataAportacion/${newTitleAportacion}`, { aportacion })
+        .then(res => {
+            console.log(res.data);
+            })
+        .catch( e => {
+        console.log(e.response);
+        });
+        this.newTitleAportacion = '';
+        this.aportacion = {};
+
+    },
+
+
+
+
   }
+
 }
 </script>
