@@ -244,8 +244,40 @@
           <div class="d-inline-flex flex-row float-left ml-5"> 
 
             <div><u> Aportaciones realizadas </u></div>
-
           </div>
+
+          <br /> <br />
+
+          <div class="d-inline-flex flex-row float-left ml-5" v-for="aportacion in aportaciones" :key="aportacion.titulo"> 
+
+              <div class="media mb-3">
+                <div class="media-body ml-3">
+                  <div class="bg-light rounded py-2 px-3 mb-2 shadow" style="min-width: 600px; font-size: 13px;">
+                    <p class="text-small mb-0 text-muted text-uppercase float-left"> TITULO: {{ aportacion.titulo }} </p><br />
+                    <p class="text-small mb-0 text-muted text-uppercase float-left"> DESCRIPCION: {{ aportacion.descripcion }} </p><br />
+                    <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS NECESARIOS: {{ aportacion.recursosNecesarios }} </p><br />
+                    <p class="text-small mb-0 text-muted text-uppercase float-left"> CREADO POR: {{ usuario }} </p><br />
+                    <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> FECHA PUBLICACIÓN:  </p> 
+                  </div>
+                </div>
+              </div>
+              
+          </div>
+          
+          <br /><br /><br /><br />
+
+          <!-- <div class="d-inline-flex flex-row float-right mr-5"> 
+
+              <div class="media ml-auto mb-3">
+                <div class="media-body">
+                  <div class="bg-light rounded py-2 px-3 mb-2">
+                    <p class="text-small mb-0 text-muted">Apollo University, Delhi, India Test</p>
+                    <p class="small text-muted">12:00 PM | Aug 13</p>
+                  </div>
+                </div>
+              </div>
+
+          </div> -->
 
 
         </div>
@@ -284,6 +316,7 @@ export default {
       aportaciones: [],
       newTitleAportacion: "",
       rol: this.$store.getters.getRole,
+      usuario: this.$store.getters.getUsuario,
       removeAportacion: "",
 
 

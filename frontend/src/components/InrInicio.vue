@@ -390,7 +390,6 @@
             <jw-pagination v-if='showINRs === "casosReales"' :items="casosReales" @changePage="onChangePage"></jw-pagination>
             <jw-pagination v-if='showINRs === "masGraves"' :items="masgrave" @changePage="onChangePage"></jw-pagination>
             <jw-pagination v-if='showINRs === "menosGraves"' :items="menosgrave" @changePage="onChangePage"></jw-pagination>
-
     </div>
 
 </div>
