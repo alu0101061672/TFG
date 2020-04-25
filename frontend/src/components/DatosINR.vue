@@ -1,5 +1,5 @@
 <template>
-  <div class="datosINR mt-3">
+  <div class="datosINR mt-3 mb-3">
 
       <div class="d-inline-flex flex-row float-left ml-3"> 
 
@@ -8,7 +8,6 @@
         <div v-if="inr.gravedad === 'BAJO'" class="bd-highlight border bg-success ml-3 mt-1" style="height: 15px; width: 45px"></div>
         <div v-if="inr.gravedad === 'MEDIO'" class="bd-highlight border bg-warning ml-3 mt-1" style="height: 15px; width: 45px"></div>
         <div v-if="inr.gravedad === 'GRAVE'" class="bd-highlight border bg-danger ml-3 mt-1" style="height: 15px; width: 45px"></div>
-
 
       </div>
 
@@ -132,8 +131,8 @@
 
       </div>
 
-      <div class="d-inline-flex flex-column bd-highlight border-dark border border-top-0 mt-2" style="width: 499px;">
-      </div>
+      <!-- <div class="d-inline-flex flex-column bd-highlight border-dark border border-top-0 mt-2" style="width: 499px;">
+      </div> -->
 
   </div>
 </template>

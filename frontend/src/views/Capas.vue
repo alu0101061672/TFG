@@ -12,7 +12,7 @@
 
         <div class="p-2 flex-row bd-highlight">
 
-            <div class="d-inline-flex flex-column bd-highlight border border-dark" style="width: 500px; height:340px;">
+            <div class="d-inline-flex flex-column bd-highlight border border-dark" style="width: 500px; height: 627px;">
               <DatosINR />
             </div>
 
