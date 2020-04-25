@@ -17,7 +17,7 @@ const recursos = { // sanitarios,seguridad,salvamento,extincion o rescate. GES: 
 }
 
 const terrenos = {
-  values: ['TERRESTRE', 'ACUÁTICO', 'AÉREO'],
+  values: ['TERRESTRE', 'ACUATICO', 'AEREO'],
   message: '{VALUE} no es un tipo de terreno válido'
 }
 
@@ -29,10 +29,12 @@ const inrSchema = new Schema({
   tipo: { type: String, enum: tipos, select: true, required: [true, 'Tipo de INR es necesario'] },
   activo: { type: Boolean, default: true },
   numAfectados: {type: Number, required: [true, 'Número de afectados necesario']},
-  recursosNecesarios: {type: String, enum: recursos, select: true, required: [true, 'Recursos necesarios obligatorio'] },
+  recursosNecesarios: {type: String, enum: recursos, select: true },
   tipoTerreno: {type: String, enum: terrenos, select: true,required: [true, 'Tipo de terreno obligatorio'] },
   fechaInicio:{type: Date, default: Date.now, required: [true, 'Fecha de inicio del INR obligatorio']},
   fechaFin:{type: Date, required: [true, 'Fecha de finalización del INR obligatorio']},
+  recursoArray: {type:Array, select: true, required: [true, 'Recursos necesarios obligatorio']},
+  
   
 });
 

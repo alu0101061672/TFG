@@ -26,6 +26,8 @@ export default new Vuex.Store({
         titulo: "",
         descripcion: "",
         recursosNecesarios: [],
+        date: "",
+        createdBy: "",
 
     },
 },

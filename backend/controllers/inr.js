@@ -19,7 +19,7 @@ async function dataINR (req,res) {
         gravedad: req.body.gravedad,
         tipo: req.body.tipo,
         numAfectados: req.body.numAfectados,
-        recursosNecesarios: req.body.recursosNecesarios,
+        recursoArray: req.body.recursoArray,
         tipoTerreno: req.body.tipoTerreno, 
         fechaInicio: req.body.fechaInicio,
         fechaFin: req.body.fechaFin,
@@ -68,7 +68,7 @@ async function getTipo (req,res) {
 
 async function getTipoTerreno (req,res) {
 
-    const terrenos = ['TERRESTRE', 'ACUÁTICO', 'AÉREO'];
+    const terrenos = ['TERRESTRE', 'ACUATICO', 'AEREO'];
 
     res.status(200).json(terrenos);
      

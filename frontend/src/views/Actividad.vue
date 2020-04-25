@@ -32,7 +32,7 @@
              <div class="modal-dialog modal-dialog-centered" role="document">
                <div class="modal-content">
                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir una aportación</h5>
+                    <h5 class="modal-title" id="AñadirAportacion">Añadir una aportación</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -148,16 +148,16 @@
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="aportacion.titulo" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
+                            <input v-model="aportacion.titulo" type="text" name="titulo" id="rtitulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
                             <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="rdescripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="aportacion.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <input v-model="aportacion.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="rrecursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             <datalist id="recursos">
                                 <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
                             </datalist>
@@ -198,7 +198,7 @@
              <div class="modal-dialog modal-dialog-centered" role="document">
                <div class="modal-content">
                  <div class="modal-header">
-                    <h5 class="modal-title" id="RectificarAportacion">Rectificar una aportación</h5>
+                    <h5 class="modal-title" id="EliminarAportacion">Eliminar una aportación</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -209,7 +209,7 @@
                        
                         <div class="form-group" style="min-width:350px;">
 
-                          <input v-model="removeAportacion" list="aportacionEliminar" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="aportacionEliminar" class="text-uppercase form-control" placeholder="Nombre de la aportación a eliminar" value="" required />
+                          <input v-model="removeAportacion" list="aportacionEliminar" type="text" name="titulo" id="dtitulo" tabindex="1" aria-describedby="aportacionEliminar" class="text-uppercase form-control" placeholder="Nombre de la aportación a eliminar" value="" required />
                           <datalist id="aportacionEliminar">
                               <option v-for="aportacion in aportaciones" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
                           </datalist>
@@ -226,7 +226,7 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
-                            <button type="submit" id="eliminar" v-on:click="deleteAportacion(removeAportacion)" variant="primary" name="eliminar-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Eliminar </button>
+                            <button type="submit" id="eliminar" v-on:click="deleteAportacion(removeAportacion)" variant="primary" name="delete-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Eliminar </button>
                         </div>
 					          </form>
 
@@ -256,8 +256,8 @@
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> TITULO: {{ aportacion.titulo }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> DESCRIPCION: {{ aportacion.descripcion }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS NECESARIOS: {{ aportacion.recursosNecesarios }} </p><br />
-                    <p class="text-small mb-0 text-muted text-uppercase float-left"> CREADO POR: {{ usuario }} </p><br />
-                    <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> FECHA PUBLICACIÓN:  </p> 
+                    <p class="text-small mb-0 text-muted text-uppercase float-left"> CREADO POR: {{ aportacion.createdBy }} </p><br />
+                    <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> FECHA PUBLICACIÓN: {{aportacion.date}}  </p> 
                   </div>
                 </div>
               </div>
@@ -312,12 +312,15 @@ export default {
         titulo: "",
         descripcion: "",
         recursosNecesarios: [],
+        date: "",
+        createdBy: "",
       },
       aportaciones: [],
       newTitleAportacion: "",
       rol: this.$store.getters.getRole,
       usuario: this.$store.getters.getUsuario,
       removeAportacion: "",
+
 
 
     };
@@ -341,7 +344,7 @@ export default {
         });
     },
     async getAportaciones(){
-
+        
         await this.axios
         .get(URL + "/user/showaportaciones")
         .then(res => {
@@ -360,6 +363,10 @@ export default {
         // this.aportacion.recursosNecesarios = "";
     },
     onSubmit(evt) {
+      // console.log(this.aportacion)
+      // aportacion.date = Date.now();
+      // aportacion.createdBy = usuario;
+      // console.log(this.aportacion.date + "    " + this.aportacion.createdBy)
 
       evt.preventDefault();
       this.axios

@@ -129,11 +129,11 @@
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             
-                            <datalist id="recursos">
-                                <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
-                            </datalist>
+                            <div>
+                                <b-form-select aria-describedby="recursosHelp" v-model="inr.recursoArray" :options="recursos" multiple :select-size="4"></b-form-select>
+                                <div><small id="recursosHelp" class="form-text text-muted float-left ml-2"> Pulse Ctrl y seleccione para añadir múltiples opciones </small></div> -->
+                            </div>
 
                         </div>
 
@@ -223,8 +223,6 @@
                                 <option v-for="grav in gravedades" :key="grav" v-bind:value="grav"> {{ grav }} </option>
                             </datalist> -->
                             
-                            <div><small id="gravedadHelp" class="form-text text-muted float-left ml-2"> Opciones: GRAVE, MEDIO, BAJO </small></div>
-
                         </div>
 
                         <div class="form-group w-75">
@@ -415,6 +413,7 @@ export default {
                 tipoTerreno: [], 
                 fechaInicio: '',
                 fechaFin: '',
+                recursoArray: [],
             },
             inrs: [],
             pageOfItems: [],

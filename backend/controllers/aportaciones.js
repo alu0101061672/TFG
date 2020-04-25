@@ -11,14 +11,17 @@ async function showAll (req,res) {
 }
 
 async function dataAportacion (req,res) {
+    console.log("HOLA");
 
     const aportacion = new Aportaciones({
         titulo: req.body.titulo,
         descripcion: req.body.descripcion,
         recursosNecesarios: req.body.recursosNecesarios,
+        date: req.body.date,
+        createdBy: req.body.createdBy,
 
     });
-
+console.log(aportacion);
     // Buscamos nombre en DB
     const aportacionesDB = await Aportaciones.findOne({titulo: req.body.titulo});
 
