@@ -21,15 +21,16 @@ export default new Vuex.Store({
         tipoTerreno: [], 
         fechaInicio: '',
         fechaFin: '',
+        aportaciones: {
+            titulo: "",
+            descripcion: "",
+            recursosNecesarios: [],
+            date: "",
+            createdBy: "",
+    
+        },
     },
-    aportacion: {
-        titulo: "",
-        descripcion: "",
-        recursosNecesarios: [],
-        date: "",
-        createdBy: "",
-
-    },
+    
 },
 mutations: {
     islogIn(state) {

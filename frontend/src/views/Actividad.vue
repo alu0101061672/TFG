@@ -42,16 +42,16 @@
                     <form id="aportacion-form" @submit="onSubmit" @reset="onReset" method="post" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
                        
                         <div class="form-group" style="min-width:300px;">
-                            <input v-model="aportacion.titulo" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Titulo de la aportación" value="" required />
+                            <input v-model="inr.aportaciones.titulo" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Titulo de la aportación" value="" required />
                             <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
                         </div>
 
                         <div class="form-group" style="min-width:300px;">
-                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                            <input v-model="inr.aportaciones.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
                         </div>
 
                         <div class="form-group" style="min-width:300px;">
-                            <input v-model="aportacion.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <input v-model="inr.aportaciones.recursos" list="recursos" type="text" name="recursos" id="recursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             <datalist id="recursos">
                                 <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
                             </datalist>
@@ -148,16 +148,16 @@
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="aportacion.titulo" type="text" name="titulo" id="rtitulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
+                            <input v-model="inr.aportaciones.titulo" type="text" name="titulo" id="rtitulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
                             <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="rdescripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                            <input v-model="inr.aportaciones.descripcion" type="text" name="descripcion" id="rdescripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="aportacion.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="rrecursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <input v-model="inr.aportaciones.recursos" list="recursos" type="text" name="chrecursos" id="chrecursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             <datalist id="recursos">
                                 <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
                             </datalist>
@@ -173,7 +173,7 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
-                            <button type="submit" id="cambiar2" v-on:click="changeDataAportaciones(newTitleAportacion,{aportacion})" variant="primary" name="rectificar-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Rectificar </button>
+                            <button type="submit" id="cambiar2" v-on:click="changeDataAportaciones(newTitleAportacion,{inr})" variant="primary" name="rectificar-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Rectificar </button>
                         </div>
 					          </form>
 
@@ -211,7 +211,7 @@
 
                           <input v-model="removeAportacion" list="aportacionEliminar" type="text" name="titulo" id="dtitulo" tabindex="1" aria-describedby="aportacionEliminar" class="text-uppercase form-control" placeholder="Nombre de la aportación a eliminar" value="" required />
                           <datalist id="aportacionEliminar">
-                              <option v-for="aportacion in aportaciones" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
+                              <option v-for="inr in aportaciones" :key="inr.titulo" v-bind:value="inr.titulo"> {{ inr.titulo }} </option>
                           </datalist>
 
                         </div>
@@ -255,7 +255,7 @@
                   <div class="bg-light rounded py-2 px-3 mb-2 shadow" style="min-width: 600px; font-size: 13px;">
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> TITULO: {{ aportacion.titulo }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> DESCRIPCION: {{ aportacion.descripcion }} </p><br />
-                    <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS NECESARIOS: {{ aportacion.recursosNecesarios }} </p><br />
+                    <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS NECESARIOS: {{ aportacion.recursos }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> CREADO POR: {{ aportacion.createdBy }} </p><br />
                     <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> FECHA PUBLICACIÓN: {{aportacion.date}}  </p> 
                   </div>
@@ -308,18 +308,12 @@ export default {
   data() {
     return {
       recursos: [],
-      aportacion: {
-        titulo: "",
-        descripcion: "",
-        recursosNecesarios: [],
-        date: "",
-        createdBy: "",
-      },
       aportaciones: [],
       newTitleAportacion: "",
       rol: this.$store.getters.getRole,
       usuario: this.$store.getters.getUsuario,
       removeAportacion: "",
+      inr: this.$store.getters.getINR,
 
 
 
@@ -327,7 +321,7 @@ export default {
   },
   async mounted (){
       await this.getAportaciones();
-      await this.getRecursos();
+     // await this.getRecursos();
   },
   methods: {
 
@@ -349,8 +343,11 @@ export default {
         .get(URL + "/user/showaportaciones")
         .then(res => {
 
-        this.aportaciones = res.data;
-
+            for (var item in res.data) {
+             if((res.data[item].nombre === this.inr.nombre) && !(this.aportaciones.includes(res.data[item].aportaciones))) {
+              this.aportaciones.push(res.data[item].aportaciones);
+             }
+           }
         })
         .catch(err => {
         console.log(err);
@@ -360,17 +357,13 @@ export default {
         $('.modal-backdrop').remove();
         // this.aportacion.titulo = "";
         // this.aportacion.descripcion = "";
-        // this.aportacion.recursosNecesarios = "";
+        // this.aportacion.recursos = "";
     },
     onSubmit(evt) {
-      // console.log(this.aportacion)
-      // aportacion.date = Date.now();
-      // aportacion.createdBy = usuario;
-      // console.log(this.aportacion.date + "    " + this.aportacion.createdBy)
 
       evt.preventDefault();
       this.axios
-        .post(URL + "/user/aportacion", this.aportacion)
+        .post(URL + "/user/aportacion", this.inr)
         .then(res => {
             console.log(res.data);
             this.$store.commit("setAportacion", res.data);
@@ -378,25 +371,24 @@ export default {
         .catch(e => {
         console.log(e.response);
         });
-    
     },
     onReset(evt) {
       evt.preventDefault();
 
       // Reset our form values
-      this.aportacion.titulo = "";
-      this.aportacion.descripcion = "";
-      this.aportacion.recursosNecesarios = "";
+      this.aportaciones.titulo = "";
+      this.aportaciones.descripcion = "";
+      this.aportaciones.recursos = "";
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
           this.show = true;
       });
     },
-    async changeDataAportaciones(newTitleAportacion,aportacion) {
+    async changeDataAportaciones(newTitleAportacion,inr) {
 
       await this.axios
-        .put(URL + `/user/changeDataAportacion/${newTitleAportacion}`, { aportacion })
+        .put(URL + `/user/changeDataAportacion/${newTitleAportacion}`, { inr })
         .then(res => {
             console.log(res.data);
             })
@@ -404,7 +396,7 @@ export default {
         console.log(e.response);
         });
         this.newTitleAportacion = '';
-        this.aportacion = {};
+        this.inr.aportaciones = {};
 
     },
     async deleteAportacion(removeAportacion) {

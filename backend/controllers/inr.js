@@ -146,6 +146,48 @@ async function deleteINR(req,res){
 
 }
 
+async function showAllAportaciones (req,res) {
+
+    await INR.find(function(err,aportaciones){
+
+        if(err) res.send(500, err.message);        
+        res.status(200).json(aportaciones);
+    });    
+}  
+
+
+async function dataAportacion (req,res) {
+
+    const nameOfINR = req.body.nombre;
+
+    var inr = INR.findOne({ nombre: nameOfINR });
+
+    try{
+        const inrDb = await INR.findByIdAndUpdate( 
+            {_id: (await inr)._id},
+            { 
+                aportaciones: {
+                    titulo: req.body.aportaciones.titulo,
+                    descripcion: req.body.aportaciones.descripcion,
+                    recursosNecesarios: req.body.aportaciones.recursos,
+                    date: req.body.aportaciones.date,
+                    createdBy: req.body.aportaciones.createdBy,
+
+                }
+            }
+        );
+
+        res.json(inrDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+}
+
+
 
 
 module.exports = {
@@ -156,6 +198,8 @@ module.exports = {
     changeDataINR,
     deleteINR,
     getTipoTerreno,
-    getRecursos
+    getRecursos,
+    showAllAportaciones,
+    dataAportacion,
 
 };

@@ -8,7 +8,7 @@ const recursos = {
 
 const aportacionesSchema = new Schema({
     titulo: {type: String, required: [true, 'Título obligatorio'], unique:true },
-    descripcion: { type: String,  required: [true, 'Descripción es necesario'] },
+    descripcion: { type: String, required: [true, 'Descripción es necesario'] },
     recursosNecesarios: {type: String, enum: recursos, select: true, required: [true, 'Recursos necesarios obligatorio'] },
     date:{type: Date, default: Date.now},
     createdBy:{type: String},

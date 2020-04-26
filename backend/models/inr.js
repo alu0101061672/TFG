@@ -34,6 +34,13 @@ const inrSchema = new Schema({
   fechaInicio:{type: Date, default: Date.now, required: [true, 'Fecha de inicio del INR obligatorio']},
   fechaFin:{type: Date, required: [true, 'Fecha de finalización del INR obligatorio']},
   recursoArray: {type:Array, select: true, required: [true, 'Recursos necesarios obligatorio']},
+  aportaciones: { 
+    titulo: {type: String, required: [true, 'Título obligatorio'], unique:true},
+    descripcion: {type: String, required: [true, 'Descripción es necesario']},
+    recursos: {type: Array, select: true, required: [true, 'Recursos necesarios obligatorio']},
+    date: {type: Date, default: Date.now},
+    createdBy: {type: String},
+  },
   
   
 });
