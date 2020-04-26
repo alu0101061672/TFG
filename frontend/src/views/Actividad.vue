@@ -42,19 +42,22 @@
                     <form id="aportacion-form" @submit="onSubmit" @reset="onReset" method="post" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
                        
                         <div class="form-group" style="min-width:300px;">
-                            <input v-model="inr.aportaciones.titulo" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Titulo de la aportación" value="" required />
+                            <input v-model="aportacion.titulo" type="text" name="titulo" id="titulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Titulo de la aportación" value="" required />
                             <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
                         </div>
 
                         <div class="form-group" style="min-width:300px;">
-                            <input v-model="inr.aportaciones.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="descripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
                         </div>
 
                         <div class="form-group" style="min-width:300px;">
-                            <input v-model="inr.aportaciones.recursos" list="recursos" type="text" name="recursos" id="recursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <b-form-select aria-describedby="recursosHelp" v-model="aportacion.recursosAportacion" :options="recursos" multiple :select-size="4"></b-form-select>
+                            <div><small id="recursosHelp" class="form-text text-muted float-left ml-2"> Pulse Ctrl y seleccione para añadir múltiples opciones </small></div> 
+                            
+                            <!-- <input v-model="aportacion.recursosAportacion" list="recursos" type="text" name="recursos" id="recursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             <datalist id="recursos">
-                                <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
-                            </datalist>
+                                <option v-for="recurso in this.recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
+                            </datalist> -->
                         </div>
 
                         <div class="form-group w-50">
@@ -148,18 +151,18 @@
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="inr.aportaciones.titulo" type="text" name="titulo" id="rtitulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
+                            <input v-model="aportacion.titulo" type="text" name="titulo" id="rtitulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
                             <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="inr.aportaciones.descripcion" type="text" name="descripcion" id="rdescripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                            <input v-model="aportacion.descripcion" type="text" name="descripcion" id="rdescripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="inr.aportaciones.recursos" list="recursos" type="text" name="chrecursos" id="chrecursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <input v-model="aportacion.recursosAportacion" list="recursos" type="text" name="chrecursos" id="chrecursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             <datalist id="recursos">
-                                <option v-for="recurso in recursos" :key="recurso" v-bind:value="recurso"> {{ recurso }} </option>
+                                <option v-for="rec in recursos" :key="rec" v-bind:value="rec"> {{ rec }} </option>
                             </datalist>
                         </div>
 
@@ -173,7 +176,7 @@
 
                         <div class="form-group modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
-                            <button type="submit" id="cambiar2" v-on:click="changeDataAportaciones(newTitleAportacion,{inr})" variant="primary" name="rectificar-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Rectificar </button>
+                            <button type="submit" id="cambiar2" v-on:click="changeDataAportaciones(newTitleAportacion,{aportacion})" variant="primary" name="rectificar-aportaciones" class="form-control btn btn-primary" style="width: 90px;"> Rectificar </button>
                         </div>
 					          </form>
 
@@ -211,7 +214,7 @@
 
                           <input v-model="removeAportacion" list="aportacionEliminar" type="text" name="titulo" id="dtitulo" tabindex="1" aria-describedby="aportacionEliminar" class="text-uppercase form-control" placeholder="Nombre de la aportación a eliminar" value="" required />
                           <datalist id="aportacionEliminar">
-                              <option v-for="inr in aportaciones" :key="inr.titulo" v-bind:value="inr.titulo"> {{ inr.titulo }} </option>
+                              <option v-for="aportacion in aportaciones" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
                           </datalist>
 
                         </div>
@@ -248,7 +251,7 @@
 
           <br /> <br />
 
-          <div class="d-inline-flex flex-row float-left ml-5" v-for="aportacion in aportaciones" :key="aportacion.titulo"> 
+          <div class="d-inline-flex flex-row float-left ml-5" v-for="aportacion in aportacionesINR" :key="aportacion.titulo"> 
 
               <div class="media mb-3">
                 <div class="media-body ml-3">
@@ -309,11 +312,21 @@ export default {
     return {
       recursos: [],
       aportaciones: [],
+      aportacionesINR: [],
       newTitleAportacion: "",
       rol: this.$store.getters.getRole,
       usuario: this.$store.getters.getUsuario,
       removeAportacion: "",
       inr: this.$store.getters.getINR,
+      aportacion: {
+        titulo: "",
+        descripcion: "",
+        recursosAportacion: [],
+        date: Date.now(),
+        createdBy: this.$store.getters.getUsuario,
+        inr: this.$store.getters.getINR,
+
+      },
 
 
 
@@ -321,15 +334,15 @@ export default {
   },
   async mounted (){
       await this.getAportaciones();
-     // await this.getRecursos();
+      await this.getRecursos();
   },
   methods: {
 
     async getRecursos(){
         await this.axios
-        .get(URL + "/user/getrecursosaportacion")
+        .get(URL + "/user/getrecursos")
         .then(res => {
-
+          //console.log(res.data)
             this.recursos = res.data;
 
         })
@@ -342,12 +355,17 @@ export default {
         await this.axios
         .get(URL + "/user/showaportaciones")
         .then(res => {
+          console.log(res);
+          this.aportaciones = res.data;
 
-            for (var item in res.data) {
-             if((res.data[item].nombre === this.inr.nombre) && !(this.aportaciones.includes(res.data[item].aportaciones))) {
-              this.aportaciones.push(res.data[item].aportaciones);
-             }
-           }
+          for (var item in this.aportaciones){
+
+            if((this.aportaciones[item].inr._id === this.inr._id)){
+              this.aportacionesINR.push(res.data[item]);
+
+            }
+          }
+
         })
         .catch(err => {
         console.log(err);
@@ -360,17 +378,20 @@ export default {
         // this.aportacion.recursos = "";
     },
     onSubmit(evt) {
+      console.log("eeeee")
+      console.log(this.aportacion)
 
       evt.preventDefault();
       this.axios
-        .post(URL + "/user/aportacion", this.inr)
+        .post(URL + "/user/aportacion", this.aportacion)
         .then(res => {
             console.log(res.data);
-            this.$store.commit("setAportacion", res.data);
             })
         .catch(e => {
         console.log(e.response);
         });
+        this.$store.commit("setAportacion", this.aportacion);
+
     },
     onReset(evt) {
       evt.preventDefault();
@@ -385,10 +406,10 @@ export default {
           this.show = true;
       });
     },
-    async changeDataAportaciones(newTitleAportacion,inr) {
+    async changeDataAportaciones(newTitleAportacion,aportacion) {
 
       await this.axios
-        .put(URL + `/user/changeDataAportacion/${newTitleAportacion}`, { inr })
+        .put(URL + `/user/changeDataAportacion/${newTitleAportacion}`, { aportacion })
         .then(res => {
             console.log(res.data);
             })

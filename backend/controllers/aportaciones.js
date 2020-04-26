@@ -1,14 +1,20 @@
 const Aportaciones = require('../models/aportaciones');
+const INR = require('../models/inr');
 
 async function showAll (req,res) {
 
-    await Aportaciones.find(function(err,aportacion){
+    await Aportaciones.find({},function(err,aportacion){
 
-        if(err) res.send(500, err.message);
+        INR.populate(aportacion, {path: "inr"}, function(err,aportacion){
+            
+            if(err) res.send(500, err.message);
+            res.status(200).send(aportacion);
+        });
+    });
+
         
-        res.status(200).json(aportacion);
-    });    
-}
+}    
+
 
 async function dataAportacion (req,res) {
     console.log("HOLA");
@@ -16,9 +22,10 @@ async function dataAportacion (req,res) {
     const aportacion = new Aportaciones({
         titulo: req.body.titulo,
         descripcion: req.body.descripcion,
-        recursosNecesarios: req.body.recursosNecesarios,
+        recursosAportacion: req.body.recursosAportacion,
         date: req.body.date,
         createdBy: req.body.createdBy,
+        inr: req.body.inr._id
 
     });
 console.log(aportacion);
@@ -41,7 +48,7 @@ console.log(aportacion);
 
             return res
             .status(201)
-            .send({ titulo: aportacion.titulo, });
+            .send({ aportacion });
         });
     }
 }

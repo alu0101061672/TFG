@@ -21,14 +21,15 @@ export default new Vuex.Store({
         tipoTerreno: [], 
         fechaInicio: '',
         fechaFin: '',
-        aportaciones: {
-            titulo: "",
-            descripcion: "",
-            recursosNecesarios: [],
-            date: "",
-            createdBy: "",
-    
-        },
+        
+    },
+    aportacion: {
+        titulo: "",
+        descripcion: "",
+        recursosNecesarios: [],
+        date: "",
+        createdBy: "",
+        inr: [],
     },
     
 },
@@ -55,7 +56,9 @@ mutations: {
     setINR(state, newINR){
         state.inr = newINR;
     },
-    setAportacion(state, newAportacion){
+    setAportacion(state,newAportacion){
+        console.log("ssssss")
+        console.log(newAportacion)
         state.aportacion = newAportacion;
     }
 },
@@ -81,6 +84,7 @@ getters: {
     getAportacion(state){
         return state.aportacion;
     }
+
 },
 actions: {},
 modules: {},

@@ -25,18 +25,18 @@ api.post('/inr', inr.dataINR);
 api.put('/changeDataINR/:inr', inr.changeDataINR);
 api.delete('/deleteINR/:inr', inr.deleteINR);
 
-api.get('/showaportaciones', inr.showAllAportaciones);
+//api.get('/showaportaciones', inr.showAllAportaciones);
 // api.get('/getrecursosaportacion', inr.getRecursosAportacion);
 // api.get('/showaportacion/:titulo', inr.showAportacion);
-api.post('/aportacion', inr.dataAportacion);
+//api.post('/aportacion', inr.dataAportacion);
 // api.put('/changeDataAportacion/:aportacion', inr.changeDataAportacion);
 // api.delete('/deleteAportacion/:aportacion', inr.deleteAportacion);
 
 
-// api.get('/showaportaciones', aportacion.showAll);
+api.get('/showaportaciones', aportacion.showAll);
 // api.get('/getrecursosaportacion', aportacion.getRecursos);
 // api.get('/showaportacion/:titulo', aportacion.showAportacion);
-// api.post('/aportacion', aportacion.dataAportacion);
+ api.post('/aportacion', aportacion.dataAportacion);
 // api.put('/changeDataAportacion/:aportacion', aportacion.changeDataAportacion);
 // api.delete('/deleteAportacion/:aportacion', aportacion.deleteAportacion);
 

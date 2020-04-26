@@ -146,46 +146,40 @@ async function deleteINR(req,res){
 
 }
 
-async function showAllAportaciones (req,res) {
+// async function showAllAportaciones (req,res) {
 
-    await INR.find(function(err,aportaciones){
+//     await INR.find(function(err,aportacionArray){
+//         if(err) res.send(500, err.message);      
+//         res.status(200).json(aportacionArray);
+//     });    
+// }  
 
-        if(err) res.send(500, err.message);        
-        res.status(200).json(aportaciones);
-    });    
-}  
 
+// async function dataAportacion (req,res) {
 
-async function dataAportacion (req,res) {
+//     console.log(req.body)
 
-    const nameOfINR = req.body.nombre;
+//     const nameOfINR = req.body.nombre;
+//     var inr = INR.findOne({ nombre: nameOfINR });
 
-    var inr = INR.findOne({ nombre: nameOfINR });
+//     try{
 
-    try{
-        const inrDb = await INR.findByIdAndUpdate( 
-            {_id: (await inr)._id},
-            { 
-                aportaciones: {
-                    titulo: req.body.aportaciones.titulo,
-                    descripcion: req.body.aportaciones.descripcion,
-                    recursosNecesarios: req.body.aportaciones.recursos,
-                    date: req.body.aportaciones.date,
-                    createdBy: req.body.aportaciones.createdBy,
+//         const inrDb = await INR.findByIdAndUpdate( 
+//             {_id: (await inr)._id},
+//             { aportacionArray: req.body.aportacionArray},
+//         );
 
-                }
-            }
-        );
+//         console.log(inrDb);
 
-        res.json(inrDb);
+//         res.json(inrDb);
 
-    } catch (error) {
-        return res.status(400).json({
-          mensaje: 'Ocurrio un error',
-          error
-        });
-    }
-}
+//     } catch (error) {
+//         return res.status(400).json({
+//           mensaje: 'Ocurrio un error',
+//           error
+//         });
+//     }
+// }
 
 
 
@@ -199,7 +193,7 @@ module.exports = {
     deleteINR,
     getTipoTerreno,
     getRecursos,
-    showAllAportaciones,
-    dataAportacion,
+    // showAllAportaciones,
+    // dataAportacion,
 
 };
