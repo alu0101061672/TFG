@@ -14,7 +14,7 @@
         <router-link to="/actividad">Actividad</router-link> |
         <router-link to="/busqueda">Búsqueda</router-link> |
         <router-link to="/sge112">SGE-112</router-link> |
-        <router-link to="/capas">Mapa</router-link> |
+        <router-link to="/mapa">Mapa</router-link> |
         <router-link to="/administrador">Administrador</router-link>
         
     </div>

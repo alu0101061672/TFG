@@ -13,21 +13,21 @@ async function showAll (req,res) {
 async function dataINR (req,res) {
 
     const inr = new INR({
-        nombre: req.body.nombre,
-        localizacion: req.body.localizacion,
-        descripcion: req.body.descripcion,
-        gravedad: req.body.gravedad,
-        tipo: req.body.tipo,
+        nombre: req.body.nombre.toUpperCase(),
+        localizacion: req.body.localizacion.toUpperCase(),
+        descripcion: req.body.descripcion.toUpperCase(),
+        gravedad: req.body.gravedad.toUpperCase(),
+        tipo: req.body.tipo.toUpperCase(),
         numAfectados: req.body.numAfectados,
         recursoArray: req.body.recursoArray,
-        tipoTerreno: req.body.tipoTerreno, 
+        tipoTerreno: req.body.tipoTerreno.toUpperCase(), 
         fechaInicio: req.body.fechaInicio,
         fechaFin: req.body.fechaFin,
 
     });
 
     // Buscamos nombre en DB
-    const inrDB = await INR.findOne({nombre: req.body.nombre});
+    const inrDB = await INR.findOne({nombre: req.body.nombre.toUpperCase()});
 
     // Evaluamos si no existe el inr en DB
     if(inrDB){
@@ -93,14 +93,14 @@ async function changeDataINR(req,res){
         const inrDb = await INR.findByIdAndUpdate( 
             {_id: (await inr)._id},
             { 
-            nombre: inrs.inr.nombre,
-            localizacion: inrs.inr.localizacion,
-            descripcion: inrs.inr.descripcion,
-            gravedad: inrs.inr.gravedad,
-            tipo: inrs.inr.tipo,
+            nombre: inrs.inr.nombre.toUpperCase(),
+            localizacion: inrs.inr.localizacion.toUpperCase(),
+            descripcion: inrs.inr.descripcion.toUpperCase(),
+            gravedad: inrs.inr.gravedad.toUpperCase(),
+            tipo: inrs.inr.tipo.toUpperCase(),
             numAfectados: inrs.inr.numAfectados,
-            recursosNecesarios: inrs.inr.recursosNecesarios,
-            tipoTerreno: inrs.inr.tipoTerreno,
+            recursoArray: inrs.inr.recursoArray.toUpperCase(),
+            tipoTerreno: inrs.inr.tipoTerreno.toUpperCase(),
             fechaInicio: inrs.inr.fechaInicio,
             fechaFin: inrs.inr.fechaFin 
             }

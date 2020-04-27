@@ -22,11 +22,11 @@
         <div class="d-flex-row bd-highlight border border-dark mt-2" style="width: 1100px; height:627px;">
 
           <div class="d-flex flex-row mt-5 justify-content-center">
-            <form id="custom-search-form" class="form-search form-horizontal pull-right" >
+            <form id="custom-search-form" class="form-search form-horizontal pull-right" role="form">
                 <div class="input-append">
-                    <input type="text" class="search-query pl-2 border border-dark mt-3" placeholder="Busque cualquier aportación o información del INR..." 
+                    <input v-model="informacion" type="text" class="search-query pl-2 border border-dark mt-3" placeholder="Busque cualquier aportación o información del INR..." 
                       style="border-radius: 15px; width: 500px; height: 35px;">
-                    <button type="submit" class="btn"><img src="../assets/busqueda.svg" alt="búsqueda" style="margin-left: -63px;"></button>
+                    <button v-on:click="searchInfo(informacion)" type="submit" class="btn"><img src="../assets/busqueda.svg" alt="búsqueda" style="margin-left: -63px;"></button>
                 </div>
             </form>
           </div>
@@ -39,11 +39,19 @@
 
           <div class="d-flex flex-row mt-4 justify-content-center">
 
-           <button type="button" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center" style="width: 70%; height: 50px;">
+           <div class="bg-light d-inline-flex bd-highlight border border-dark align-items-center" style="width: 70%;">
 
-             <div class="p-2"> Nombre de la aportación </div>
+             <div class="p-2"> 
+               <p> {{ resConsulta.titulo }} </p>
+               <p> {{ resConsulta.descripcion }} </p>
+               <p> {{ resConsulta.recursosAportacion.toString() }} </p>
+               <p> {{ resConsulta.createdBy }} </p>
+               <p> {{ resConsulta.date }} </p>
+               <p> {{ resConsulta.inr }} </p>
 
-           </button>
+             </div>
+
+           </div>
 
           </div>
         </div>
@@ -56,6 +64,9 @@
 </template>
 
 <script>
+
+const URL = "http://localhost:4000";
+
 // @ is an alias to /src
 import Cabecera from '@/components/Cabecera.vue'
 import Navegacion from '@/components/Navegacion.vue'
@@ -70,6 +81,36 @@ export default {
     Navegacion,
     DatosINR,
     FiltrosBusqueda
+
+  },
+  data () {
+    
+    return {
+      informacion: "",
+      resConsulta: "",
+
+
+    };
+  },
+  methods: {
+
+    async searchInfo(informacion) {
+      
+      await this.axios
+        .put(URL + `/user/showaportacion/${informacion}`)
+        .then(res => {
+          
+          for (var item in res.data){
+            this.resConsulta = res.data[item];
+          }
+
+        })
+        .catch(err => {
+        console.log(err);
+        });
+
+
+    },
 
   }
 }

@@ -4,7 +4,7 @@ import Inicio from '../views/Inicio.vue'
 import Actividad from '../views/Actividad.vue'
 import Busqueda from '../views/Busqueda.vue'
 import Sge112 from '../views/SGE112.vue'
-import Capas from '../views/Capas.vue'
+import Mapa from '../views/Mapa.vue'
 import InicioSesion from '../views/InicioSesion.vue'
 import Administrador from '../views/Administrador.vue'
 
@@ -45,9 +45,9 @@ const routes = [
     component: Sge112
   },
   {
-    path: '/capas',
-    name: 'Capas',
-    component: Capas
+    path: '/mapa',
+    name: 'Mapa',
+    component: Mapa
   },
   {
     path: '/administrador',

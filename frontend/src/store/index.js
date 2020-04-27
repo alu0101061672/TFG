@@ -31,6 +31,11 @@ export default new Vuex.Store({
         createdBy: "",
         inr: [],
     },
+    carpeta: {
+        nombre: "",
+        file: "",
+        inr: [],
+    },
     
 },
 mutations: {
@@ -57,9 +62,11 @@ mutations: {
         state.inr = newINR;
     },
     setAportacion(state,newAportacion){
-        console.log("ssssss")
-        console.log(newAportacion)
         state.aportacion = newAportacion;
+    },
+    setCarpeta(state,newCarpeta){
+
+        state.carpeta = newCarpeta;
     }
 },
 getters: {
@@ -83,6 +90,9 @@ getters: {
     },
     getAportacion(state){
         return state.aportacion;
+    },
+    getCarpeta(state){
+        return state.carpeta;
     }
 
 },

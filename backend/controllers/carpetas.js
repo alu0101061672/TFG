@@ -1,25 +1,33 @@
 const Carpetas = require('../models/carpetas');
+const INR = require('../models/inr');
 
 async function showAll (req,res) {
 
-    await Carpetas.find(function(err,carpeta){
+    await Carpetas.find({},function(err,carpeta){
 
-        if(err) res.send(500, err.message);
-        
-        res.status(200).json(carpeta);
-    });    
+        INR.populate(carpeta, {path: "inr"}, function(err,carpeta){
+            
+            if(err) res.send(500, err.message);
+            res.status(200).send(carpeta);
+        });
+    });
 }
 
 async function dataCarpeta (req,res) {
+    console.log("sola")
+    console.log(req.body)
+    console.log(req.body.nombre)
+
 
     const carpeta = new Carpetas({
-        nombre: req.body.nombre,
-        archivo: req.body.file,
+        nombre: req.body.nombre.toUpperCase(),
+        file: req.body.file.toUpperCase(),
+        inr: req.body.inr._id
 
     });
 
     // Buscamos nombre en DB
-    const carpetaDB = await Carpetas.findOne({nombre: req.body.nombre});
+    const carpetaDB = await Carpetas.findOne({nombre: req.body.nombre.toUpperCase()});
 
     // Evaluamos si no existe el inr en DB
     if(carpetaDB){
@@ -37,7 +45,7 @@ async function dataCarpeta (req,res) {
 
             return res
             .status(201)
-            .send({ nombre: carpeta.nombre, });
+            .send({ carpeta });
         });
     }
 }

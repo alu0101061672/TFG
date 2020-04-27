@@ -148,26 +148,20 @@
                             <datalist id="aportaciones">
                                 <option v-for="aportacion in aportacionesINR" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
                             </datalist>
-                                                     <div class="mt-3">Selected: <strong>{{ newTitleAportacion }}</strong></div>   
-
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
                             <input v-model="aportacion.titulo" type="text" name="titulo" id="rtitulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
                             <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
-                                                     <div class="mt-3">Selected: <strong>{{ aportacion.titulo }}</strong></div>   
-
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
                             <input v-model="aportacion.descripcion" type="text" name="descripcion" id="rdescripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
-                         <div class="mt-3">Selected: <strong>{{ aportacion.descripcion }}</strong></div>   
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
                           <b-form-select aria-describedby="rectificarRecursosHelp" v-model="aportacion.recursosAportacion" :options="recursos" multiple :select-size="4"></b-form-select>
                             <div><small id="rectificarRecursosHelp" class="form-text text-muted float-left ml-2"> Pulse Ctrl y seleccione para añadir múltiples opciones </small></div> 
-                          <div class="mt-3">Selected: <strong>{{ aportacion.recursosAportacion }}</strong></div>
                             <!-- <input v-model="aportacion.recursosAportacion" list="recursos" type="text" name="chrecursos" id="chrecursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             <datalist id="recursos">
                                 <option v-for="rec in recursos" :key="rec" v-bind:value="rec"> {{ rec }} </option>

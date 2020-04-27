@@ -1,5 +1,5 @@
 <template>
-  <div class="capas">
+  <div class="mapa">
 
     <Cabecera />
 
@@ -7,7 +7,7 @@
       <Navegacion /> 
     </div>
 
-    <div>
+    <!-- <div>
       <div class="d-inline-flex bd-highlight ml-5 mr-5"> 
 
         <div class="p-2 flex-row bd-highlight">
@@ -97,6 +97,11 @@
 
       </div>
     
+    </div> -->
+
+    <div class="d-inline-flex bd-highlight border border-dark" style="width: 1600px; height:627px;"> 
+    
+    
     </div>
 
   </div>
@@ -109,7 +114,7 @@ import Navegacion from '@/components/Navegacion.vue'
 import DatosINR from '@/components/DatosINR.vue'
 
 export default {
-  name: 'Capas',
+  name: 'Mapa',
   components: {
     Cabecera,
     Navegacion,

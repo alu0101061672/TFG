@@ -17,20 +17,18 @@ async function showAll (req,res) {
 
 
 async function dataAportacion (req,res) {
-    console.log("HOLA");
 
     const aportacion = new Aportaciones({
-        titulo: req.body.titulo,
-        descripcion: req.body.descripcion,
-        recursosAportacion: req.body.recursosAportacion,
+        titulo: req.body.titulo.toUpperCase(),
+        descripcion: req.body.descripcion.toUpperCase(),
+        recursosAportacion: req.body.recursosAportacion.toUpperCase(),
         date: req.body.date,
-        createdBy: req.body.createdBy,
+        createdBy: req.body.createdBy.toUpperCase(),
         inr: req.body.inr._id
 
     });
-console.log(aportacion);
     // Buscamos nombre en DB
-    const aportacionesDB = await Aportaciones.findOne({titulo: req.body.titulo});
+    const aportacionesDB = await Aportaciones.findOne({titulo: req.body.titulo.toUpperCase()});
 
     // Evaluamos si no existe el inr en DB
     if(aportacionesDB){
@@ -72,9 +70,9 @@ async function changeDataAportacion(req,res){
         const aportacionDb = await Aportaciones.findByIdAndUpdate( 
             {_id: (await apor)._id},
             { 
-            titulo: aportaciones.titulo,
-            descripcion: aportaciones.descripcion,
-            recursosAportacion: aportaciones.recursosAportacion,
+            titulo: aportaciones.titulo.toUpperCase(),
+            descripcion: aportaciones.descripcion.toUpperCase(),
+            recursosAportacion: aportaciones.recursosAportacion.toUpperCase(),
             rectificado: true,
             }
         );
@@ -119,10 +117,16 @@ async function deleteAportacion(req,res){
 
 async function showAportacion (req,res) {
 
-    var aportacion = await Aportaciones.findOne({ titulo: req });
+    try{
+        const aportacionDB = await Aportaciones.find({titulo: req.params.titulo});
+        res.json(aportacionDB);
 
-    var aportacionesDB = await Aportaciones.findById(aportacion._id);
- console.log(aportacionesDB);
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
 
 }
 
