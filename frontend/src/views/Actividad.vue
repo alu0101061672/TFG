@@ -263,7 +263,7 @@
 
               <div class="media mb-3">
                 <div class="media-body ml-3">
-                  <div class="bg-light rounded py-2 px-3 mb-2 shadow" style="min-width: 650px; max-width: 650px; font-size: 13px;">
+                  <div class="bg-light rounded py-2 px-3 mb-2 shadow" style="min-width: 650px; max-width: 650px; font-size: 13px; text-truncate">
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> TITULO: {{ aportacion.titulo }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> DESCRIPCION: {{ aportacion.descripcion }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS: {{ aportacion.recursosAportacion.toString() }} </p><br />

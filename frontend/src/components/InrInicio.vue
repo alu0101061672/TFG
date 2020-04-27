@@ -329,13 +329,13 @@
 
             <div class="p-2 flex-row bd-highlight" style="min-width: 250px;text-align: left;">
 
-                <div class="d-inline-flex flex-column bd-highlight ml-3">
+                <div class="d-inline-flex flex-column bd-highlight ml-3 text-uppercase">
                 
                     {{inr.nombre}}
 
                 </div>
 
-                <div class="flex-column bd-highlight ml-3">
+                <div class="flex-column bd-highlight ml-3 text-uppercase">
                 
                     <img src="../assets/localizacion.png" alt="localización" class="img-responsive img-fluid" 
                     height="23" width="23"/> 
@@ -356,13 +356,13 @@
 
             <div class="p-2 flex-row bd-highlight justify-content-center" style="margin-left: 100px; min-width: 1000px;text-align: left;">
 
-                <div class="flex-column bd-highlight">
+                <div class="flex-column bd-highlight text-truncate text-uppercase" style="max-width: 850px;">
                 
                     {{inr.descripcion}}
 
                 </div>
 
-                <div class="flex-column bd-highlight">
+                <div class="flex-column bd-highlight ">
                 
                     Número de afectados: {{inr.numAfectados}}, Tipo: {{inr.tipo}}
 
@@ -370,7 +370,7 @@
 
             </div>
 
-            <div class="p-2 flex-row bd-highlight align-self-end" style="margin-left:;">
+            <div class="p-2 flex-row bd-highlight align-self-end">
 
                 <div class="flex-column bd-highlight justify-content-end">
                 
