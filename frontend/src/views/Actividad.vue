@@ -146,24 +146,32 @@
                        <div class="form-group" style="min-width:370px;">
                             <input v-model="newTitleAportacion" list="aportaciones" type="text" name="tituloARectificar" id="tituloARectificar" tabindex="1" aria-describedby="rectificar" class="text-uppercase form-control" placeholder="Nombre de la aportación a rectificar" value="" required />
                             <datalist id="aportaciones">
-                                <option v-for="aportacion in aportaciones" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
+                                <option v-for="aportacion in aportacionesINR" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
                             </datalist>
+                                                     <div class="mt-3">Selected: <strong>{{ newTitleAportacion }}</strong></div>   
+
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
                             <input v-model="aportacion.titulo" type="text" name="titulo" id="rtitulo" tabindex="1" aria-describedby="titleAportacion" class="text-uppercase form-control" placeholder="Nuevo titulo de la aportación" value="" required />
                             <div><small id="titleAportacion" class="form-text text-muted float-left ml-2"> Formato: NOMBRE APORTACION </small></div>
+                                                     <div class="mt-3">Selected: <strong>{{ aportacion.titulo }}</strong></div>   
+
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
                             <input v-model="aportacion.descripcion" type="text" name="descripcion" id="rdescripcion" tabindex="1" aria-describedby="descripcionAportacion" class="text-uppercase form-control" placeholder="Descripción de la aportación" value="" required />
+                         <div class="mt-3">Selected: <strong>{{ aportacion.descripcion }}</strong></div>   
                         </div>
 
                         <div class="form-group" style="min-width:370px;">
-                            <input v-model="aportacion.recursosAportacion" list="recursos" type="text" name="chrecursos" id="chrecursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                          <b-form-select aria-describedby="rectificarRecursosHelp" v-model="aportacion.recursosAportacion" :options="recursos" multiple :select-size="4"></b-form-select>
+                            <div><small id="rectificarRecursosHelp" class="form-text text-muted float-left ml-2"> Pulse Ctrl y seleccione para añadir múltiples opciones </small></div> 
+                          <div class="mt-3">Selected: <strong>{{ aportacion.recursosAportacion }}</strong></div>
+                            <!-- <input v-model="aportacion.recursosAportacion" list="recursos" type="text" name="chrecursos" id="chrecursos" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
                             <datalist id="recursos">
                                 <option v-for="rec in recursos" :key="rec" v-bind:value="rec"> {{ rec }} </option>
-                            </datalist>
+                            </datalist> -->
                         </div>
 
                         <div class="form-group w-50">
@@ -214,7 +222,7 @@
 
                           <input v-model="removeAportacion" list="aportacionEliminar" type="text" name="titulo" id="dtitulo" tabindex="1" aria-describedby="aportacionEliminar" class="text-uppercase form-control" placeholder="Nombre de la aportación a eliminar" value="" required />
                           <datalist id="aportacionEliminar">
-                              <option v-for="aportacion in aportaciones" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
+                              <option v-for="aportacion in aportacionesINR" :key="aportacion.titulo" v-bind:value="aportacion.titulo"> {{ aportacion.titulo }} </option>
                           </datalist>
 
                         </div>
@@ -255,12 +263,14 @@
 
               <div class="media mb-3">
                 <div class="media-body ml-3">
-                  <div class="bg-light rounded py-2 px-3 mb-2 shadow" style="min-width: 600px; font-size: 13px;">
+                  <div class="bg-light rounded py-2 px-3 mb-2 shadow" style="min-width: 650px; max-width: 650px; font-size: 13px;">
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> TITULO: {{ aportacion.titulo }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> DESCRIPCION: {{ aportacion.descripcion }} </p><br />
-                    <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS NECESARIOS: {{ aportacion.recursos }} </p><br />
+                    <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS: {{ aportacion.recursosAportacion.toString() }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> CREADO POR: {{ aportacion.createdBy }} </p><br />
-                    <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> FECHA PUBLICACIÓN: {{aportacion.date}}  </p> 
+                    <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> {{aportacion.date}}  </p> 
+
+                    <p v-if="aportacion.rectificado === true" class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-75px; margin-right:-125px;"> Rectificado  </p> 
                   </div>
                 </div>
               </div>
@@ -360,7 +370,7 @@ export default {
 
           for (var item in this.aportaciones){
 
-            if((this.aportaciones[item].inr._id === this.inr._id)){
+            if((this.aportaciones[item].inr._id === this.inr._id) && !(this.aportacionesINR.includes(res.data[item]))){
               this.aportacionesINR.push(res.data[item]);
 
             }
@@ -373,13 +383,11 @@ export default {
 
         $("#cerrar").click();
         $('.modal-backdrop').remove();
-        // this.aportacion.titulo = "";
-        // this.aportacion.descripcion = "";
-        // this.aportacion.recursos = "";
+        this.aportacion.titulo = "";
+        this.aportacion.descripcion = "";
+        this.aportacion.recursos = "";
     },
     onSubmit(evt) {
-      console.log("eeeee")
-      console.log(this.aportacion)
 
       evt.preventDefault();
       this.axios
@@ -416,8 +424,6 @@ export default {
         .catch( e => {
         console.log(e.response);
         });
-        this.newTitleAportacion = '';
-        this.inr.aportaciones = {};
 
     },
     async deleteAportacion(removeAportacion) {
@@ -430,7 +436,7 @@ export default {
       .catch( e => {
       console.log(e.response);
       })
-      this.removeAportacion = '';
+      // this.removeAportacion = '';
 
     },
 

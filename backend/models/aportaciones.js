@@ -2,10 +2,10 @@ const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
 var INR = mongoose.model('inr');
 
-const recursos = { 
-    values: ['POLICIA LOCAL', 'POLICIA NACIONAL', 'GUARDIA CIVIL', 'AMBULANCIA', 'BOMBEROS', 'GES' ],
-    message: '{VALUE} no es un recurso válido'
-  }
+// const recursos = { 
+//     values: ['POLICIA LOCAL', 'POLICIA NACIONAL', 'GUARDIA CIVIL', 'AMBULANCIA', 'BOMBEROS', 'GES' ],
+//     message: '{VALUE} no es un recurso válido'
+//   }
 
 const aportacionesSchema = new Schema({
     titulo: {type: String, required: [true, 'Título obligatorio'], unique:true },
@@ -13,7 +13,8 @@ const aportacionesSchema = new Schema({
     recursosAportacion: {type: Array, select: true, required: [true, 'Recursos necesarios obligatorio'] },
     date:{type: Date, default: Date.now},
     createdBy:{type: String},
-    inr: {type: Schema.ObjectId, ref: INR}
+    inr: {type: Schema.ObjectId, ref: INR},
+    rectificado: {type: Boolean, default: false}
     
   });
   

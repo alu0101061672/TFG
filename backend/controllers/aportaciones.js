@@ -74,7 +74,8 @@ async function changeDataAportacion(req,res){
             { 
             titulo: aportaciones.titulo,
             descripcion: aportaciones.descripcion,
-            recursosNecesarios: aportaciones.recursosNecesarios,
+            recursosAportacion: aportaciones.recursosAportacion,
+            rectificado: true,
             }
         );
 

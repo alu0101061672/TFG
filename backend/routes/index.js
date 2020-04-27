@@ -36,9 +36,9 @@ api.delete('/deleteINR/:inr', inr.deleteINR);
 api.get('/showaportaciones', aportacion.showAll);
 // api.get('/getrecursosaportacion', aportacion.getRecursos);
 // api.get('/showaportacion/:titulo', aportacion.showAportacion);
- api.post('/aportacion', aportacion.dataAportacion);
-// api.put('/changeDataAportacion/:aportacion', aportacion.changeDataAportacion);
-// api.delete('/deleteAportacion/:aportacion', aportacion.deleteAportacion);
+api.post('/aportacion', aportacion.dataAportacion);
+api.put('/changeDataAportacion/:aportacion', aportacion.changeDataAportacion);
+api.delete('/deleteAportacion/:aportacion', aportacion.deleteAportacion);
 
 
 api.get('/showall', carpeta.showAll);
