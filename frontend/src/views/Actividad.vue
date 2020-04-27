@@ -255,11 +255,12 @@
           <div class="d-inline-flex flex-row float-left ml-5"> 
 
             <div><u> Aportaciones realizadas </u></div>
+
           </div>
-
           <br /> <br />
-
-          <div class="d-inline-flex flex-row float-left ml-5" v-for="aportacion in aportacionesINR" :key="aportacion.titulo"> 
+          
+          <div class="overflow-auto" style="max-height:350px;">
+            <div class="d-inline-flex flex-row float-left ml-5" v-for="aportacion in aportacionesINR" :key="aportacion.titulo"> 
 
               <div class="media mb-3">
                 <div class="media-body ml-3">
@@ -275,22 +276,10 @@
                 </div>
               </div>
               
+            </div>
           </div>
-          
+
           <br /><br /><br /><br />
-
-          <!-- <div class="d-inline-flex flex-row float-right mr-5"> 
-
-              <div class="media ml-auto mb-3">
-                <div class="media-body">
-                  <div class="bg-light rounded py-2 px-3 mb-2">
-                    <p class="text-small mb-0 text-muted">Apollo University, Delhi, India Test</p>
-                    <p class="small text-muted">12:00 PM | Aug 13</p>
-                  </div>
-                </div>
-              </div>
-
-          </div> -->
 
 
         </div>
