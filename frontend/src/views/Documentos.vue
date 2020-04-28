@@ -42,15 +42,17 @@
 
           </div>
 
-          <div class=" overflow-auto" style="max-height:350px;">
+          <div class="overflow-auto" style="max-height:340px; margin-top: 5px; margin-left: -12px; max-width: 840px;">
             <div class="float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
                 
-                <button class="btn" type="button" data-target="'#'+carpeta._id" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCarpeta">
+                <b-button v-b-toggle="carpeta._id" class="btn bg-white border-0 btn-outline-light float-left" type="button">
                   <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="carpeta cerrada" class="d-flex img-responsive img-fluid" />
-                </button>
-                <div class="text-uppercase d-flex" style="margin-left: 30px; margin-top: -23px;"> {{ carpeta.nombre }}</div>
-                <a href="#" style="margin-left:45px;" class="d-flex alert-link collapse" id=carpeta._id v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </a> 
+                </b-button>
 
+                <div class="text-uppercase d-flex" style="margin-left: 30px; margin-top:8px;"> {{ carpeta.nombre }}</div>
+                <b-collapse :id="carpeta._id">
+                <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </b-link> 
+                </b-collapse>
             </div>
           </div>   
              <!-- <hr class="float-left border border-dark" style="border-right: 1px solid; height: 27px; width: 0px; margin-left: 67px; margin-top: -28px;">
@@ -64,7 +66,7 @@
 
           </div> -->
 
-          <div class="float-right mr-4" style="margin-top: -70px;">
+          <div class="float-right mr-4" style="margin-top: -400px;">
 
             <button type="button" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
                <img src="../assets/carpetaCerrada.svg" alt="añadir carpeta nueva" class="img-responsive img-fluid" 
@@ -110,7 +112,6 @@
                </div>
               </div>
             </div>
-          </div>
 
           <div class="modal fade" id="deleteCarpeta" tabindex="-1" role="dialog" aria-labelledby="Eliminar una carpeta" aria-hidden="true">
              <div class="modal-dialog modal-dialog-centered" role="document">
@@ -140,8 +141,6 @@
                </div>
               </div>
             </div>
-          </div>
-
 
 
             <div class="modal fade" id="addDocument" tabindex="-1" role="dialog" aria-labelledby="Añadir un documento" aria-hidden="true">
@@ -178,8 +177,6 @@
             </div>
           </div>
 
-
-
           <!-- <div class="float-right mr-4" style="margin-top: -15px;">
             <div class="row">
               <form id="custom-search-form" class="form-search form-horizontal pull-right" >
@@ -191,7 +188,7 @@
               </div>
           </div> -->
 
-          <hr style="margin-top: 350px; height: 1px; width: 1000px;
+          <hr style="height: 1px; width: 1000px;
             background: -moz-radial-gradient(center center, circle, black, white); 
             background: -o-radial-gradient(center center, circle, black, white); 
             background: -ms-radial-gradient(center center, circle, black, white); 
@@ -199,7 +196,7 @@
             background: -webkit-radial-gradient(center center, circle, black, white); 
           "/>
 
-          <div class="float-left">
+          <div class="float-left ml-1">
               <div class="text-uppercase">
                 Favoritos
               </div>
@@ -218,6 +215,8 @@
         </div>
 
       </div>
+    </div>
+  </div>
     
 
 </template>
