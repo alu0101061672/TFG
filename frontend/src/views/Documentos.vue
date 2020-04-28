@@ -42,12 +42,17 @@
 
           </div>
 
-          <div class="d-flex float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
-              
-              <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="carpeta cerrada" class="img-responsive img-fluid" />
-              <div class="ml-1 text-uppercase" style="margin-top: -2;"> {{ carpeta.nombre }}</div>
+          <div class=" overflow-auto" style="max-height:350px;">
+            <div class="float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
+                
+                <button class="btn" type="button" data-target="'#'+carpeta._id" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCarpeta">
+                  <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="carpeta cerrada" class="d-flex img-responsive img-fluid" />
+                </button>
+                <div class="text-uppercase d-flex" style="margin-left: 30px; margin-top: -23px;"> {{ carpeta.nombre }}</div>
+                <a href="#" style="margin-left:45px;" class="d-flex alert-link collapse" id=carpeta._id v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </a> 
 
-          </div>
+            </div>
+          </div>   
              <!-- <hr class="float-left border border-dark" style="border-right: 1px solid; height: 27px; width: 0px; margin-left: 67px; margin-top: -28px;">
             <div class="border border-dark mt-4" style="width: 50px; margin-left: 67px;"></div>
               -->
@@ -66,8 +71,14 @@
               height="25" width="25"/>
               <div class="ml-2"> Añadir carpeta </div>
             </button>
+
+            <button type="button" data-toggle="modal" data-target="#deleteCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+               <img src="../assets/delete.svg" alt="eliminar carpeta nuevo" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+              <div class="ml-2"> Eliminar carpeta </div>
+            </button>
           
-            <button type="button" data-toggle="modal" data-target="#addDocument" class="d-flex btn bg-light border border-dark mr-2" style="width:190px; height:36px;">
+            <button type="button" data-toggle="modal" data-target="#addDocument" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
                <img src="../assets/añadirDocumento.svg" alt="añadir documento nuevo" class="img-responsive img-fluid" 
               height="25" width="25"/>
               <div class="ml-2"> Añadir documento </div>
@@ -101,6 +112,37 @@
             </div>
           </div>
 
+          <div class="modal fade" id="deleteCarpeta" tabindex="-1" role="dialog" aria-labelledby="Eliminar una carpeta" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered" role="document">
+               <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="eliminarCarpeta">Eliminar una carpeta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                 </div>
+                 <div class="modal-body">
+
+                    <form id="eliminarCarpeta-form" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
+
+                        <input v-model="removeCarpeta" list="eliminarCarpeta" placeholder="Nombre de la carpeta" aria-describedby="nombreCarpeta" type="nombreCarpeta" name="nombreCarpeta" id="nombreCarpetaEliminar" class="form-control mt-3 mb-3"  required/>
+                        <datalist id="eliminarCarpeta">
+                            <option v-for="carpeta in carpetasINR" :key="carpeta.nombre" v-bind:value="carpeta.nombre"> {{ carpeta.nombre }} </option>
+                        </datalist>
+
+                        <div class="form-group modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
+                            <button type="submit" id="eliminarCarpeta" v-on:click="deleteCarpeta(removeCarpeta)" variant="primary" name="inr-submit" class="btn btn-primary form-control" style="width: 90px;"> Eliminar </button>
+                        </div>
+					          </form>
+
+                 </div>
+               </div>
+              </div>
+            </div>
+          </div>
+
+
 
             <div class="modal fade" id="addDocument" tabindex="-1" role="dialog" aria-labelledby="Añadir un documento" aria-hidden="true">
              <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,12 +157,17 @@
 
                     <form id="documento-form" class="d-inline-flex flex-column justify-content-center align-items-center" role="form">
                        
+                       <input v-model="carpeta.nombre" list="verCarpeta" placeholder="Nombre de la carpeta para el fichero" aria-describedby="nombreCarpeta" type="nombreCarpeta" name="nombreCarpeta" id="nombreCarpetaVer" class="form-control mt-3 mb-3"  required/>
+                        <datalist id="verCarpeta">
+                            <option v-for="carpeta in carpetasINR" :key="carpeta.nombre" v-bind:value="carpeta.nombre"> {{ carpeta.nombre }} </option>
+                        </datalist>
+
                         <b-form-file v-model="file" class="mt-3 mb-3" plain></b-form-file>
-                        <!-- <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div> -->
+                         <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div> 
 
                         <div class="form-group modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
-                            <button type="button" id="guardar" variant="primary" name="inr-submit" class="btn btn-primary" style="width: 90px;"> Añadir </button>
+                            <button type="submit" v-on:click="addFile(file)" id="addFile" variant="primary" name="addFile-submit" class="btn btn-primary" style="width: 90px;"> Añadir </button>
 
                         </div>
 					          </form>
@@ -172,7 +219,6 @@
 
       </div>
     
-    </div>
 
 </template>
 
@@ -212,12 +258,13 @@ export default {
         file: null,
         carpeta: {
           nombre: "",
-          file: "",
+          file: [],
           inr: this.$store.getters.getINR,
         },
         carpetas: [],
         carpetasINR: [],
         inr: this.$store.getters.getINR,
+        removeCarpeta: "",
 
 
 
@@ -229,14 +276,33 @@ export default {
   },
   methods: {
 
+    async addFile(filename) {
+
+      this.carpeta.file.push(filename.name);
+      console.log(this.carpeta)
+      console.log("gol")
+
+      this.axios
+        .put(URL + "/user/addFile",  this.carpeta)
+        .then(res => {
+            console.log(res.data);
+            })
+        .catch(e => {
+        console.log(e.response);
+        });
+
+    },
+
     async getCarpetas () {
 
       await this.axios
         .get(URL + "/user/showcarpetas")
         .then(res => {
-
           console.log(res.data);
-          this.carpetas = res.data;
+
+          if(!(this.carpetas.includes(res.data))){ 
+              this.carpetas = res.data;
+          }
 
           for (var item in this.carpetas){
 
@@ -253,7 +319,7 @@ export default {
 
         $("#cerrar").click();
         $('.modal-backdrop').remove();
-        this.carpetas.nombre = "";
+        this.carpetas = {};
 
     },
 
@@ -269,6 +335,21 @@ export default {
         console.log(e.response);
         });
         this.$store.commit("setCarpeta", this.carpeta);
+
+    },
+
+    async deleteCarpeta(removeCarpeta) {
+
+      await this.axios
+      .delete(URL + `/user/deleteCarpeta/${removeCarpeta}`)
+      .then(res => {
+            console.log(res.data);
+            })
+      .catch( e => {
+      console.log(e.response);
+      })
+      this.removeCarpeta = '';
+
 
     },
 

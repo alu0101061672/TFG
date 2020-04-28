@@ -14,14 +14,10 @@ async function showAll (req,res) {
 }
 
 async function dataCarpeta (req,res) {
-    console.log("sola")
-    console.log(req.body)
-    console.log(req.body.nombre)
-
 
     const carpeta = new Carpetas({
         nombre: req.body.nombre.toUpperCase(),
-        file: req.body.file.toUpperCase(),
+        file: req.body.file,
         inr: req.body.inr._id
 
     });
@@ -50,18 +46,47 @@ async function dataCarpeta (req,res) {
     }
 }
 
+async function fileInCarpeta(req,res) {
+
+    const nombreCarpeta = req.body.nombre.toUpperCase();
+    const file = req.body.file;
+
+    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
+    
+    var array = [];
+    array.push((await carpeta).file);
+    array.push(file);
+
+    try{
+        const carpetaDb = await Carpetas.findByIdAndUpdate( 
+            {_id: (await carpeta)._id},
+            { 
+                file: array,
+            }
+        );
+
+        res.json(carpetaDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+
+}
+
 async function deleteCarpeta(req,res){
 
-    const nombreCarpeta = req.params.carpeta;
+    const nombreCarpeta = req.params.nombre.toUpperCase();
 
     var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
 
-
+ 
     try{
 
         //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
         const carpetaDB = await Carpetas.findByIdAndRemove((await carpeta)._id);
-
 
         if(!carpetaDB){
             return res.status(400).json({
@@ -116,6 +141,7 @@ module.exports = {
     showAll,
     dataCarpeta,
     deleteCarpeta,
+    fileInCarpeta,
     deleteFileFromCarpeta,
 
 

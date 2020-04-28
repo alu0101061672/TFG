@@ -35,6 +35,7 @@ api.delete('/deleteAportacion/:aportacion', aportacion.deleteAportacion);
 
 api.get('/showcarpetas', carpeta.showAll);
 api.post('/addCarpeta', carpeta.dataCarpeta);
+api.put('/addFile', carpeta.fileInCarpeta);
 api.delete('/deleteCarpeta/:nombre', carpeta.deleteCarpeta);
 
 
