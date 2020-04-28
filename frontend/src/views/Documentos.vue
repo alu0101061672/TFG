@@ -39,35 +39,8 @@
 
             </div>
 
-
           </div>
-
-          <div class="overflow-auto" style="max-height:340px; margin-top: 5px; margin-left: -12px; max-width: 840px;">
-            <div class="float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
-                
-                <b-button v-b-toggle="carpeta._id" class="btn bg-white border-0 btn-outline-light float-left" type="button">
-                  <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="carpeta cerrada" class="d-flex img-responsive img-fluid" />
-                </b-button>
-
-                <div class="text-uppercase d-flex" style="margin-left: 30px; margin-top:8px;"> {{ carpeta.nombre }}</div>
-                <b-collapse :id="carpeta._id">
-                <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </b-link> 
-                </b-collapse>
-            </div>
-          </div>   
-             <!-- <hr class="float-left border border-dark" style="border-right: 1px solid; height: 27px; width: 0px; margin-left: 67px; margin-top: -28px;">
-            <div class="border border-dark mt-4" style="width: 50px; margin-left: 67px;"></div>
-              -->
-          <!--Para cada carpeta-->
-          <!-- <div style="margin-left: 20px;">
-
-            <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="a" class="img-responsive img-fluid ml-5 float-left" />
-            <div class=" ml-1 float-left text-uppercase" style="margin-top: -2;"> Nombre carpeta</div>
-
-          </div> -->
-
-          <div class="float-right mr-4" style="margin-top: -400px;">
-
+          <div class="float-right mr-3">
             <button type="button" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
                <img src="../assets/carpetaCerrada.svg" alt="añadir carpeta nueva" class="img-responsive img-fluid" 
               height="25" width="25"/>
@@ -85,6 +58,53 @@
               height="25" width="25"/>
               <div class="ml-2"> Añadir documento </div>
             </button>
+          </div>
+
+          <div class="overflow-auto" style="max-height:340px; margin-top: 5px; margin-left: -12px; max-width: 840px;">
+            <div class="float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
+                
+                <b-button v-b-toggle="carpeta._id" class="btn bg-white border-0 btn-outline-light float-left" type="button">
+                  <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="carpeta cerrada" class="d-flex img-responsive img-fluid" />
+                </b-button>
+
+                <div class="text-uppercase d-flex" style="margin-left: 30px; margin-top:8px;"> {{ carpeta.nombre }}</div>
+                <b-collapse :id="carpeta._id">
+                <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </b-link> 
+                </b-collapse>
+            </div>
+          </div>  
+          
+           
+             <!-- <hr class="float-left border border-dark" style="border-right: 1px solid; height: 27px; width: 0px; margin-left: 67px; margin-top: -28px;">
+            <div class="border border-dark mt-4" style="width: 50px; margin-left: 67px;"></div>
+              -->
+          <!--Para cada carpeta-->
+          <!-- <div style="margin-left: 20px;">
+
+            <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="a" class="img-responsive img-fluid ml-5 float-left" />
+            <div class=" ml-1 float-left text-uppercase" style="margin-top: -2;"> Nombre carpeta</div>
+
+          </div> -->
+
+          <div class="float-right mr-4" > <!-- style="margin-top: -400px;" -->
+
+            <!-- <button type="button" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+               <img src="../assets/carpetaCerrada.svg" alt="añadir carpeta nueva" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+              <div class="ml-2"> Añadir carpeta </div>
+            </button>
+
+            <button type="button" data-toggle="modal" data-target="#deleteCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+               <img src="../assets/delete.svg" alt="eliminar carpeta nuevo" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+              <div class="ml-2"> Eliminar carpeta </div>
+            </button>
+          
+            <button type="button" data-toggle="modal" data-target="#addDocument" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+               <img src="../assets/añadirDocumento.svg" alt="añadir documento nuevo" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+              <div class="ml-2"> Añadir documento </div>
+            </button> -->
 
             <div class="modal fade" id="addCarpeta" tabindex="-1" role="dialog" aria-labelledby="Añadir una carpeta" aria-hidden="true">
              <div class="modal-dialog modal-dialog-centered" role="document">
@@ -187,7 +207,7 @@
               </form>
               </div>
           </div> -->
-
+        <div class="d-flex align-items-end">
           <hr style="height: 1px; width: 1000px;
             background: -moz-radial-gradient(center center, circle, black, white); 
             background: -o-radial-gradient(center center, circle, black, white); 
@@ -211,7 +231,7 @@
                   
               </div>
           </div>
-
+        </div>
         </div>
 
       </div>
