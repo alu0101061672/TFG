@@ -24,6 +24,33 @@
 
         <div class="d-flex-row bd-highlight border border-dark mt-2" style="width: 1100px; height:627px;">
           
+         <div class="ml-5" style="bottom: 0px; margin-bottom: 210px; position: absolute;" >
+          <hr style="height: 1px; width: 1000px;
+            background: -moz-radial-gradient(center center, circle, black, white); 
+            background: -o-radial-gradient(center center, circle, black, white); 
+            background: -ms-radial-gradient(center center, circle, black, white); 
+            background: radial-gradient(center center, circle, black, white); 
+            background: -webkit-radial-gradient(center center, circle, black, white); 
+          "/>
+
+          <div class="float-left ml-1">
+              <div class="text-uppercase mb-3">
+                Favoritos
+              </div>
+              <div class="d-flex" v-for="favorito in favoritos" :key="favorito.nombre">
+                <img src="../assets/carpeta.svg" alt="carpeta" class="img-responsive img-fluid mr-1" 
+                  height="25" width="25"/> 
+
+                <div class="text-uppercase" style="margin-left:;">
+                  {{ favorito.nombre }}
+                </div>
+
+                  
+              </div>
+          </div>
+        </div>
+
+
           <div>
             <div class="d-flex mt-5 ml-5">
                          <!-- '<div style='margin-left: 20px;'>;
@@ -32,6 +59,7 @@
               <div class='ml-1 float-left text-uppercase' style='margin-top: -2px;'> Nombre carpeta</div>;
 
               </div>;'" -->
+
              <div class="float-left btn" height="40" width="40">
               <img src="../assets/carpeta.svg" alt="carpeta" class="img-responsive img-fluid" 
                 height="40" width="40"/>
@@ -60,9 +88,21 @@
             </button>
           </div>
 
-          <div class="overflow-auto" style="max-height:340px; margin-top: 5px; margin-left: -12px; max-width: 840px;">
+          <div class="overflow-auto" style="max-height:340px; margin-top: 5px; left: -12px; position: relative; max-width: 840px;">
             <div class="float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
-                
+
+                <div v-if="carpeta.fav === false">
+                  <b-button v-on:click="addFavorito(carpeta)" class="btn bg-white border-0 btn-outline-light float-left" type="submit">
+                  <img src="../assets/favoritovacio.svg" height="25" width="25" alt="favorito vacio" class="d-flex img-responsive img-fluid" />
+                  </b-button>
+                </div>
+                <div v-if="carpeta.fav === true">
+                  <b-button  v-on:click="removeFavorito(carpeta)" class="btn bg-white border-0 btn-outline-light float-left" type="button">
+                  <img src="../assets/favoritolleno.svg" height="25" width="25" alt="favorito lleno" class="d-flex img-responsive img-fluid" />
+                  </b-button>
+                </div>
+
+
                 <b-button v-b-toggle="carpeta._id" class="btn bg-white border-0 btn-outline-light float-left" type="button">
                   <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="carpeta cerrada" class="d-flex img-responsive img-fluid" />
                 </b-button>
@@ -206,32 +246,8 @@
                   </div>
               </form>
               </div>
-          </div> -->
-        <div class="d-flex align-items-end">
-          <hr style="height: 1px; width: 1000px;
-            background: -moz-radial-gradient(center center, circle, black, white); 
-            background: -o-radial-gradient(center center, circle, black, white); 
-            background: -ms-radial-gradient(center center, circle, black, white); 
-            background: radial-gradient(center center, circle, black, white); 
-            background: -webkit-radial-gradient(center center, circle, black, white); 
-          "/>
+          </div> Poner antes-->
 
-          <div class="float-left ml-1">
-              <div class="text-uppercase">
-                Favoritos
-              </div>
-              <div class="d-flex-inline" style="margin-top: 10px;">
-                <img src="../assets/carpeta.svg" alt="carpeta" class="img-responsive img-fluid" 
-                  height="25" width="25"/> 
-
-                <div class="text-uppercase" style="margin-left: 110px; margin-top: -22px;">
-                  Nombre
-                </div>
-
-                  
-              </div>
-          </div>
-        </div>
         </div>
 
       </div>
@@ -284,6 +300,8 @@ export default {
         carpetasINR: [],
         inr: this.$store.getters.getINR,
         removeCarpeta: "",
+        favoritos: [],
+
 
 
 
@@ -293,13 +311,52 @@ export default {
   async mounted (){
       await this.getCarpetas();
   },
+  watch: {
+
+
+
+    
+
+  },
   methods: {
+
+    addFavorito(carpeta) {
+
+
+      if(!(this.favoritos.includes(carpeta))){
+        this.favoritos.push(carpeta);
+      }
+
+      this.axios
+        .put(URL + "/user/addFavorito",  carpeta)
+        .then(res => {
+            console.log(res.data);
+            })
+        .catch(e => {
+        console.log(e.response);
+        });
+
+    },
+    removeFavorito(carpeta) {
+
+      if((this.favoritos.includes(carpeta))){
+        this.favoritos.pop(carpeta);
+      }
+
+      this.axios
+        .put(URL + "/user/removeFavorito",  carpeta)
+        .then(res => {
+            console.log(res.data);
+            })
+        .catch(e => {
+        console.log(e.response);
+        });
+
+    },
 
     async addFile(filename) {
 
       this.carpeta.file.push(filename.name);
-      console.log(this.carpeta)
-      console.log("gol")
 
       this.axios
         .put(URL + "/user/addFile",  this.carpeta)

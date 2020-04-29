@@ -137,12 +137,66 @@ async function deleteFileFromCarpeta(req,res){
 
 }
 
+async function addFavorito(req,res) {
+
+    const nombreCarpeta = req.body.nombre.toUpperCase();
+
+    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
+    
+
+    try{
+        const carpetaDb = await Carpetas.findByIdAndUpdate( 
+            {_id: (await carpeta)._id},
+            { 
+                fav: true,
+            }
+        );
+
+        res.json(carpetaDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+
+}
+
+async function removeFavorito(req,res) {
+
+    const nombreCarpeta = req.body.nombre.toUpperCase();
+
+    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
+    
+
+    try{
+        const carpetaDb = await Carpetas.findByIdAndUpdate( 
+            {_id: (await carpeta)._id},
+            { 
+                fav: false,
+            }
+        );
+
+        res.json(carpetaDb);
+
+    } catch (error) {
+        return res.status(400).json({
+          mensaje: 'Ocurrio un error',
+          error
+        });
+    }
+
+}
+
 module.exports = {
     showAll,
     dataCarpeta,
     deleteCarpeta,
     fileInCarpeta,
     deleteFileFromCarpeta,
+    addFavorito,
+    removeFavorito,
 
 
 

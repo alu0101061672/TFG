@@ -36,11 +36,9 @@ api.delete('/deleteAportacion/:aportacion', aportacion.deleteAportacion);
 api.get('/showcarpetas', carpeta.showAll);
 api.post('/addCarpeta', carpeta.dataCarpeta);
 api.put('/addFile', carpeta.fileInCarpeta);
+api.put('/addFavorito', carpeta.addFavorito)
+api.put('/removeFavorito', carpeta.removeFavorito)
 api.delete('/deleteCarpeta/:nombre', carpeta.deleteCarpeta);
-
-
-
-
 
 
 
