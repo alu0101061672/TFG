@@ -142,14 +142,11 @@ async function addFavorito(req,res) {
     const nombreCarpeta = req.body.nombre.toUpperCase();
 
     var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
-    
 
     try{
         const carpetaDb = await Carpetas.findByIdAndUpdate( 
             {_id: (await carpeta)._id},
-            { 
-                fav: true,
-            }
+            {fav: true}
         );
 
         res.json(carpetaDb);
@@ -174,7 +171,7 @@ async function removeFavorito(req,res) {
         const carpetaDb = await Carpetas.findByIdAndUpdate( 
             {_id: (await carpeta)._id},
             { 
-                fav: false,
+                fav: false
             }
         );
 

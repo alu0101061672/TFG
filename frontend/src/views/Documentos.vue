@@ -13,19 +13,71 @@
         <div class="p-2 flex-row bd-highlight">
 
             <div class="d-inline-flex flex-column bd-highlight border border-dark" style="width: 500px; height: 627px;">
-              <!-- <div class="d-inline-flex flex-column bd-highlight border-dark border-left" style="height: 273px;">
-              <div class="d-inline-flex flex-column bd-highlight border-dark border-right" style="height: 273px;">
-                -->
               <DatosINR /> 
-               <!-- </div></div> -->
             </div>
 
         </div>
 
-        <div class="d-flex-row bd-highlight border border-dark mt-2" style="width: 1100px; height:627px;">
+        <div class="d-flex flex-column bd-highlight border border-dark mt-2" style="width: 1100px; height:627px;">
+         
+          <div class="d-inline-flex flex-column mt-3" style="max-width: 840px; max-height:350px;">
+
+            <div class="btn" style="justify-content: flex-start;display: flex; margin-left: 95px;" height="40" width="40">
+              <img src="../assets/carpeta.svg" alt="carpeta" class="img-responsive img-fluid" 
+                height="40" width="40"/>
+             </div>
+            
+            <div class="overflow-auto" style="margin-top: 5px; left: -12px; position: relative;">
+            <div class="float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
+
+                <div v-if="!carpeta.fav">
+                  <b-button v-on:click="addFavorito(carpeta)" class="btn bg-white border-0 btn-outline-light float-left" type="submit">
+                  <img src="../assets/favoritovacio.svg" height="25" width="25" alt="favorito vacio" class="d-flex img-responsive img-fluid" />
+                  </b-button>
+                </div>
+                <div v-else>
+                  <b-button  v-on:click="removeFavorito(carpeta)" class="btn bg-white border-0 btn-outline-light float-left" type="button">
+                  <img src="../assets/favoritolleno.svg" height="25" width="25" alt="favorito lleno" class="d-flex img-responsive img-fluid" />
+                  </b-button>
+                </div>
+
+
+                <b-button v-b-toggle="carpeta._id" class="btn bg-white border-0 btn-outline-light float-left" type="button">
+                  <img src="../assets/carpetaCerrada.svg" height="25" width="25" alt="carpeta cerrada" class="d-flex img-responsive img-fluid" />
+                </b-button>
+
+                <div class="text-uppercase d-flex" style="margin-left: 30px; margin-top:8px;"> {{ carpeta.nombre }}</div>
+                <b-collapse :id="carpeta._id">
+                <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </b-link> 
+                </b-collapse>
+            </div>
+          </div>
+
+          <div class="d-inline-flex flex-row" style="max-width: 250px; position:absolute; right: 120px; margin-top:30px;">
+            <div class="float-right mr-3">
+            <button type="button" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+               <img src="../assets/carpetaCerrada.svg" alt="añadir carpeta nueva" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+              <div class="ml-2"> Añadir carpeta </div>
+            </button>
+
+            <button type="button" data-toggle="modal" data-target="#deleteCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+               <img src="../assets/delete.svg" alt="eliminar carpeta nuevo" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+              <div class="ml-2"> Eliminar carpeta </div>
+            </button>
           
-         <div class="ml-5" style="bottom: 0px; margin-bottom: 210px; position: absolute;" >
-          <hr style="height: 1px; width: 1000px;
+            <button type="button" data-toggle="modal" data-target="#addDocument" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+               <img src="../assets/añadirDocumento.svg" alt="añadir documento nuevo" class="img-responsive img-fluid" 
+              height="25" width="25"/>
+              <div class="ml-2"> Añadir documento </div>
+            </button>
+          </div>
+          </div>
+          </div>
+
+          <div class="d-inline-flex flex-column justify-content-end">
+            <hr style="height: 1px; width: 1000px;
             background: -moz-radial-gradient(center center, circle, black, white); 
             background: -o-radial-gradient(center center, circle, black, white); 
             background: -ms-radial-gradient(center center, circle, black, white); 
@@ -33,34 +85,54 @@
             background: -webkit-radial-gradient(center center, circle, black, white); 
           "/>
 
-          <div class="float-left ml-1">
-              <div class="text-uppercase mb-3">
-                Favoritos
+            <div class="text-uppercase" style="margin-left: -735px; margin-top: 10px;">
+              <img src="../assets/carpeta.svg" height="25" width="25" alt="a" class="img-responsive img-fluid mr-1" />
+              Favoritos
+            </div>
+
+            <div class="overflow-auto" style="min-height: 170px;max-height: 170px;">
+              <div class="d-flex mt-2" v-for="favorito in favoritos" :key="favorito.nombre" style="margin-left:120px;">
+                    <img src="../assets/carpetaCerrada.svg" alt="carpeta" class="img-responsive img-fluid mr-1" 
+                      height="25" width="25"/> 
+
+                    <div class="text-uppercase">
+                      {{ favorito.nombre }}
+                    </div>
+
               </div>
-              <div class="d-flex" v-for="favorito in favoritos" :key="favorito.nombre">
+            </div>
+
+          </div>
+          
+<!--           
+         <div class="ml-4 d-flex flex-column" style="margin-top: 500px" >
+          <hr style="height: 1px; width: 1000px;
+            background: -moz-radial-gradient(center center, circle, black, white); 
+            background: -o-radial-gradient(center center, circle, black, white); 
+            background: -ms-radial-gradient(center center, circle, black, white); 
+            background: radial-gradient(center center, circle, black, white); 
+            background: -webkit-radial-gradient(center center, circle, black, white); 
+          "/>
+          <div class="float-left ml-5 text-uppercase">
+            Favoritos
+          </div>
+
+          <div class="d-flex" v-for="favorito in favoritos" :key="favorito.nombre">
                 <img src="../assets/carpeta.svg" alt="carpeta" class="img-responsive img-fluid mr-1" 
                   height="25" width="25"/> 
 
-                <div class="text-uppercase" style="margin-left:;">
+                <div class="text-uppercase">
                   {{ favorito.nombre }}
                 </div>
 
-                  
-              </div>
           </div>
-        </div>
 
+         </div>
 
-          <div>
-            <div class="d-flex mt-5 ml-5">
-                         <!-- '<div style='margin-left: 20px;'>;
+          <div style="margin-top: -580px;">
+            <div class="d-flex" style="margin-left:;">
 
-              <img src='../assets/carpetaCerrada.svg' height='25' width='25' alt='carpetaCerrada' class='img-responsive img-fluid ml-5 float-left' />;
-              <div class='ml-1 float-left text-uppercase' style='margin-top: -2px;'> Nombre carpeta</div>;
-
-              </div>;'" -->
-
-             <div class="float-left btn" height="40" width="40">
+             <div class="btn" height="40" width="40">
               <img src="../assets/carpeta.svg" alt="carpeta" class="img-responsive img-fluid" 
                 height="40" width="40"/>
              </div>
@@ -86,9 +158,9 @@
               height="25" width="25"/>
               <div class="ml-2"> Añadir documento </div>
             </button>
-          </div>
+          </div> -->
 
-          <div class="overflow-auto" style="max-height:340px; margin-top: 5px; left: -12px; position: relative; max-width: 840px;">
+          <!-- <div class="overflow-auto" style="max-height:340px; margin-top: 5px; left: -12px; position: relative; max-width: 840px;">
             <div class="float-left" v-for="carpeta in carpetasINR" :key="carpeta.nombre" style="margin-left: 68px; min-width: 700px;">
 
                 <div v-if="carpeta.fav === false">
@@ -112,8 +184,8 @@
                 <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </b-link> 
                 </b-collapse>
             </div>
-          </div>  
-          
+          </div>  -->
+          <!-- ----------------------------- -->
            
              <!-- <hr class="float-left border border-dark" style="border-right: 1px solid; height: 27px; width: 0px; margin-left: 67px; margin-top: -28px;">
             <div class="border border-dark mt-4" style="width: 50px; margin-left: 67px;"></div>
@@ -126,7 +198,7 @@
 
           </div> -->
 
-          <div class="float-right mr-4" > <!-- style="margin-top: -400px;" -->
+          <!-- <div class="float-right mr-4" > style="margin-top: -400px;" -->
 
             <!-- <button type="button" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
                <img src="../assets/carpetaCerrada.svg" alt="añadir carpeta nueva" class="img-responsive img-fluid" 
@@ -222,7 +294,7 @@
                         </datalist>
 
                         <b-form-file v-model="file" class="mt-3 mb-3" plain></b-form-file>
-                         <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div> 
+                         <!-- <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div>  -->
 
                         <div class="form-group modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar" style="width: 90px;"> Cancelar </button>
@@ -251,9 +323,7 @@
         </div>
 
       </div>
-    </div>
-  </div>
-    
+    </div>    
 
 </template>
 
@@ -295,6 +365,7 @@ export default {
           nombre: "",
           file: [],
           inr: this.$store.getters.getINR,
+          fav: false,
         },
         carpetas: [],
         carpetasINR: [],
@@ -313,15 +384,12 @@ export default {
   },
   watch: {
 
-
-
     
 
   },
   methods: {
 
     addFavorito(carpeta) {
-
 
       if(!(this.favoritos.includes(carpeta))){
         this.favoritos.push(carpeta);
@@ -330,11 +398,13 @@ export default {
       this.axios
         .put(URL + "/user/addFavorito",  carpeta)
         .then(res => {
+            this.getCarpetas();
             console.log(res.data);
             })
         .catch(e => {
         console.log(e.response);
         });
+
 
     },
     removeFavorito(carpeta) {
@@ -346,11 +416,14 @@ export default {
       this.axios
         .put(URL + "/user/removeFavorito",  carpeta)
         .then(res => {
+                        this.getCarpetas();
+
             console.log(res.data);
             })
         .catch(e => {
         console.log(e.response);
         });
+
 
     },
 
