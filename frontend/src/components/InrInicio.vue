@@ -13,8 +13,10 @@
                 Fecha
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
-                <a class="dropdown-item" href="#"> Comienzan antes </a>
-                <a class="dropdown-item" href="#"> Comienzan más tarde </a>               
+                <a class="dropdown-item" v-on:click="getFechasRecientes()" href="#"> Comienzan antes </a>
+                <a class="dropdown-item" v-on:click="getFechasLejanas()" href="#"> Comienzan más tarde </a>
+                <div class="dropdown-divider"></div>
+                <a v-on:click="reload()" class="dropdown-item" href="#"> Sin filtro </a>                  
               </div>
             
             </div>
@@ -569,6 +571,10 @@ export default {
             console.log(err);
             });
         },
+        reload(){
+
+            location.reload();
+        },
         putNormal(){
 
             this.showINRs = "normal";
@@ -636,6 +642,15 @@ export default {
 
 
 
+        },
+
+        getFechasRecientes(){
+
+            this.inrs.sort((a, b) => new Date(a.fechaInicio) > new Date(b.fechaInicio));
+        },
+        getFechasLejanas(){
+
+            this.inrs.sort((a, b) => new Date(a.fechaInicio) <  new Date(b.fechaInicio));
         },
 
         getSimulacros(){
