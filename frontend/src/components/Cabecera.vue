@@ -53,7 +53,7 @@ export default {
     data() {
       return {
         sesion: this.$store.getters.getSession,
-        perfil: this.$store.getters.getUsuario,
+        perfil: localStorage.getItem("Usuario"),
         usuarios: [],
         activeUsers: [],
 

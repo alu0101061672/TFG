@@ -13,6 +13,14 @@ async function showAll (req,res) {
     });
 }
 
+async function showFavs (req,res) {
+
+    const carpetasDB = await Carpetas.find({fav: true});
+    res.status(200).send(carpetasDB);
+
+
+}
+
 async function dataCarpeta (req,res) {
 
     const carpeta = new Carpetas({
@@ -188,6 +196,7 @@ async function removeFavorito(req,res) {
 
 module.exports = {
     showAll,
+    showFavs,
     dataCarpeta,
     deleteCarpeta,
     fileInCarpeta,

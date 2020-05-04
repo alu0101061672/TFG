@@ -263,7 +263,7 @@
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> DESCRIPCION: {{ aportacion.descripcion }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> RECURSOS: {{ aportacion.recursosAportacion.toString() }} </p><br />
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> CREADO POR: {{ aportacion.createdBy }} </p><br />
-                    <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> {{aportacion.date}}  </p> 
+                    <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> {{aportacion.date.split('T')[0]}}  </p> 
 
                     <p v-if="aportacion.rectificado === true" class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-75px; margin-right:-125px;"> Rectificado  </p> 
                   </div>
@@ -307,17 +307,17 @@ export default {
       aportaciones: [],
       aportacionesINR: [],
       newTitleAportacion: "",
-      rol: this.$store.getters.getRole,
-      usuario: this.$store.getters.getUsuario,
+      rol: localStorage.getItem("Rol"),
+      usuario: localStorage.getItem("Usuario"),
       removeAportacion: "",
-      inr: this.$store.getters.getINR,
+      inr: JSON.parse(localStorage.getItem("INR")),
       aportacion: {
         titulo: "",
         descripcion: "",
         recursosAportacion: [],
         date: Date.now(),
-        createdBy: this.$store.getters.getUsuario,
-        inr: this.$store.getters.getINR,
+        createdBy: localStorage.getItem("Usuario"),
+        inr: JSON.parse(localStorage.getItem("INR")),
 
       },
 

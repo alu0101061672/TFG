@@ -44,7 +44,7 @@
              <div class="p-2"> 
                <p> {{ resConsulta.titulo }} </p>
                <p> {{ resConsulta.descripcion }} </p>
-               <p> {{ resConsulta.recursosAportacion.toString() }} </p>
+               <!-- <p> {{ resConsulta.recursosAportacion.toString() }} </p> -->
                <p> {{ resConsulta.createdBy }} </p>
                <p> {{ resConsulta.date }} </p>
                <p> {{ resConsulta.inr }} </p>
@@ -95,14 +95,18 @@ export default {
   methods: {
 
     async searchInfo(informacion) {
-      
+       console.log("ddddd")
       await this.axios
         .put(URL + `/user/showaportacion/${informacion}`)
         .then(res => {
-          
-          for (var item in res.data){
-            this.resConsulta = res.data[item];
-          }
+                     console.log(res)
+
+          // for (var item in res.data){
+          //             console.log("eeeeeeee")
+
+          //   this.resConsulta = res.data[item];
+          // }
+          // console.log("aaaaaaaaaaa")
 
         })
         .catch(err => {

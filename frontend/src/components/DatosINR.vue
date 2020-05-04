@@ -13,10 +13,10 @@
 
       <br />
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Nombre: </div> 
-          <div class="text-dark pl-1 mr-3 text-uppercase"> {{ inr.nombre }} </div>
+          <div class="text-dark pl-1 mr-3 text-uppercase"> {{ JSON.parse(inr).nombre }} </div>
 
       </div>
 
@@ -25,25 +25,25 @@
       <div class="d-inline-flex flex-row float-left ml-3"> 
           
           <div class="text-dark"> Descripción: </div> 
-          <div class="text-dark pl-1 text-justify mr-3 text-uppercase text-break" style="max-width: 370px;"> {{ inr.descripcion }} </div>
+          <div class="text-dark pl-1 text-justify mr-3 text-uppercase text-break" style="max-width: 370px; min-width:370px;"> {{ JSON.parse(inr).descripcion }} </div>
 
       </div>
 
       <br />
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Tipo de INR: </div> 
-          <div class="text-dark pl-1 mr-3 text-uppercase"> {{ inr.tipo }} </div>
+          <div class="text-dark pl-1 mr-3 text-uppercase"> {{ JSON.parse(inr).tipo }} </div>
 
       </div>
 
       <br />
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Fecha de inicio: </div> 
-          <div class="text-dark pl-1 pr-1 mr-3 text-uppercase"> {{ inr.fechaInicio }} </div> |
+          <div class="text-dark pl-1 pr-1 mr-1 text-uppercase"> {{ JSON.parse(inr).fechaInicio.split('T')[0] }} </div> |
           <div><img src="../assets/date.svg" alt="date" class=" ml-1 img-responsive img-fluid" 
                 height="20" width="20"/>
           </div> 
@@ -52,10 +52,10 @@
 
         <br />
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Fecha de finalización: </div> 
-          <div class="text-dark pl-1 pr-1 mr-3 text-uppercase"> {{ inr.fechaFin }} </div> | 
+          <div class="text-dark pl-1 pr-1 mr-1 text-uppercase"> {{ JSON.parse(inr).fechaFin.split('T')[0] }} </div> | 
           <div><img src="../assets/date.svg" alt="date" class=" ml-1 img-responsive img-fluid" 
                 height="20" width="20"/>
           </div>
@@ -64,29 +64,29 @@
 
         <br />
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Localización: </div> 
-          <div class="text-dark pl-1 mr-3 text-uppercase"> {{ inr.localizacion }} </div> 
+          <div class="text-dark pl-1 mr-3 text-uppercase"> {{ JSON.parse(inr).localizacion }} </div> 
 
       </div>
 
         <br />
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Número de afectados: </div> 
-          <div class="text-dark pl-1 mr-3"> {{ inr.numAfectados }} </div> 
+          <div class="text-dark pl-1 mr-3"> {{ JSON.parse(inr).numAfectados }} </div> 
 
       </div>
 
       <br /> 
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Recursos necesarios: </div> 
           <div class="text-dark pl-1 mr-3 text-uppercase"> 
-                {{ inr.recursosNecesarios }}
+                {{ JSON.parse(inr).recursosNecesarios }}
 
             <!-- <div class="dropdown">
 
@@ -108,11 +108,11 @@
 
       <br /> 
 
-      <div class="d-inline-flex flex-row float-left ml-3"> 
+      <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
           <div class="text-dark"> Tipo de terreno afectado: </div> 
           <div class="text-dark pl-1 mr-3 text-uppercase"> 
-              {{ inr.tipoTerreno }}
+              {{ JSON.parse(inr).tipoTerreno }}
             <!-- <div class="dropdown">
 
               <button class="btn btn-secondary dropdown-toggle pl-1 pr-1 p-0 important!" style="color:black; background-color:white;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -143,7 +143,7 @@ export default {
   name: 'DatosINR',
     data() {
       return {
-        inr: this.$store.getters.getINR,
+        inr: localStorage.getItem("INR"),
        
       };
 

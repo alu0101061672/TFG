@@ -21,7 +21,7 @@ async function dataAportacion (req,res) {
     const aportacion = new Aportaciones({
         titulo: req.body.titulo.toUpperCase(),
         descripcion: req.body.descripcion.toUpperCase(),
-        recursosAportacion: req.body.recursosAportacion.toUpperCase(),
+        recursosAportacion: req.body.recursosAportacion,
         date: req.body.date,
         createdBy: req.body.createdBy.toUpperCase(),
         inr: req.body.inr._id
@@ -72,7 +72,7 @@ async function changeDataAportacion(req,res){
             { 
             titulo: aportaciones.titulo.toUpperCase(),
             descripcion: aportaciones.descripcion.toUpperCase(),
-            recursosAportacion: aportaciones.recursosAportacion.toUpperCase(),
+            recursosAportacion: aportaciones.recursosAportacion,
             rectificado: true,
             }
         );
@@ -116,6 +116,7 @@ async function deleteAportacion(req,res){
 }
 
 async function showAportacion (req,res) {
+
 
     try{
         const aportacionDB = await Aportaciones.find({titulo: req.params.titulo});

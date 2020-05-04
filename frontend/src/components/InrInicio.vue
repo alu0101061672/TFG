@@ -372,9 +372,9 @@
 
             <div class="p-2 flex-row bd-highlight align-self-end">
 
-                <div class="flex-column bd-highlight justify-content-end">
+                <div class="flex-column bd-highlight justify-content-end" style="margin-left:130px;">
                 
-                    {{inr.fechaInicio}}
+                    {{inr.fechaInicio.split('T')[0]}}
 
                 </div>
             </div>
@@ -401,7 +401,7 @@ export default {
     name: 'InrInicio',
     data() {
         return{
-            rol: this.$store.getters.getRole,
+            rol: localStorage.getItem("Rol"),
             inr: {
                 nombre: "",
                 localizacion: "",

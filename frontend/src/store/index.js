@@ -36,11 +36,14 @@ export default new Vuex.Store({
         file: "",
         inr: [],
     },
+    favoritos: [],
     
 },
 mutations: {
     islogIn(state) {
-        state.session_out = false;
+       // state.session_out = false;
+        if (localStorage.getItem("Token") == null) state.session_out = true;
+        else state.session_out = false;
     },
     isLogOut(state) {
         state.session_out = true;
@@ -48,18 +51,27 @@ mutations: {
     },
     setToken(state, newToken) {
         state.token = newToken;
+        localStorage.setItem("Token", newToken);
+       // state.token = newToken;
     },
     setEmail(state, newEmail) {
-        state.email = newEmail;
+       // state.email = newEmail;
+       state.email = newEmail;
+       localStorage.setItem("Email", newEmail);
     },
     setRole(state, newRole) {
         state.role = newRole;
+        localStorage.setItem("Rol", newRole);
+
     },
     setUsuario(state, newUsuario) {
         state.usuario = newUsuario;
+        localStorage.setItem("Usuario", newUsuario);
+
     },
     setINR(state, newINR){
         state.inr = newINR;
+        localStorage.setItem("INR", JSON.stringify(newINR));
     },
     setAportacion(state,newAportacion){
         state.aportacion = newAportacion;
@@ -67,6 +79,14 @@ mutations: {
     setCarpeta(state,newCarpeta){
 
         state.carpeta = newCarpeta;
+    },
+    setFavoritos(state,newFav){
+
+        state.favoritos.push(newFav);
+    },
+    removeFavoritos(state,newFav){
+
+        state.favoritos.pop(newFav);
     }
 },
 getters: {
@@ -93,6 +113,9 @@ getters: {
     },
     getCarpeta(state){
         return state.carpeta;
+    },
+    getFavoritos(state){
+        return state.favoritos;
     }
 
 },

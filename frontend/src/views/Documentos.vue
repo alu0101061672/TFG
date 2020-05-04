@@ -48,20 +48,20 @@
 
                 <div class="text-uppercase d-flex" style="margin-left: 30px; margin-top:8px;"> {{ carpeta.nombre }}</div>
                 <b-collapse :id="carpeta._id">
-                <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </b-link> 
+                  <b-link href="#" style="margin-left:100px;" class="d-flex alert-link" v-for="file in carpeta.file" :key="file"> {{ file.toString() }} </b-link> 
                 </b-collapse>
-            </div>
+              </div>
           </div>
 
           <div class="d-inline-flex flex-row" style="max-width: 250px; position:absolute; right: 120px; margin-top:30px;">
             <div class="float-right mr-3">
-            <button type="button" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+            <button type="button" v-if="rol === 'ADMIN'" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
                <img src="../assets/carpetaCerrada.svg" alt="añadir carpeta nueva" class="img-responsive img-fluid" 
               height="25" width="25"/>
               <div class="ml-2"> Añadir carpeta </div>
             </button>
 
-            <button type="button" data-toggle="modal" data-target="#deleteCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
+            <button type="button" v-if="rol === 'ADMIN'" data-toggle="modal" data-target="#deleteCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
                <img src="../assets/delete.svg" alt="eliminar carpeta nuevo" class="img-responsive img-fluid" 
               height="25" width="25"/>
               <div class="ml-2"> Eliminar carpeta </div>
@@ -91,13 +91,24 @@
             </div>
 
             <div class="overflow-auto" style="min-height: 170px;max-height: 170px;">
-              <div class="d-flex mt-2" v-for="favorito in favoritos" :key="favorito.nombre" style="margin-left:120px;">
-                    <img src="../assets/carpetaCerrada.svg" alt="carpeta" class="img-responsive img-fluid mr-1" 
-                      height="25" width="25"/> 
+              <div class="d-flex mt-2" v-for="favorito in favs" :key="favorito.nombre" style="margin-left:120px;">
 
+                    <b-button v-b-toggle="favorito" class="btn bg-white border-0 btn-outline-light" type="button">
+                    <img src="../assets/carpetaCerrada.svg" alt="carpeta cerrada" class="img-responsive img-fluid d-flex" 
+                      height="25" width="25"/> 
+                    </b-button>
+
+                    <div class="text-uppercase d-flex" style=" margin-top: 8px;"> {{ favorito.nombre }} </div>
+                    <b-collapse :id="favorito">
+                      <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in favorito.file" :key="file"> {{ file.toString() }} </b-link> 
+                    </b-collapse>
+                   
+          
+<!--                 
+             
                     <div class="text-uppercase">
                       {{ favorito.nombre }}
-                    </div>
+                    </div> -->
 
               </div>
             </div>
@@ -364,23 +375,24 @@ export default {
         carpeta: {
           nombre: "",
           file: [],
-          inr: this.$store.getters.getINR,
+          inr: JSON.parse(localStorage.getItem("INR")),
           fav: false,
         },
         carpetas: [],
         carpetasINR: [],
-        inr: this.$store.getters.getINR,
+        inr: localStorage.getItem("INR"),
         removeCarpeta: "",
         favoritos: [],
-
-
-
+        rol: localStorage.getItem("Rol"),
+        favs: [],
 
 
       };
   },
   async mounted (){
       await this.getCarpetas();
+      await this.getFavoritos();
+
   },
   watch: {
 
@@ -404,6 +416,8 @@ export default {
         .catch(e => {
         console.log(e.response);
         });
+        this.$store.commit("setFavoritos", carpeta);
+        location.reload();
 
 
     },
@@ -423,6 +437,9 @@ export default {
         .catch(e => {
         console.log(e.response);
         });
+        this.$store.commit("removeFavoritos", carpeta);
+        location.reload();
+
 
 
     },
@@ -442,12 +459,27 @@ export default {
 
     },
 
+     async getFavoritos () {
+
+      await this.axios
+        .get(URL + "/user/showfavoritos")
+        .then(res => {
+            
+            for (var item in res.data){
+              this.favs.push(res.data[item]);
+            }
+        })
+        .catch(err => {
+        console.log(err);
+        });
+
+    },
+
     async getCarpetas () {
 
       await this.axios
         .get(URL + "/user/showcarpetas")
         .then(res => {
-          console.log(res.data);
 
           if(!(this.carpetas.includes(res.data))){ 
               this.carpetas = res.data;
@@ -455,7 +487,8 @@ export default {
 
           for (var item in this.carpetas){
 
-            if((this.carpetas[item].inr._id === this.inr._id) && !(this.carpetasINR.includes(res.data[item]))){
+            if((this.carpetas[item].inr._id === JSON.parse(this.inr)._id) && !(this.carpetasINR.includes(res.data[item]))){
+
               this.carpetasINR.push(res.data[item]);
 
             }

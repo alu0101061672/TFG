@@ -1,7 +1,7 @@
 const express = require ('express');
 const api = express.Router();
 const user = require( '../controllers/user');
-const auth = require('../middlewares/auth');
+const auth = require("../middlewares/auth");
 const inr = require('../controllers/inr');
 const carpeta = require('../controllers/carpetas');
 const aportacion = require('../controllers/aportaciones');
@@ -34,6 +34,7 @@ api.delete('/deleteAportacion/:aportacion', aportacion.deleteAportacion);
 
 
 api.get('/showcarpetas', carpeta.showAll);
+api.get('/showfavoritos', carpeta.showFavs);
 api.post('/addCarpeta', carpeta.dataCarpeta);
 api.put('/addFile', carpeta.fileInCarpeta);
 api.put('/addFavorito', carpeta.addFavorito)
@@ -41,12 +42,14 @@ api.put('/removeFavorito', carpeta.removeFavorito)
 api.delete('/deleteCarpeta/:nombre', carpeta.deleteCarpeta);
 
 
-
+// api.get("/isAuth", auth, (req, res) => {
+//     res.status(200).send({ auth: req.auth });
+//   });
 // api.get('/private', auth, function(req, res) {
 //     res.status(200).send({ message: 'Tienes Acceso' });
 // });
-// api.get('/isAuth', auth, (req, res) => {
-//     res.status(200).send({ auth: true });
-// });
+api.get('/isAuth', auth, (req, res) => {
+    res.status(200).send({ auth: true });
+});
 
 module.exports = api;
