@@ -21,6 +21,7 @@
     "jwt-simple": "^0.5.6",
     "moment": "^2.24.0",
     "mongoose": "^5.9.6",
+    "mongoose-field-encryption": "^3.0.4",
     "morgan": "^1.10.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",

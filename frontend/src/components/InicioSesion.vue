@@ -25,10 +25,10 @@
 									<div class="d-inline-flex form-group w-75 justify-content-center">
 										<input v-model="userLogin.password" type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required />
 									</div>
-									<div class="form-group text-center">
+									<!-- <div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
 										<label class="pl-2" for="remember"> Recordarme</label>
-									</div>
+									</div> -->
 									<div class="form-group">
 										<div class="row justify-content-center">
 											<div class="col-sm-6 col-sm-offset-3">
@@ -245,10 +245,15 @@ export default {
             this.$store.commit("setEmail", res.data.email);
 			this.$store.commit("setToken", res.data.token);
 			this.$store.commit("setRole", res.data.role);
+			this.$store.commit("setVerificado", res.data.verificado);
 			//console.log("HOLAAA " + res.data.usuario);
 			this.$store.commit("setUsuario", res.data.usuario);
 			//showUser(res.data.email);
-			this.$router.push("/inicio");
+			if(res.data.verificado === false){
+				alert("No puede iniciar sesión hasta que un administrador verifique su cuenta.");
+			}else {
+				this.$router.push("/inicio");
+			}
 			
           }
         })

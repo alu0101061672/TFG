@@ -26,11 +26,20 @@ async function dataINR (req,res) {
 
     });
 
-    // Buscamos nombre en DB
-    const inrDB = await INR.findOne({nombre: req.body.nombre.toUpperCase()});
+    var i = {};
+    var inrs = await INR.find();
+
+    for (var item in inrs){
+
+        if(inrs[item].nombre === req.body.nombre.toUpperCase()){
+
+          i = inrs[item];
+
+        }
+    }
 
     // Evaluamos si no existe el inr en DB
-    if(inrDB){
+    if(i === {}){
         return res.status(400).json({
         mensaje: 'INR existente',
         });
@@ -45,7 +54,7 @@ async function dataINR (req,res) {
 
             return res
             .status(201)
-            .send({ nombre: inr.nombre, });
+            .send({ nombre: i.nombre, });
         });
     }
 }
@@ -84,25 +93,32 @@ function getRecursos (req,res) {
 
 async function changeDataINR(req,res){
 
-    const nameofINR = req.params.inr;
-    const inrs = req.body.inr;
+    var i = {};
+    var inrconcreto = await INR.find();
 
-    var inr = INR.findOne({ nombre: nameofINR });
+    for (var item in inrconcreto){
+
+        if(inrconcreto[item].nombre === req.params.inr.toUpperCase()){
+
+          i = inrconcreto[item];
+
+        }
+    }
 
     try{
         const inrDb = await INR.findByIdAndUpdate( 
-            {_id: (await inr)._id},
+            {_id: i._id},
             { 
-            nombre: inrs.inr.nombre.toUpperCase(),
-            localizacion: inrs.inr.localizacion.toUpperCase(),
-            descripcion: inrs.inr.descripcion.toUpperCase(),
-            gravedad: inrs.inr.gravedad.toUpperCase(),
-            tipo: inrs.inr.tipo.toUpperCase(),
-            numAfectados: inrs.inr.numAfectados,
-            recursoArray: inrs.inr.recursoArray.toUpperCase(),
-            tipoTerreno: inrs.inr.tipoTerreno.toUpperCase(),
-            fechaInicio: inrs.inr.fechaInicio,
-            fechaFin: inrs.inr.fechaFin 
+            nombre: req.body.inr.inr.nombre.toUpperCase(),
+            localizacion: req.body.inr.inr.localizacion.toUpperCase(),
+            descripcion: req.body.inr.inr.descripcion.toUpperCase(),
+            gravedad: req.body.inr.inr.gravedad.toUpperCase(),
+            tipo: req.body.inr.inr.tipo.toUpperCase(),
+            numAfectados: req.body.inr.inr.numAfectados,
+            recursoArray: req.body.inr.inr.recursoArray,
+            tipoTerreno: req.body.inr.inr.tipoTerreno.toUpperCase(),
+            fechaInicio: req.body.inr.inr.fechaInicio,
+            fechaFin: req.body.inr.inr.fechaFin 
             }
         );
 
@@ -119,15 +135,23 @@ async function changeDataINR(req,res){
 
 async function deleteINR(req,res){
 
-    const nameOfINR = req.params.inr;
 
-    var inr = INR.findOne({ nombre: nameOfINR });
+    var i = {};
+    var inrs = await INR.find();
 
+    for (var item in inrs){
+
+        if(inrs[item].nombre === req.params.inr.toUpperCase()){
+
+          i = inrs[item];
+
+        }
+    }
 
     try{
 
         //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
-        const inrDB = await INR.findByIdAndRemove((await inr)._id);
+        const inrDB = await INR.findByIdAndRemove(i._id);
 
 
         if(!inrDB){

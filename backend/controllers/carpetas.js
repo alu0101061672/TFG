@@ -30,11 +30,20 @@ async function dataCarpeta (req,res) {
 
     });
 
-    // Buscamos nombre en DB
-    const carpetaDB = await Carpetas.findOne({nombre: req.body.nombre.toUpperCase()});
+    var car = {};
+    var crpts = await Carpetas.find();
+
+    for (var item in crpts){
+
+        if(crpts[item].nombre === req.body.nombre.toUpperCase()){
+
+          car = crpts[item];
+
+        }
+    }
 
     // Evaluamos si no existe el inr en DB
-    if(carpetaDB){
+    if(car){
         return res.status(400).json({
         mensaje: 'Carpeta existente',
         });
@@ -56,18 +65,27 @@ async function dataCarpeta (req,res) {
 
 async function fileInCarpeta(req,res) {
 
-    const nombreCarpeta = req.body.nombre.toUpperCase();
+    var car = {};
+    var crpts = await Carpetas.find();
+
+    for (var item in crpts){
+
+        if(crpts[item].nombre === req.body.nombre.toUpperCase()){
+
+          car = crpts[item];
+
+        }
+    }
+
     const file = req.body.file;
 
-    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
-    
     var array = [];
-    array.push((await carpeta).file);
+    array.push(car.file);
     array.push(file);
 
     try{
         const carpetaDb = await Carpetas.findByIdAndUpdate( 
-            {_id: (await carpeta)._id},
+            {_id: car._id},
             { 
                 file: array,
             }
@@ -86,15 +104,22 @@ async function fileInCarpeta(req,res) {
 
 async function deleteCarpeta(req,res){
 
-    const nombreCarpeta = req.params.nombre.toUpperCase();
+    var car = {};
+    var crpts = await Carpetas.find();
 
-    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
+    for (var item in crpts){
 
+        if(crpts[item].nombre === req.params.nombre.toUpperCase()){
+
+          car = crpts[item];
+
+        }
+    }
  
     try{
 
         //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
-        const carpetaDB = await Carpetas.findByIdAndRemove((await carpeta)._id);
+        const carpetaDB = await Carpetas.findByIdAndRemove(car._id);
 
         if(!carpetaDB){
             return res.status(400).json({
@@ -112,48 +137,56 @@ async function deleteCarpeta(req,res){
 
 }
 
-async function deleteFileFromCarpeta(req,res){
+// async function deleteFileFromCarpeta(req,res){
 
-    const nombreCarpeta = req.params.nombre;
-    const archivo = req.body.file;
-
-
-    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
+//     const nombreCarpeta = req.params.nombre;
+//     const archivo = req.body.file;
 
 
-    try{
+//     var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
 
-        //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
-        const carpetaDB = await Carpetas.findByIdAndUpdate( 
-            {_id: (await carpeta)._id},
-            {file: ""},
-        );
 
-        if(!carpetaDB){
-            return res.status(400).json({
-            mensaje: 'No se encontró el nombre de la carpeta indicada'
-            })
-        }
-        res.json(carpetaDb);
+//     try{
 
-    } catch (error) {
-        return res.status(400).json({
-          mensaje: 'Ocurrio un error',
-          error
-        });
-    }
+//         //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
+//         const carpetaDB = await Carpetas.findByIdAndUpdate( 
+//             {_id: (await carpeta)._id},
+//             {file: ""},
+//         );
 
-}
+//         if(!carpetaDB){
+//             return res.status(400).json({
+//             mensaje: 'No se encontró el nombre de la carpeta indicada'
+//             })
+//         }
+//         res.json(carpetaDb);
+
+//     } catch (error) {
+//         return res.status(400).json({
+//           mensaje: 'Ocurrio un error',
+//           error
+//         });
+//     }
+
+// }
 
 async function addFavorito(req,res) {
 
-    const nombreCarpeta = req.body.nombre.toUpperCase();
+    var car = {};
+    var crpts = await Carpetas.find();
 
-    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
+    for (var item in crpts){
+
+        if(crpts[item].nombre === req.body.nombre.toUpperCase()){
+
+          car = crpts[item];
+
+        }
+    }
 
     try{
         const carpetaDb = await Carpetas.findByIdAndUpdate( 
-            {_id: (await carpeta)._id},
+            {_id: car._id},
             {fav: true}
         );
 
@@ -170,14 +203,21 @@ async function addFavorito(req,res) {
 
 async function removeFavorito(req,res) {
 
-    const nombreCarpeta = req.body.nombre.toUpperCase();
+    var car = {};
+    var crpts = await Carpetas.find();
 
-    var carpeta = Carpetas.findOne({ nombre: nombreCarpeta });
-    
+    for (var item in crpts){
+
+        if(crpts[item].nombre === req.body.nombre.toUpperCase()){
+
+          car = crpts[item];
+
+        }
+    }
 
     try{
         const carpetaDb = await Carpetas.findByIdAndUpdate( 
-            {_id: (await carpeta)._id},
+            {_id: car._id},
             { 
                 fav: false
             }
@@ -200,7 +240,6 @@ module.exports = {
     dataCarpeta,
     deleteCarpeta,
     fileInCarpeta,
-    deleteFileFromCarpeta,
     addFavorito,
     removeFavorito,
 

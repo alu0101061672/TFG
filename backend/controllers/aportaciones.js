@@ -27,11 +27,20 @@ async function dataAportacion (req,res) {
         inr: req.body.inr._id
 
     });
-    // Buscamos nombre en DB
-    const aportacionesDB = await Aportaciones.findOne({titulo: req.body.titulo.toUpperCase()});
 
+    var ap = {};
+    var aprts = await Aportaciones.find();
+
+    for (var item in aprts){
+
+        if(aprts[item].titulo === req.body.titulo.toUpperCase()){
+
+          ap = aprts[item];
+
+        }
+    }
     // Evaluamos si no existe el inr en DB
-    if(aportacionesDB){
+    if(ap){
         return res.status(400).json({
         mensaje: 'Aportación existente',
         });
@@ -61,14 +70,23 @@ function getRecursos (req,res) {
 
 async function changeDataAportacion(req,res){
 
-    const tituloAportacion = req.params.aportacion;
-    const aportaciones = req.body.aportacion.aportacion;
+    var ap = {};
+    var aprts = await Aportaciones.find();
 
-    var apor = Aportaciones.findOne({ titulo: tituloAportacion });
+    for (var item in aprts){
+
+        if(aprts[item].titulo === req.params.aportacion){
+
+          ap = aprts[item];
+
+        }
+    }
+
+    const aportaciones = req.body.aportacion.aportacion;
 
     try{
         const aportacionDb = await Aportaciones.findByIdAndUpdate( 
-            {_id: (await apor)._id},
+            {_id: ap._id},
             { 
             titulo: aportaciones.titulo.toUpperCase(),
             descripcion: aportaciones.descripcion.toUpperCase(),
@@ -90,14 +108,22 @@ async function changeDataAportacion(req,res){
 
 async function deleteAportacion(req,res){
 
-    const tituloAportacion = req.params.aportacion;
+    var ap = {};
+    var aprts = await Aportaciones.find();
 
-    var aportacion = Aportaciones.findOne({ titulo: tituloAportacion });
+    for (var item in aprts){
+
+        if(aprts[item].titulo === req.params.aportacion){
+
+          ap = aprts[item];
+
+        }
+    }
 
     try{
 
         //const inrDB =  await INR.findOneAndDelete( { nombre: nameOfINR }) ;
-        const aportacionesDB = await Aportaciones.findByIdAndRemove((await aportacion)._id);
+        const aportacionesDB = await Aportaciones.findByIdAndRemove(ap._id);
 
         if(!aportacionesDB){
             return res.status(400).json({
@@ -117,10 +143,20 @@ async function deleteAportacion(req,res){
 
 async function showAportacion (req,res) {
 
+    var ap = {};
+    var aprts = await Aportaciones.find();
+
+    for (var item in aprts){
+
+        if(aprts[item].titulo === req.params.titulo){
+
+          ap = aprts[item];
+
+        }
+    }
 
     try{
-        const aportacionDB = await Aportaciones.find({titulo: req.params.titulo});
-        res.json(aportacionDB);
+        res.json(ap);
 
     } catch (error) {
         return res.status(400).json({

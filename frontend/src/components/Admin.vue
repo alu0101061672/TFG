@@ -90,8 +90,10 @@
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="userRegister.role" type="text" name="rolUsuario" id="rolUsuario" tabindex="1" class="form-control" placeholder="Rol del usuario" value="" required />
-
+                            <input v-model="userRegister.role" list="roles" type="text" name="rolUsuario" id="rolUsuario" tabindex="1" class="form-control" placeholder="Rol del usuario" value="" required />
+                            <datalist id="roles">
+                                <option v-for="rol in roles" :key="rol" v-bind:value="rol"> {{ rol }} </option>
+                            </datalist> 
                         </div>
 
                         <div class="form-group w-75">
@@ -125,6 +127,28 @@
     </div>
 </div>
 
+    <div class="d-flex mt-5 align-items-center" style="width: 500px;">
+        <div class="text-dark"> Verificar usuarios </div>
+                
+        <div class="text-dark ml-3">
+
+            <input v-model="usuNoVerificado" list="usuariosNoVerificados" placeholder="Usuario a verificar"/>
+
+            <datalist id="usuariosNoVerificados">
+                <option v-for="usuario in usuariosNoVerificados" :key="usuario.usuario" v-bind:value="usuario.usuario"> {{ usuario.usuario }} </option>
+            </datalist>
+
+
+        </div>
+
+        <div class="text-dark ml-3">
+
+                <button type="submit" v-on:click="changeVerificado(usuNoVerificado)" class="btn btn-outline-dark" style="height:36px;" > Verificar </button>    
+
+            </div>
+    </div>
+
+
 
 </div>
 
@@ -147,8 +171,12 @@ export default {
                 password: "",
                 usuario: "",
                 confirmpassword: "",
-                role: ""
+                role: "",
+                verificado: true,
             },
+            usuariosNoVerificados: [],
+            usuNoVerificado: [],
+            
 
 
         };
@@ -156,6 +184,7 @@ export default {
     async mounted (){
         await this.getDataUser();
         await this.getRoleUser();
+        await this.getNoVerificados();
     },
     watch: {
         usudel: function () {
@@ -170,13 +199,38 @@ export default {
     },
     methods: {
 
+        async getNoVerificados(){
+            await this.axios
+            .get("http://localhost:4000/user/shownoverificados")
+            .then(res => {
+
+            this.usuariosNoVerificados = res.data;
+
+            })
+            .catch(err => {
+            console.log(err);
+            });
+        },
+        async changeVerificado(usuNoVerificado){
+
+            await this.axios
+            .put(`http://localhost:4000/user/changeverificado/${usuNoVerificado}`)
+            
+            .catch( e => {
+            console.log(e.response);
+            })
+            this.usuNoVerificado = '';
+
+
+        },
         onSubmit(evt) {
             evt.preventDefault();
             if(this.userRegister.password === this.userRegister.confirmpassword){
             this.axios
-                .post("http://localhost:4000/user/signup", this.userRegister)
+                .post("http://localhost:4000/user/signupadmin", this.userRegister)
                 .then(res => {
                 console.log(res.data);
+                this.$store.commit("setVerificado", res.data.verificado);
                 })
                 .catch(e => {
                 console.log(e.response);

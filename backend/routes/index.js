@@ -7,14 +7,18 @@ const carpeta = require('../controllers/carpetas');
 const aportacion = require('../controllers/aportaciones');
 
 api.post('/signin', user.signIn);
-api.post('/signup', user.signUp);
+api.post('/signup', user.signUpNoAdmin);
+api.post('/signupadmin', user.signUpAdmin);
 api.delete('/delete/:usuario', user.deleteUserByUsuario);
 //api.get('/showinfo', user.showInfo);
 api.get('/showall', user.showAll);
 api.get('/showuser/:email', user.showUser);
 api.get('/getrole', user.getRole);
+api.get('/shownoverificados', user.showNoVerificados);
 api.put('/logout/:usuario', user.logOut);
 api.put('/changerol/:usuario', user.changeRolToUser);
+api.put('/changeverificado/:usuario', user.changeVerificado);
+
 
 api.get('/showinrs', inr.showAll);
 api.get('/getgravedad', inr.getGravedad);

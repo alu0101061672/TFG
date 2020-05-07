@@ -1,5 +1,7 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
+const mongooseFieldEncryption = require("mongoose-field-encryption").fieldEncryption;
+const key = "j5o7m9gawg1jtysdfh23gfc456k";
 
 const gravedades = {
   values: ['GRAVE', 'MEDIO', 'BAJO'],
@@ -46,6 +48,9 @@ const inrSchema = new Schema({
   
 });
 
+inrSchema.plugin(mongooseFieldEncryption, {
+  fields: ["nombre", "localizacion", "descripcion"], secret: key});
 module.exports = mongoose.model('inr', inrSchema);
+
 
 

@@ -37,6 +37,7 @@ export default new Vuex.Store({
         inr: [],
     },
     favoritos: [],
+    verificado: '',
     
 },
 mutations: {
@@ -62,6 +63,11 @@ mutations: {
     setRole(state, newRole) {
         state.role = newRole;
         localStorage.setItem("Rol", newRole);
+
+    },
+    setVerificado(state, newVer) {
+        state.verificado = newVer;
+        localStorage.setItem("Verificado", newVer);
 
     },
     setUsuario(state, newUsuario) {
@@ -116,6 +122,9 @@ getters: {
     },
     getFavoritos(state){
         return state.favoritos;
+    },
+    getVerificado(state){
+        return state.verificado;
     }
 
 },

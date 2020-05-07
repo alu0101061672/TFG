@@ -197,8 +197,12 @@
                     <form id="inr-form-modify" class="d-flex flex-column align-items-center" @reset="onReset" role="form">
 
                         <div class="form-group w-75">
-                            <input v-model="nameOfINR" type="text" name="nombre" id="nombre" tabindex="1" aria-describedby="nombreHelp" class="text-uppercase form-control" placeholder="Nombre del INR a modificar" value="" required />
+                            <input v-model="nameOfINR" list="nombremodify" type="text" name="nombre" id="nombre" tabindex="1" aria-describedby="nombreHelp" class="text-uppercase form-control" placeholder="Nombre del INR a modificar" value="" required />
                             <div><small id="nombreHelp" class="form-text text-muted float-left ml-2"> Formato: NOMBRE INR </small></div>
+
+                            <datalist id="nombremodify">
+                                <option v-for="inr in inrs" :key="inr.nombre" v-bind:value="inr.nombre"> {{ inr.nombre }} </option>
+                            </datalist> 
                         </div>
                        
                         <div class="form-group w-75">
@@ -241,7 +245,10 @@
                         </div>
 
                         <div class="form-group w-75">
-                            <input v-model="inr.recursosNecesarios" list="recursos" type="text" name="recursosNecesarios" id="recursosNecesarios" tabindex="2" class="text-uppercase form-control" placeholder="Recursos necesarios" required />
+                            <div>
+                                <b-form-select aria-describedby="recursosHelp" v-model="inr.recursoArray" :options="recursos" multiple :select-size="4"></b-form-select>
+                                <div><small id="recursosHelp" class="form-text text-muted float-left ml-2"> Pulse Ctrl y seleccione para añadir múltiples opciones </small></div> 
+                            </div>                        
                         </div>
 
                         <div class="form-group w-75">

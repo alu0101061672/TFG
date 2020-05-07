@@ -1,8 +1,7 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-
+const mongooseFieldEncryption = require("mongoose-field-encryption").fieldEncryption;
+const key = "mf68snf6k1p3j5d8g9c2j4b6";
 //const uniqueValidator = require('mongoose-unique-validator');
 
 // Roles
@@ -20,6 +19,7 @@ const usuarioSchema = new Schema({
   activo: { type: Boolean, default: true },
   date:{type: Date, default: Date.now},
   lastLogin: Date,
+  verificado: {type: Boolean, default: true},
   
 });
 
@@ -55,7 +55,8 @@ UserSchema.methods.gravatar = function() {
 };
 
 mongoose.set('useFindAndModify', false);*/
-
+usuarioSchema.plugin(mongooseFieldEncryption, {
+  fields: ["usuario", "email", "password", "confirmpassword"], secret: key});
 module.exports = mongoose.model('usuario', usuarioSchema);
 
 

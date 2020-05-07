@@ -1,6 +1,8 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
 var INR = mongoose.model('inr');
+const mongooseFieldEncryption = require("mongoose-field-encryption").fieldEncryption;
+const key = "56hv3g32kjn2gvcdxf8gvh90jh6bb4hv";
 
 // const recursos = { 
 //     values: ['POLICIA LOCAL', 'POLICIA NACIONAL', 'GUARDIA CIVIL', 'AMBULANCIA', 'BOMBEROS', 'GES' ],
@@ -17,5 +19,7 @@ const aportacionesSchema = new Schema({
     rectificado: {type: Boolean, default: false}
     
   });
-  
-  module.exports = mongoose.model('aportaciones', aportacionesSchema);
+
+aportacionesSchema.plugin(mongooseFieldEncryption, {
+  fields: ["titulo", "descripcion", "createdBy", "inr"], secret: key});
+module.exports = mongoose.model('aportaciones', aportacionesSchema);
