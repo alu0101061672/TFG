@@ -40,7 +40,7 @@ async function dataAportacion (req,res) {
         }
     }
     // Evaluamos si no existe el inr en DB
-    if(ap){
+    if(ap === {}){
         return res.status(400).json({
         mensaje: 'Aportación existente',
         });
@@ -75,22 +75,20 @@ async function changeDataAportacion(req,res){
 
     for (var item in aprts){
 
-        if(aprts[item].titulo === req.params.aportacion){
+        if(aprts[item].titulo === req.params.aportacion.toUpperCase()){
 
           ap = aprts[item];
 
         }
     }
 
-    const aportaciones = req.body.aportacion.aportacion;
-
     try{
         const aportacionDb = await Aportaciones.findByIdAndUpdate( 
             {_id: ap._id},
             { 
-            titulo: aportaciones.titulo.toUpperCase(),
-            descripcion: aportaciones.descripcion.toUpperCase(),
-            recursosAportacion: aportaciones.recursosAportacion,
+            titulo: req.body.aportacion.aportacion.titulo.toUpperCase(),
+            descripcion: req.body.aportacion.aportacion.descripcion.toUpperCase(),
+            recursosAportacion: req.body.aportacion.aportacion.recursosAportacion,
             rectificado: true,
             }
         );
@@ -113,7 +111,7 @@ async function deleteAportacion(req,res){
 
     for (var item in aprts){
 
-        if(aprts[item].titulo === req.params.aportacion){
+        if(aprts[item].titulo === req.params.aportacion.toUpperCase()){
 
           ap = aprts[item];
 
@@ -130,6 +128,7 @@ async function deleteAportacion(req,res){
             mensaje: 'No se encontró el nombre de la aportación indicada'
             })
         }
+
         res.json(aportacionesDb);
 
     } catch (error) {
@@ -143,27 +142,44 @@ async function deleteAportacion(req,res){
 
 async function showAportacion (req,res) {
 
-    var ap = {};
-    var aprts = await Aportaciones.find();
+    await Aportaciones.find({ titulo: req.params.titulo.toUpperCase()},function(err,aportacion){
 
-    for (var item in aprts){
-
-        if(aprts[item].titulo === req.params.titulo){
-
-          ap = aprts[item];
-
-        }
-    }
-
-    try{
-        res.json(ap);
-
-    } catch (error) {
-        return res.status(400).json({
-          mensaje: 'Ocurrio un error',
-          error
+        INR.populate(aportacion, {path: "inr"}, function(err,aportacion){
+            
+            if(err) res.send(500, err.message);
+            res.status(200).send(aportacion);
         });
-    }
+    });
+
+    // var ap = {};
+    // var aprts = await Aportaciones.find({});
+
+    // for (var item in aprts){
+
+    //     if(aprts[item].titulo === req.params.titulo.toUpperCase()){
+
+    //       ap = aprts[item];
+
+    //     }
+    // }
+
+    // try{
+    //     const aportacionesDB = await Aportaciones.findOne({_id: ap._id});
+
+    //     if(!aportacionesDB){
+    //         return res.status(400).json({
+    //         mensaje: 'No se encontró el nombre de la aportación indicada'
+    //         })
+    //     }
+    //     // console.log(res.json(ap));
+    //     res.json(aportacionesDB);
+
+    // } catch (error) {
+    //     return res.status(400).json({
+    //       mensaje: 'Ocurrio un error',
+    //       error
+    //     });
+    // }
 
 }
 

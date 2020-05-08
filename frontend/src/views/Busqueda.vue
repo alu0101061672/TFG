@@ -26,28 +26,21 @@
                 <div class="input-append">
                     <input v-model="informacion" type="text" class="search-query pl-2 border border-dark mt-3" placeholder="Busque cualquier aportación o información del INR..." 
                       style="border-radius: 15px; width: 500px; height: 35px;">
-                    <button v-on:click="searchInfo(informacion)" type="submit" class="btn"><img src="../assets/busqueda.svg" alt="búsqueda" style="margin-left: -63px;"></button>
+                    <button v-on:click.prevent="searchInfo(informacion)" class="btn"><img src="../assets/busqueda.svg" alt="búsqueda" style="margin-left: -63px;"></button>
                 </div>
             </form>
           </div>
 
-          <div class="d-flex flex-row mt-4 justify-content-center" style="margin-right:100px;">
-
-            <FiltrosBusqueda />
-
-          </div>
-
           <div class="d-flex flex-row mt-4 justify-content-center">
 
-           <div class="bg-light d-inline-flex bd-highlight border border-dark align-items-center" style="width: 70%;">
+           <div v-if="enseñar === true" class="bg-light d-inline-flex bd-highlight border border-dark" style="width: 70%;">
 
-             <div class="p-2"> 
-               <p> {{ resConsulta.titulo }} </p>
-               <p> {{ resConsulta.descripcion }} </p>
-               <!-- <p> {{ resConsulta.recursosAportacion.toString() }} </p> -->
-               <p> {{ resConsulta.createdBy }} </p>
-               <p> {{ resConsulta.date }} </p>
-               <p> {{ resConsulta.inr }} </p>
+             <div class="p-2 text-left"> 
+               <p> Título: {{ resConsulta.titulo }} </p>
+               <p> Descripción: {{ resConsulta.descripcion }} </p>
+               <p> Recursos:  {{ resConsulta.recursosAportacion.toString() }} </p>
+               <p> Creado por:  {{ resConsulta.createdBy }} </p>
+               <p> Fecha:  {{ resConsulta.date.split('T')[0] }} </p>
 
              </div>
 
@@ -71,7 +64,6 @@ const URL = "http://localhost:4000";
 import Cabecera from '@/components/Cabecera.vue'
 import Navegacion from '@/components/Navegacion.vue'
 import DatosINR from '@/components/DatosINR.vue'
-import FiltrosBusqueda from '@/components/FiltrosBusqueda.vue'
 
 
 export default {
@@ -79,15 +71,22 @@ export default {
   components: {
     Cabecera,
     Navegacion,
-    DatosINR,
-    FiltrosBusqueda
+    DatosINR
 
+  },
+  async mounted (){
+      await this.getAportaciones();
   },
   data () {
     
     return {
       informacion: "",
-      resConsulta: "",
+      resConsulta: [],
+      aportaciones: [],
+      aportacionesINR: [],
+      inr: JSON.parse(localStorage.getItem("INR")),
+      enseñar: false,
+
 
 
     };
@@ -95,26 +94,38 @@ export default {
   methods: {
 
     async searchInfo(informacion) {
-       console.log("ddddd")
-      await this.axios
-        .put(URL + `/user/showaportacion/${informacion}`)
+
+      for (var item in this.aportacionesINR){
+
+        if(this.aportacionesINR[item].titulo === informacion.toUpperCase()){
+
+          this.resConsulta = this.aportacionesINR[item];
+
+        }
+      }
+      this.enseñar = true;      
+    },
+
+     async getAportaciones(){
+        
+        await this.axios
+        .get(URL + "/user/showaportaciones")
         .then(res => {
-                     console.log(res)
+          console.log(res.data);
+          this.aportaciones = res.data;
 
-          // for (var item in res.data){
-          //             console.log("eeeeeeee")
+          for (var item in this.aportaciones){
 
-          //   this.resConsulta = res.data[item];
-          // }
-          // console.log("aaaaaaaaaaa")
+            if((this.aportaciones[item].inr._id === this.inr._id) && !(this.aportacionesINR.includes(res.data[item]))){
+              this.aportacionesINR.push(res.data[item]);
 
+            }
+          }
         })
         .catch(err => {
         console.log(err);
         });
-
-
-    },
+     }
 
   }
 }

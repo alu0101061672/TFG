@@ -484,7 +484,6 @@ export default {
 
             await this.axios
             .put(URL + `/user/changeDataINR/${nameOfINR}`, { inr })
-            
             .catch( e => {
             console.log(e.response);
             })

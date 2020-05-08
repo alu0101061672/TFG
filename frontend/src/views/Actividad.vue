@@ -265,7 +265,7 @@
                     <p class="text-small mb-0 text-muted text-uppercase float-left"> CREADO POR: {{ aportacion.createdBy }} </p><br />
                     <p class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-15px;"> {{aportacion.date.split('T')[0]}}  </p> 
 
-                    <p v-if="aportacion.rectificado === true" class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-75px; margin-right:-125px;"> Rectificado  </p> 
+                    <p v-if="aportacion.rectificado === true" class="small mb-0 text-muted text-uppercase float-right" style="margin-top:-75px; margin-right:-60px;"> Rectificado  </p> 
                   </div>
                 </div>
               </div>
