@@ -53,7 +53,7 @@
               </div>
           </div>
 
-          <div class="d-inline-flex flex-row" style="max-width: 250px; position:absolute; right: 120px; margin-top:30px;">
+          <div class="d-inline-flex flex-row" style="max-width: 250px; position:absolute; right: 140px; margin-top:30px;">
             <div class="float-right mr-3">
             <button type="button" v-if="rol === 'ADMIN'" data-toggle="modal" data-target="#addCarpeta" class="d-flex btn bg-light border border-dark mr-2 mb-2" style="width:190px; height:36px;">
                <img src="../assets/carpetaCerrada.svg" alt="añadir carpeta nueva" class="img-responsive img-fluid" 
@@ -85,13 +85,13 @@
             background: -webkit-radial-gradient(center center, circle, black, white); 
           "/>
 
-            <div class="text-uppercase" style="margin-left: -735px; margin-top: 10px;">
+            <div class="text-uppercase mb-1" style="margin-left: -785px; margin-top: 10px;">
               <img src="../assets/carpeta.svg" height="25" width="25" alt="a" class="img-responsive img-fluid mr-1" />
               Favoritos
             </div>
 
-            <div class="overflow-auto" style="min-height: 170px;max-height: 170px;">
-              <div class="d-flex mt-2" v-for="favorito in favs" :key="favorito.nombre" style="margin-left:120px;">
+            <div class="overflow-auto" style="min-height: 170px;max-height: 170px; max-width: 830px;">
+              <div class="d-flex mt-2" v-for="favorito in favs" :key="favorito.nombre" style="margin-left:105px;">
 
                     <b-button v-b-toggle="favorito" class="btn bg-white border-0 btn-outline-light" type="button">
                     <img src="../assets/carpetaCerrada.svg" alt="carpeta cerrada" class="img-responsive img-fluid d-flex" 
@@ -99,7 +99,7 @@
                     </b-button>
 
                     <div class="text-uppercase d-flex" style=" margin-top: 8px;"> {{ favorito.nombre }} </div>
-                    <b-collapse :id="favorito">
+                    <b-collapse :id="favorito.nombre">
                       <b-link href="#" style="margin-left:50px;" class="d-flex alert-link" v-for="file in favorito.file" :key="file"> {{ file.toString() }} </b-link> 
                     </b-collapse>
                    
@@ -377,6 +377,8 @@ export default {
           file: [],
           inr: JSON.parse(localStorage.getItem("INR")),
           fav: false,
+          favoritos: [],
+          
         },
         carpetas: [],
         carpetasINR: [],
@@ -403,8 +405,8 @@ export default {
 
     addFavorito(carpeta) {
 
-      if(!(this.favoritos.includes(carpeta))){
-        this.favoritos.push(carpeta);
+      if(!(this.carpeta.favoritos.includes(carpeta))){
+        this.carpeta.favoritos.push(carpeta);
       }
 
       this.axios
@@ -420,11 +422,12 @@ export default {
         location.reload();
 
 
+
     },
     removeFavorito(carpeta) {
 
-      if((this.favoritos.includes(carpeta))){
-        this.favoritos.pop(carpeta);
+      if((this.carpeta.favoritos.includes(carpeta))){
+        this.carpeta.favoritos.pop(carpeta);
       }
 
       this.axios
@@ -464,9 +467,13 @@ export default {
       await this.axios
         .get(URL + "/user/showfavoritos")
         .then(res => {
+
             
             for (var item in res.data){
-              this.favs.push(res.data[item]);
+
+              if((res.data[item].inr === JSON.parse(this.inr)._id) && !(this.carpeta.favoritos.includes(res.data[item]))){
+                this.favs.push(res.data[item]);
+              }
             }
         })
         .catch(err => {
@@ -517,6 +524,7 @@ export default {
         console.log(e.response);
         });
         this.$store.commit("setCarpeta", this.carpeta);
+        location.reload();
 
     },
 

@@ -24,7 +24,7 @@
           <div class="d-flex flex-row mt-5 justify-content-center">
             <form id="custom-search-form" class="form-search form-horizontal pull-right" role="form">
                 <div class="input-append">
-                    <input v-model="informacion" type="text" class="search-query pl-2 border border-dark mt-3" placeholder="Busque cualquier aportación o información del INR..." 
+                    <input v-model="informacion" type="text" class="search-query pl-2 border border-dark mt-3" placeholder="Busque cualquier aportación..." 
                       style="border-radius: 15px; width: 500px; height: 35px;">
                     <button v-on:click.prevent="searchInfo(informacion)" class="btn"><img src="../assets/busqueda.svg" alt="búsqueda" style="margin-left: -63px;"></button>
                 </div>

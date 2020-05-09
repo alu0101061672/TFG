@@ -84,9 +84,9 @@
 
       <div class="d-inline-flex flex-row float-left ml-3" style="min-width: 370px;"> 
           
-          <div class="text-dark"> Recursos necesarios: </div> 
-          <div class="text-dark pl-1 mr-3 text-uppercase"> 
-                {{ JSON.parse(inr).recursosNecesarios }}
+          <div class="text-dark text-break" style="min-width:155px;"> Recursos necesarios: </div> 
+          <div class="text-dark pl-1 text-justify mr-3 text-uppercase text-break" style="min-width:300px;"> 
+                {{ JSON.parse(inr).recursoArray.toString() }}
 
             <!-- <div class="dropdown">
 

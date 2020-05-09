@@ -141,7 +141,7 @@ async function deleteINR(req,res){
 
     for (var item in inrs){
 
-        if(inrs[item].nombre === req.params.inr.toUpperCase()){
+        if(inrs[item].nombre === req.params.inr){
 
           i = inrs[item];
 

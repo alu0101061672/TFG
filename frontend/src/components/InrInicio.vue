@@ -336,7 +336,7 @@
     <div id=inrWatch v-for="inr in pageOfItems" :key="inr.nombre">
     <button type="button" v-on:click="goINR(inr)" class="bg-light d-inline-flex bd-highlight border border-dark align-items-center mt-1 mb-4 ml-5 mr-5" style="width: 90%;"> 
 
-            <div class="p-2 flex-row bd-highlight" style="min-width: 250px;text-align: left;">
+            <div class="p-2 flex-row bd-highlight" style="min-width: 350px;text-align: left;">
 
                 <div class="d-inline-flex flex-column bd-highlight ml-3 text-uppercase">
                 
@@ -381,7 +381,7 @@
 
             <div class="p-2 flex-row bd-highlight align-self-end">
 
-                <div class="flex-column bd-highlight justify-content-end" style="margin-left:130px;">
+                <div class="flex-column bd-highlight justify-content-end" style="margin-left:50px;">
                 
                     {{inr.fechaInicio.split('T')[0]}}
 

@@ -43,7 +43,7 @@ async function dataCarpeta (req,res) {
     }
 
     // Evaluamos si no existe el inr en DB
-    if(car){
+    if(car  === {}){
         return res.status(400).json({
         mensaje: 'Carpeta existente',
         });
@@ -177,7 +177,7 @@ async function addFavorito(req,res) {
 
     for (var item in crpts){
 
-        if(crpts[item].nombre === req.body.nombre.toUpperCase()){
+        if(crpts[item]._id == req.body._id){
 
           car = crpts[item];
 
@@ -208,7 +208,7 @@ async function removeFavorito(req,res) {
 
     for (var item in crpts){
 
-        if(crpts[item].nombre === req.body.nombre.toUpperCase()){
+        if(crpts[item]._id == req.body._id){
 
           car = crpts[item];
 
